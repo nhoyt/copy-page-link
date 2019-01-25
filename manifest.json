@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "Copy Link",
+  "version": "1.0",
+
+  "description" : "Build a link representation string, and copy it to the clipboard.",
+
+  "icons": {
+    "48": "copy-to-clipboard.png"
+  },
+
+  "browser_action": {
+    "default_icon": "copy-to-clipboard.png"
+  },
+
+  "permissions": [
+    "activeTab",
+    "clipboardWrite",
+    "storage"
+  ],
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  }
+}
