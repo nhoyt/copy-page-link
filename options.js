@@ -27,7 +27,7 @@ function saveOptions() {
 
 // Restore UI state based on user options saved in chrome.storage
 function restoreOptions() {
-  chrome.storage.sync.get(['linkFormat'],
+  chrome.storage.sync.get({ linkFormat: 'markdown' },
     function (result) {
       var id = result.linkFormat;
       document.getElementById(id).checked = true;

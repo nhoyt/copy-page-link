@@ -23,7 +23,7 @@ function getFormattedLink (data, format) {
       return '[' + name + '](' + data.href + ')\n';
 
     default:
-      return 'Unknown format option';
+      return 'Error: Unknown format option';
   }
 }
 
@@ -35,7 +35,7 @@ function processLinkData (data) {
   }
 
   // Copy the user-specified link format to clipboard
-  chrome.storage.sync.get(['linkFormat'],
+  chrome.storage.sync.get({ linkFormat: 'markdown' },
     function (result) {
       var format = result.linkFormat;
       copyToClipboard(getFormattedLink(data, format));
