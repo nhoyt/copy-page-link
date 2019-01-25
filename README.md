@@ -4,7 +4,8 @@ A Chrome extension that builds a link to the current page being viewed in
 your browser and copies it to the clipboard.
 
 The options page allows you to select from the following link formats:
-* Markdown format
+* Markdown
+* HTML
 * XML &lt;site&gt; element
 
 By default, the page title is used as the display text for the link. You can

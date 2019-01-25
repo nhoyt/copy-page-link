@@ -20,7 +20,10 @@ function getFormattedLink (data, format) {
              '      </site>\n';
 
     case 'markdown':
-      return '[' + name + '](' + data.href + ')\n';
+      return '[' + name + '](' + data.href + ')';
+
+    case 'html':
+      return '<a href="' + data.href + '">' + name + '</a>';
 
     default:
       return 'Error: Unknown format option';
