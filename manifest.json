@@ -3,7 +3,7 @@
   "name": "Copy Link",
   "version": "1.0",
 
-  "description" : "Build a link representation string, and copy it to the clipboard.",
+  "description" : "Build a formatted string that represents a link to the current page, and copy it to the clipboard.",
 
   "icons": {
     "48": "copy-to-clipboard.png"
