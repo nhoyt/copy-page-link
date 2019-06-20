@@ -2,8 +2,7 @@
   "manifest_version": 2,
   "name": "Copy Link",
   "version": "1.0",
-
-  "description" : "Build a formatted string that represents a link to the current page, and copy it to the clipboard.",
+  "description" : "Builds a formatted string that represents a link to the current page, and copies it to the clipboard.",
 
   "icons": {
     "48": "copy-to-clipboard.png"
@@ -21,13 +20,14 @@
 
   "background": {
     "scripts": ["background.js"],
-    "persistent": false
+    "persistent": true
   },
 
   "options_ui": {
     "page": "options.html",
     "open_in_tab": false
   },
+
   "browser_specific_settings": {
     "gecko": {
       "id": "copy-link@gitlab.com"

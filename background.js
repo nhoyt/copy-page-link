@@ -38,7 +38,7 @@ function processLinkData (data) {
   }
 
   // Copy the user-specified link format to clipboard
-  chrome.storage.sync.get({ linkFormat: 'markdown' },
+  chrome.storage.sync.get({ linkFormat: 'site' },
     function (result) {
       var format = result.linkFormat;
       copyToClipboard(getFormattedLink(data, format));
