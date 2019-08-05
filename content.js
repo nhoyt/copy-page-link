@@ -6,4 +6,4 @@ var linkData = {
   selection: window.getSelection().toString().trim()
 };
 
-chrome.runtime.sendMessage(linkData);
+browser.runtime.sendMessage(linkData);

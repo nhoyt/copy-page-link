@@ -38,20 +38,26 @@ function processLinkData (data) {
   }
 
   // Copy the user-specified link format to clipboard
-  chrome.storage.sync.get({ linkFormat: 'site' },
-    function (result) {
-      var format = result.linkFormat;
-      copyToClipboard(getFormattedLink(data, format));
-    });
+  function copyLink (result) {
+    var format = result.format;
+    copyToClipboard(getFormattedLink(data, format));
+  }
+
+  function onError(error) {
+    console.log(`Error: ${error}`);
+  }
+
+  var copying = browser.storage.sync.get('format');
+  copying.then(copyLink, onError);
 }
 
-chrome.runtime.onMessage.addListener(
+browser.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     processLinkData(request);
   }
 );
 
-chrome.browserAction.onClicked.addListener(function(tab) {
+browser.browserAction.onClicked.addListener(function (tab) {
   // We can only inject scripts to find the title on pages loaded with http
   // and https, so for all other pages, we don't access the title.
   if (tab.url.indexOf('http:') != 0 && tab.url.indexOf('https:') != 0) {
@@ -59,6 +65,6 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     processLinkData(data);
   }
   else {
-    chrome.tabs.executeScript(null, {file: 'content.js'});
+    browser.tabs.executeScript(null, {file: 'content.js'});
   }
 });

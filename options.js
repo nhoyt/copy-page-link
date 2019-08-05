@@ -1,40 +1,54 @@
-// Save user options to chrome.storage
-function saveOptions() {
-  var selectedOption;
+// Save user options to browser.storage
 
-  var options = document.getElementsByTagName('input');
-  for (var i = 0; i < options.length; i++) {
-    if (options[i].checked) {
-      selectedOption = options[i].value;
+function saveOptions(e) {
+  e.preventDefault();
+
+  var formats = document.getElementById('formats');
+  var inputs = formats.getElementsByTagName('input');
+  var selectedFormat = null;
+
+  for (var i = 0; i < inputs.length; i++) {
+    if (inputs[i].checked) {
+      selectedFormat = inputs[i].value;
       break;
     }
   }
 
-  chrome.storage.sync.set(
-    {
-      linkFormat: selectedOption
-    },
-    function () {
-      // Update status to let user know options were saved
-      var status = document.getElementById('status');
-      status.textContent = 'Options saved.';
-      setTimeout(function() {
-        status.textContent = '';
-      }, 750);
-    }
-  );
+  function notifyUser () {
+    var status = document.getElementById('status');
+    status.innerHTML = 'Options saved.';
+    setTimeout(function () {
+      status.innerHTML = '';
+    }, 750);
+    console.log('Options saved!');
+  }
+
+  function onError(error) {
+    console.log(`Error: ${error}`);
+  }
+
+  if (selectedFormat) {
+    var setting = browser.storage.sync.set({ format: selectedFormat });
+    setting.then(notifyUser, onError);
+  }
 }
 
-// Restore UI state based on user options saved in chrome.storage
+// Restore UI state based on user options saved in browser.storage
+
 function restoreOptions() {
-  chrome.storage.sync.get({ linkFormat: 'markdown' },
-    function (result) {
-      var id = result.linkFormat;
-      document.getElementById(id).checked = true;
-    }
-  );
+
+  function setCurrentChoice (result) {
+    document.getElementById(result.format || 'markdown').checked = true;
+  }
+
+  function onError(error) {
+    console.log(`Error: ${error}`);
+  }
+
+  var getting = browser.storage.sync.get('format');
+  getting.then(setCurrentChoice, onError);
 }
 
 // Add the event listeners for saving and restoring options
 document.addEventListener('DOMContentLoaded', restoreOptions);
-document.getElementById('save').addEventListener('click', saveOptions);
+document.querySelector('form').addEventListener('submit', saveOptions);
