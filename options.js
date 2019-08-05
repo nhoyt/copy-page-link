@@ -1,5 +1,6 @@
-// Save user options to browser.storage
-
+/*
+*   Save user options to browser.storage
+*/
 function saveOptions(e) {
   e.preventDefault();
 
@@ -33,8 +34,9 @@ function saveOptions(e) {
   }
 }
 
-// Restore UI state based on user options saved in browser.storage
-
+/*
+*   Restore HTML form values based on user options saved in browser.storage
+*/
 function restoreOptions() {
 
   function setCurrentChoice (result) {
@@ -49,6 +51,8 @@ function restoreOptions() {
   getting.then(setCurrentChoice, onError);
 }
 
-// Add the event listeners for saving and restoring options
+/*
+*   Add the event listeners for saving and restoring options
+*/
 document.addEventListener('DOMContentLoaded', restoreOptions);
 document.querySelector('form').addEventListener('submit', saveOptions);

@@ -1,5 +1,6 @@
-// content.js
-
+/*
+*   content.js
+*/
 var linkData = {
   href: window.location.href,
   title: document.title,

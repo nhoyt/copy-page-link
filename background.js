@@ -1,5 +1,6 @@
-// background.js
-
+/*
+*   background.js
+*/
 function copyToClipboard (str) {
   var listener = function (event) {
     event.clipboardData.setData('text/plain', str);
