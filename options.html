@@ -5,13 +5,15 @@
   <title>Copy Link Options</title>
   <style>
     body {
-      padding: 0 2em 2em 2em;
+      padding: 0 3em;
       font-size: 120%;
     }
 
     fieldset {
       margin-top: 2em;
     }
+
+    fieldset div { font-size: 92%; }
     fieldset div:nth-child(n+3) { margin-top: 0.75em; }
     fieldset div:nth-child(2)   { margin-top: 0.25em; }
     fieldset div:last-child     { margin-bottom: 0.5em; }
@@ -31,7 +33,7 @@
 <body>
   <form>
     <fieldset id="formats">
-      <legend>Format options</legend>
+      <legend>Link Format</legend>
       <div>
         <label><input type="radio" name="format" id="markdown" value="markdown"> Markdown</label>
       </div>
@@ -39,7 +41,7 @@
         <label><input type="radio" name="format" id="html" value="html"> HTML &lt;a&gt; element</label>
       </div>
       <div>
-        <label><input type="radio" name="format" id="site" value="site"> XML &lt;site&gt; element</label>
+        <label><input type="radio" name="format" id="xml" value="xml"> XML &lt;site&gt; element</label>
       </div>
     </fieldset>
 
