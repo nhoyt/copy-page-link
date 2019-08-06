@@ -11,10 +11,10 @@ function copyToClipboard (str) {
   document.removeEventListener('copy', listener);
 }
 
-function getFormattedLink (data, format) {
+function getFormattedLink (data, options) {
   var name = data.selection ? data.selection : data.title;
 
-  switch (format) {
+  switch (options.format) {
     case 'markdown':
       return '[' + name + '](' + data.href + ')';
 
@@ -22,9 +22,9 @@ function getFormattedLink (data, format) {
       return '<a href="' + data.href + '">' + name + '</a>';
 
     case 'xml':
-      return '      <site href="' + data.href + '">\n' +
-             '        <name>' + name + '</name>\n' +
-             '      </site>\n';
+      return '      <' + options.link + ' ' + options.href + '="' + data.href + '">\n' +
+             '        <' + options.name + '>' + name + '</' + options.name + '>\n' +
+             '      </' + options.link + '>\n';
 
     default:
       return 'Error: Unknown format option';
@@ -39,16 +39,15 @@ function processLinkData (data) {
   }
 
   // Copy the user-specified link format to clipboard
-  function copyLink (result) {
-    var format = result.format;
-    copyToClipboard(getFormattedLink(data, format));
+  function copyLink (options) {
+    copyToClipboard(getFormattedLink(data, options));
   }
 
   function onError(error) {
     console.log(`Error: ${error}`);
   }
 
-  var copying = browser.storage.sync.get('format');
+  var copying = browser.storage.sync.get();
   copying.then(copyLink, onError);
 }
 

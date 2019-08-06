@@ -29,7 +29,12 @@ function saveOptions(e) {
   }
 
   if (selectedFormat) {
-    var setting = browser.storage.sync.set({ format: selectedFormat });
+    var setting = browser.storage.sync.set({
+      format: selectedFormat,
+      link: document.getElementById('link').value,
+      href: document.getElementById('href').value,
+      name: document.getElementById('name').value
+    });
     setting.then(notifyUser, onError);
   }
 }
@@ -40,16 +45,19 @@ function saveOptions(e) {
 function restoreOptions() {
   var defaultFormat = 'markdown';
 
-  function setCurrentChoice (result) {
-    document.getElementById(result.format || defaultFormat).checked = true;
+  function setPreferences (options) {
+    document.getElementById(options.format || defaultFormat).checked = true;
+    document.getElementById('link').value = options.link || 'link';
+    document.getElementById('href').value = options.href || 'href';
+    document.getElementById('name').value = options.name || 'name';
   }
 
   function onError (error) {
     console.log(`Error: ${error}`);
   }
 
-  var getting = browser.storage.sync.get('format');
-  getting.then(setCurrentChoice, onError);
+  var getting = browser.storage.sync.get();
+  getting.then(setPreferences, onError);
 }
 
 /*
