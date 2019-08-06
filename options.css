@@ -3,18 +3,9 @@ body {
   font-size: 120%;
 }
 
-h2 {
-  font-size: 120%;
-  font-weight: 500;
-  margin: 0.75em 0 0;
-}
-
-fieldset#formats {
+fieldset {
+  border: 1px solid #bbb;
   margin-top: 1em;
-}
-
-fieldset#identifiers {
-  margin-top: 1.5em;
 }
 
 fieldset div { font-size: 92%; }
