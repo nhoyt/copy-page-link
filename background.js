@@ -13,8 +13,9 @@ function copyToClipboard (str) {
 
 function getFormattedLink (data, options) {
   var name = data.selection ? data.selection : data.title;
+  var format = options.format || 'markdown';
 
-  switch (options.format) {
+  switch (format) {
     case 'markdown':
       return `[${name}](${data.href})`;
 
