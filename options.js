@@ -8,7 +8,7 @@ function saveOptions(e) {
   var inputs = formats.getElementsByTagName('input');
   var selectedFormat = null;
 
-  for (var i = 0; i < inputs.length; i++) {
+  for (let i = 0; i < inputs.length; i++) {
     if (inputs[i].checked) {
       selectedFormat = inputs[i].value;
       break;
@@ -24,7 +24,7 @@ function saveOptions(e) {
     console.log('Options saved!');
   }
 
-  function onError(error) {
+  function onError (error) {
     console.log(`Error: ${error}`);
   }
 
@@ -38,12 +38,13 @@ function saveOptions(e) {
 *   Restore HTML form values based on user options saved in browser.storage
 */
 function restoreOptions() {
+  var defaultFormat = 'markdown';
 
   function setCurrentChoice (result) {
-    document.getElementById(result.format || 'markdown').checked = true;
+    document.getElementById(result.format || defaultFormat).checked = true;
   }
 
-  function onError(error) {
+  function onError (error) {
     console.log(`Error: ${error}`);
   }
 
