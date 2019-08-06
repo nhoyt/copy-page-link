@@ -1,0 +1,38 @@
+body {
+  padding: 0 3em;
+  font-size: 120%;
+}
+
+h2 {
+  font-size: 120%;
+  font-weight: 500;
+  margin: 0.75em 0 0;
+}
+
+fieldset#formats {
+  margin-top: 1em;
+}
+
+fieldset#identifiers {
+  margin-top: 1.5em;
+}
+
+fieldset div { font-size: 92%; }
+fieldset div:nth-child(n+3) { margin-top: 0.75em; }
+fieldset div:nth-child(2)   { margin-top: 0.25em; }
+fieldset div:last-child     { margin-bottom: 0.5em; }
+
+div#status { margin: 0.75em 0 0.5em; color: cyan; }
+
+label[for] {
+  display: block;
+}
+
+button {
+  width: 80px;
+  background-color: #ddd;
+  font-size: 100%;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  text-align: center;
+}
