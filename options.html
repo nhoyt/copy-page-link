@@ -1,72 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
   <title>Copy Link Options</title>
-  <style>
-    body {
-      padding: 0 3em;
-      font-size: 120%;
-    }
-
-    fieldset {
-      margin-top: 1.5em;
-    }
-
-    fieldset div { font-size: 92%; }
-    fieldset div:nth-child(n+3) { margin-top: 0.75em; }
-    fieldset div:nth-child(2)   { margin-top: 0.25em; }
-    fieldset div:last-child     { margin-bottom: 0.5em; }
-
-    div#status { margin: 0.75em 0 0.5em; color: cyan; }
-
-    label[for] {
-      display: block;
-    }
-
-    button {
-      width: 80px;
-      background-color: #ddd;
-      font-size: 100%;
-      margin-top: 0.5em;
-      margin-bottom: 1em;
-      text-align: center;
-    }
-  </style>
+  <link href="options.css" rel="stylesheet">
+  <meta charset="utf-8">
 </head>
-
 <body>
-  <form>
-    <fieldset id="formats">
-      <legend>Link Format</legend>
-      <div>
-        <label><input type="radio" name="format" id="markdown" value="markdown"> Markdown</label>
-      </div>
-      <div>
-        <label><input type="radio" name="format" id="html" value="html"> HTML &lt;a&gt; element</label>
-      </div>
-      <div>
-        <label><input type="radio" name="format" id="xml" value="xml"> XML</label>
-      </div>
-    </fieldset>
+  <main>
+    <h2>Preferences</h2>
+    <form>
+      <fieldset id="formats">
+        <legend>Link Format</legend>
+        <div>
+          <label><input type="radio" name="format" id="markdown" value="markdown"> Markdown</label>
+        </div>
+        <div>
+          <label><input type="radio" name="format" id="html" value="html"> HTML &lt;a&gt; element</label>
+        </div>
+        <div>
+          <label><input type="radio" name="format" id="xml" value="xml"> XML</label>
+        </div>
+      </fieldset>
 
-    <fieldset id="identifiers">
-      <legend>XML Identifiers</legend>
-      <div>
-        <label for="link">Link element</label><input type="text" id="link">
-      </div>
-      <div>
-        <label for="href">URL attribute</label><input type="text" id="href">
-      </div>
-      <div>
-        <label for="name">Name element</label><input type="text" id="name">
-      </div>
-    </fieldset>
+      <fieldset id="identifiers">
+        <legend>XML Identifiers</legend>
+        <div>
+          <label for="link">Link element</label><input type="text" id="link">
+        </div>
+        <div>
+          <label for="href">URL attribute</label><input type="text" id="href">
+        </div>
+        <div>
+          <label for="name">Name element</label><input type="text" id="name">
+        </div>
+      </fieldset>
 
-    <div id="status"></div>
-    <button type="submit">Save</button>
-  </form>
-
+      <div id="status" aria-live="polite"></div>
+      <button type="submit">Save</button>
+    </form>
+  </main>
   <script src="options.js"></script>
 </body>
 </html>
