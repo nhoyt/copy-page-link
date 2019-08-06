@@ -16,15 +16,15 @@ function getFormattedLink (data, options) {
 
   switch (options.format) {
     case 'markdown':
-      return '[' + name + '](' + data.href + ')';
+      return `[${name}](${data.href})`;
 
     case 'html':
-      return '<a href="' + data.href + '">' + name + '</a>';
+      return `<a href="${data.href}">${name}</a>`;
 
     case 'xml':
-      return '      <' + options.link + ' ' + options.href + '="' + data.href + '">\n' +
-             '        <' + options.name + '>' + name + '</' + options.name + '>\n' +
-             '      </' + options.link + '>\n';
+      return `      <${options.link} ${options.href}="${data.href}">\n` +
+             `        <${options.name}>${name}</${options.name}>\n` +
+             `      </${options.link}>\n`;
 
     default:
       return 'Error: Unknown format option';
