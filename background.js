@@ -15,16 +15,16 @@ function getFormattedLink (data, format) {
   var name = data.selection ? data.selection : data.title;
 
   switch (format) {
-    case 'site':
-      return '      <site href="' + data.href + '">\n' +
-             '        <name>' + name + '</name>\n' +
-             '      </site>\n';
-
     case 'markdown':
       return '[' + name + '](' + data.href + ')';
 
     case 'html':
       return '<a href="' + data.href + '">' + name + '</a>';
+
+    case 'xml':
+      return '      <site href="' + data.href + '">\n' +
+             '        <name>' + name + '</name>\n' +
+             '      </site>\n';
 
     default:
       return 'Error: Unknown format option';
