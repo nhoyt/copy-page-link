@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Copy Link",
   "version": "1.0",
-  "description" : "Builds a formatted string that represents a link to the current page, and copies it to the clipboard.",
+  "description" : "Insert the title and URL of the current page into the selected link format, and copy the result to the clipboard, for pasting into an external document.",
 
   "icons": {
     "48": "copy-to-clipboard.png"
