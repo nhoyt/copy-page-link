@@ -4,9 +4,9 @@
 function saveOptions(e) {
   e.preventDefault();
 
-  var formats = document.getElementById('formats');
-  var inputs = formats.getElementsByTagName('input');
-  var selectedFormat = null;
+  let formats = document.getElementById('formats');
+  let inputs = formats.getElementsByTagName('input');
+  let selectedFormat = null;
 
   for (let i = 0; i < inputs.length; i++) {
     if (inputs[i].checked) {
@@ -16,7 +16,7 @@ function saveOptions(e) {
   }
 
   function notifyUser () {
-    var status = document.getElementById('status');
+    let status = document.getElementById('status');
     status.innerHTML = 'Options saved.';
     setTimeout(function () {
       status.innerHTML = '';
@@ -29,7 +29,7 @@ function saveOptions(e) {
   }
 
   if (selectedFormat) {
-    var setting = browser.storage.sync.set({
+    let setting = browser.storage.sync.set({
       format: selectedFormat,
       link: document.getElementById('link').value,
       href: document.getElementById('href').value,
@@ -43,7 +43,7 @@ function saveOptions(e) {
 *   Restore HTML form values based on user options saved in browser.storage
 */
 function restoreOptions() {
-  var defaultFormat = 'markdown';
+  const defaultFormat = 'markdown';
 
   function setPreferences (options) {
     document.getElementById(options.format || defaultFormat).checked = true;
@@ -56,7 +56,7 @@ function restoreOptions() {
     console.log(`Error: ${error}`);
   }
 
-  var getting = browser.storage.sync.get();
+  let getting = browser.storage.sync.get();
   getting.then(setPreferences, onError);
 }
 

@@ -2,7 +2,7 @@
 *   background.js
 */
 function copyToClipboard (str) {
-  var listener = function (event) {
+  let listener = function (event) {
     event.clipboardData.setData('text/plain', str);
     event.preventDefault();
   };
@@ -12,8 +12,8 @@ function copyToClipboard (str) {
 }
 
 function getFormattedLink (data, options) {
-  var name = data.selection ? data.selection : data.title;
-  var format = options.format || 'markdown';
+  let name = data.selection ? data.selection : data.title;
+  let format = options.format || 'markdown';
 
   switch (format) {
     case 'markdown':
@@ -48,8 +48,8 @@ function processLinkData (data) {
     console.log(`Error: ${error}`);
   }
 
-  var copying = browser.storage.sync.get();
-  copying.then(copyLink, onError);
+  let getting = browser.storage.sync.get();
+  getting.then(copyLink, onError);
 }
 
 browser.runtime.onMessage.addListener(
@@ -59,13 +59,12 @@ browser.runtime.onMessage.addListener(
 );
 
 browser.browserAction.onClicked.addListener(function (tab) {
-  // We can only inject scripts to find the title on pages loaded with http
-  // and https, so for all other pages, we don't access the title.
-  if (tab.url.indexOf('http:') != 0 && tab.url.indexOf('https:') != 0) {
-    var data = { href: tab.url, title: '', selection: '' };
-    processLinkData(data);
+  // Security policy only allows us to inject the content script that
+  // accesses title and selection for pages loaded with http or https.
+  if (tab.url.indexOf('http:') === 0 || tab.url.indexOf('https:') === 0) {
+    browser.tabs.executeScript(null, { file: 'content.js' });
   }
   else {
-    browser.tabs.executeScript(null, {file: 'content.js'});
+    processLinkData({ href: tab.url, title: '', selection: '' });
   }
 });
