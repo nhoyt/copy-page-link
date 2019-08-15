@@ -1,6 +1,7 @@
 /*
 *   background.js
 */
+
 function copyToClipboard (str) {
   let listener = function (event) {
     event.clipboardData.setData('text/plain', str);
@@ -52,12 +53,40 @@ function processLinkData (data) {
   getting.then(copyLink, onError);
 }
 
+// Because we've declared a popup for the extension, we need an entry point
+// function we can call from the popup script that replicates what the
+// browserAction.onClicked event handler originally did.
+
+function processActiveTab () {
+  function onGotActiveTab (tabs) {
+    for (let tab of tabs) {
+      // Security policy only allows us to inject the content script that
+      // accesses title and selection for pages loaded with http or https.
+      if (tab.url.indexOf('http:') === 0 || tab.url.indexOf('https:') === 0) {
+        browser.tabs.executeScript(null, { file: 'content.js' });
+      }
+      else {
+        processLinkData({ href: tab.url, title: '', selection: '' });
+      }
+    }
+  }
+
+  function onError(error) {
+    console.log(`Error: ${error}`);
+  }
+
+  let querying = browser.tabs.query({currentWindow: true, active: true});
+  querying.then(onGotActiveTab, onError);
+}
+
+// Listen for messages from the content script
 browser.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     processLinkData(request);
   }
 );
 
+/*
 browser.browserAction.onClicked.addListener(function (tab) {
   // Security policy only allows us to inject the content script that
   // accesses title and selection for pages loaded with http or https.
@@ -68,3 +97,4 @@ browser.browserAction.onClicked.addListener(function (tab) {
     processLinkData({ href: tab.url, title: '', selection: '' });
   }
 });
+*/
