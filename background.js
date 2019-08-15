@@ -55,7 +55,7 @@ function processLinkData (data) {
 
 // Because we've declared a popup for the extension, we need an entry point
 // function we can call from the popup script that replicates what the
-// browserAction.onClicked event handler originally did.
+// browserAction.onClicked event handler would have done.
 
 function processActiveTab () {
   function onGotActiveTab (tabs) {
