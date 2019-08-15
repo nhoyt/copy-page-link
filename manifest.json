@@ -9,11 +9,13 @@
   },
 
   "browser_action": {
-    "default_icon": "copy-to-clipboard.png"
+    "default_icon": "copy-to-clipboard.png",
+    "default_popup": "popup.html"
   },
 
   "permissions": [
-    "activeTab",
+    "<all_urls>",
+    "tabs",
     "clipboardWrite",
     "storage"
   ],
