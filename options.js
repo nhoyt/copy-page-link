@@ -17,9 +17,9 @@ function saveOptions(e) {
 
   function notifyUser () {
     let status = document.getElementById('status');
-    status.innerHTML = 'Options saved.';
+    status.textContent = 'Options saved.';
     setTimeout(function () {
-      status.innerHTML = '';
+      status.textContent = '';
     }, 750);
     console.log('Options saved!');
   }
