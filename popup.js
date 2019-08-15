@@ -2,24 +2,29 @@
 *   popup.js
 */
 
-function displayMessage () {
+function browserAction () {
   // Invoke the main function of the background script
   let backgroundPage = browser.extension.getBackgroundPage();
   backgroundPage.processActiveTab();
 
-  // Update the popup content with current format set in preferences
+  // Get the user preferences settings, update the popup.html content,
+  // and close the popup window automatically after timed delay.
+  let defaultFormat = 'markdown';
+
   function setFormat (options) {
-    document.getElementById('format').textContent = options.format || 'markdown';
+    document.getElementById('format').textContent = options.format || defaultFormat;
   }
+
   function onError (error) {
     console.log(`Error: ${error}`);
   }
 
   let getting = browser.storage.sync.get();
   getting.then(setFormat, onError);
+
   setTimeout(function () {
     window.close();
   }, 2500);
 }
 
-window.addEventListener("load", displayMessage);
+window.addEventListener("load", browserAction);
