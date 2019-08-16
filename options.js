@@ -17,11 +17,11 @@ function saveOptions(e) {
 
   function notifyUser () {
     let status = document.getElementById('status');
-    status.textContent = 'Options saved.';
+    status.textContent = 'Preferences saved.';
     setTimeout(function () {
       status.textContent = '';
     }, 750);
-    console.log('Options saved!');
+    console.log('Preferences saved!');
   }
 
   function onError (error) {
