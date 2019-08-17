@@ -8,22 +8,43 @@ fieldset {
   margin-top: 1em;
 }
 
-fieldset div { font-size: 92%; }
+fieldset div { font-size: 92.5%; }
 fieldset div:nth-child(n+3) { margin-top: 0.75em; }
 fieldset div:nth-child(2)   { margin-top: 0.25em; }
 fieldset div:last-child     { margin-bottom: 0.5em; }
 
-div#status { margin: 0.75em 0 0.5em; color: cyan; }
+.grid-container {
+  display: grid;
+  grid-template-columns: 20% auto;
+  grid-gap: 5px;
+}
+
+input[type=checkbox] {
+  transform: scale(1.1);
+}
+
+input[type=text] {
+  font-size: 100%;
+  width: 50%;
+}
 
 label[for] {
-  display: block;
+  display: inline;
+  padding-top: 4px;
 }
+
+option, select {
+  font-size: 100%;
+}
+
+div#status { margin: 0.75em 0 0.5em; color: cyan; }
 
 button {
   width: 80px;
   background-color: #ddd;
-  font-size: 100%;
+  font-size: 92.5%;
   margin-top: 0.5em;
   margin-bottom: 1em;
+  padding: 2px 0 3px;
   text-align: center;
 }
