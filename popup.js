@@ -4,6 +4,7 @@
 const defaultFormat = 'markdown';
 const defaultTimeout = 2500;
 const minTimeout = 1500;
+const maxTimeout = 10000;
 
 function browserAction () {
 
@@ -22,11 +23,16 @@ function browserAction () {
 
     // Set the delay time for closing the popup window
     let msec = parseInt(options.msec, 10);
+
     if (isNaN(msec)) {
       console.log('Warning: Copy Link \'Notification Timeout\' value (' +
                   options.msec + ') could not be parsed as an integer.');
       msec = defaultTimeout;
     }
+    else {
+      msec = Math.min(msec, maxTimeout);
+    }
+
     if (msec >= minTimeout) {
       setTimeout(function () { window.close(); }, msec);
     }
