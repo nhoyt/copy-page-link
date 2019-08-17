@@ -2,6 +2,7 @@
 *   popup.js
 */
 const defaultFormat = 'markdown';
+const defaultTimeout = 3000;
 
 function browserAction () {
 
@@ -19,8 +20,10 @@ function browserAction () {
     document.getElementById('format').textContent = options.format || defaultFormat;
 
     // Conditionally close the popup window automatically
-    if (options.auto) {
-      setTimeout(function () { window.close(); }, options.msec);
+    let auto = (typeof options.auto === 'undefined') ? true : options.auto;
+    let msec = options.msec || defaultTimeout;
+    if (auto) {
+      setTimeout(function () { window.close(); }, msec);
     }
   }
 
