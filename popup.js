@@ -6,14 +6,18 @@ const defaultTimeout = 2500;
 const minTimeout = 1500;
 
 function browserAction () {
-  // Invoke the main function of the background script
-  let backgroundPage = browser.extension.getBackgroundPage();
-  backgroundPage.processActiveTab();
 
-  // Get the user preferences settings, update the popup.html content,
-  // and close the popup window automatically after timed delay.
-  function updateFromUserPrefs (options) {
-    // Set the format value
+  function startProcessing (options) {
+
+    // Set options var and initiate processing in background script
+    let backgroundPage = browser.extension.getBackgroundPage();
+    backgroundPage.options = options;
+    backgroundPage.processActiveTab();
+
+    // Update popup content and conditionally close the popup window
+    // automatically after user-specified delay.
+
+    // Set the format value in popup message
     document.getElementById('format').textContent = options.format || defaultFormat;
 
     // Set the delay time for closing the popup window
@@ -33,7 +37,7 @@ function browserAction () {
   }
 
   let getting = browser.storage.sync.get();
-  getting.then(updateFromUserPrefs, onError);
+  getting.then(startProcessing, onError);
 }
 
 window.addEventListener("load", browserAction);

@@ -2,6 +2,8 @@
 *   background.js
 */
 
+var options;
+
 function copyToClipboard (str) {
   let listener = function (event) {
     event.clipboardData.setData('text/plain', str);
@@ -12,7 +14,7 @@ function copyToClipboard (str) {
   document.removeEventListener('copy', listener);
 }
 
-function getFormattedLink (data, options) {
+function getFormattedLink (data) {
   let name = data.selection ? data.selection : data.title;
   let format = options.format || 'markdown';
 
@@ -39,18 +41,7 @@ function processLinkData (data) {
   if (data.selection && data.selection.length > maxLength) {
     data.selection = data.selection.substring(0, maxLength) + '…';
   }
-
-  // Copy the user-specified link format to clipboard
-  function copyLink (options) {
-    copyToClipboard(getFormattedLink(data, options));
-  }
-
-  function onError(error) {
-    console.log(`Error: ${error}`);
-  }
-
-  let getting = browser.storage.sync.get();
-  getting.then(copyLink, onError);
+  copyToClipboard(getFormattedLink(data));
 }
 
 // Because we've declared a popup for the extension, we need an entry point
@@ -85,16 +76,3 @@ browser.runtime.onMessage.addListener(
     processLinkData(request);
   }
 );
-
-/*
-browser.browserAction.onClicked.addListener(function (tab) {
-  // Security policy only allows us to inject the content script that
-  // accesses title and selection for pages loaded with http or https.
-  if (tab.url.indexOf('http:') === 0 || tab.url.indexOf('https:') === 0) {
-    browser.tabs.executeScript(null, { file: 'content.js' });
-  }
-  else {
-    processLinkData({ href: tab.url, title: '', selection: '' });
-  }
-});
-*/
