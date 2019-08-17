@@ -2,8 +2,8 @@
 *   Save user options to browser.storage
 */
 const defaultFormat = 'markdown';
-const defaultTimeout = '2500';
-const minTimeout = '1500';
+const defaultTimeout = '3000';
+const message = 'Preferences saved!';
 
 function saveOptions(e) {
   e.preventDefault();
@@ -21,11 +21,11 @@ function saveOptions(e) {
 
   function notifyUser () {
     let status = document.getElementById('status');
-    status.textContent = 'Preferences saved.';
+    status.textContent = message;
     setTimeout(function () {
       status.textContent = '';
     }, 750);
-    console.log('Preferences saved!');
+    console.log(message);
   }
 
   function onError (error) {
@@ -35,10 +35,12 @@ function saveOptions(e) {
   if (selectedFormat) {
     let setting = browser.storage.sync.set({
       format: selectedFormat,
+      auto: document.getElementById('auto').checked,
+      msec: document.getElementById('msec').value,
+
       link: document.getElementById('link').value,
       href: document.getElementById('href').value,
-      name: document.getElementById('name').value,
-      msec: document.getElementById('msec').value
+      name: document.getElementById('name').value
     });
     setting.then(notifyUser, onError);
   }
@@ -51,11 +53,16 @@ function restoreOptions() {
 
   function setPreferences (options) {
     document.getElementById(options.format || defaultFormat).checked = true;
+
+    document.getElementById('auto').checked =
+      (typeof options.auto === 'undefined') ? true : options.auto;
+
+    document.getElementById('msec').value = options.msec || defaultTimeout;
+
     document.getElementById('link').value = options.link || 'link';
     document.getElementById('href').value = options.href || 'href';
     document.getElementById('name').value = options.name || 'name';
-    document.getElementById('msec').value = options.msec || defaultTimeout;
-    document.getElementById('minValue').textContent = minTimeout;
+
     console.log(options);
   }
 

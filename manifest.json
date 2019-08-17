@@ -32,7 +32,7 @@
 
   "browser_specific_settings": {
     "gecko": {
-      "id": "copy-link@gitlab.com"
+      "id": "copy-link@github.com"
     }
   }
 }
