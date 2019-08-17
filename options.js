@@ -1,6 +1,10 @@
 /*
 *   Save user options to browser.storage
 */
+const defaultFormat = 'markdown';
+const defaultTimeout = '2500';
+const minTimeout = '1500';
+
 function saveOptions(e) {
   e.preventDefault();
 
@@ -33,7 +37,8 @@ function saveOptions(e) {
       format: selectedFormat,
       link: document.getElementById('link').value,
       href: document.getElementById('href').value,
-      name: document.getElementById('name').value
+      name: document.getElementById('name').value,
+      msec: document.getElementById('msec').value
     });
     setting.then(notifyUser, onError);
   }
@@ -43,13 +48,15 @@ function saveOptions(e) {
 *   Restore HTML form values based on user options saved in browser.storage
 */
 function restoreOptions() {
-  const defaultFormat = 'markdown';
 
   function setPreferences (options) {
     document.getElementById(options.format || defaultFormat).checked = true;
     document.getElementById('link').value = options.link || 'link';
     document.getElementById('href').value = options.href || 'href';
     document.getElementById('name').value = options.name || 'name';
+    document.getElementById('msec').value = options.msec || defaultTimeout;
+    document.getElementById('minValue').textContent = minTimeout;
+    console.log(options);
   }
 
   function onError (error) {

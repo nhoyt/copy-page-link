@@ -1,6 +1,9 @@
 /*
 *   popup.js
 */
+const defaultFormat = 'markdown';
+const defaultTimeout = 2500;
+const minTimeout = 1500;
 
 function browserAction () {
   // Invoke the main function of the background script
@@ -9,10 +12,20 @@ function browserAction () {
 
   // Get the user preferences settings, update the popup.html content,
   // and close the popup window automatically after timed delay.
-  let defaultFormat = 'markdown';
-
-  function setFormat (options) {
+  function updateFromUserPrefs (options) {
+    // Set the format value
     document.getElementById('format').textContent = options.format || defaultFormat;
+
+    // Set the delay time for closing the popup window
+    let msec = parseInt(options.msec, 10);
+    if (isNaN(msec)) {
+      console.log('Warning: Copy Link \'Notification Timeout\' value (' +
+                  options.msec + ') could not be parsed as an integer.');
+      msec = defaultTimeout;
+    }
+    if (msec >= minTimeout) {
+      setTimeout(function () { window.close(); }, msec);
+    }
   }
 
   function onError (error) {
@@ -20,11 +33,7 @@ function browserAction () {
   }
 
   let getting = browser.storage.sync.get();
-  getting.then(setFormat, onError);
-
-  setTimeout(function () {
-    window.close();
-  }, 2500);
+  getting.then(updateFromUserPrefs, onError);
 }
 
 window.addEventListener("load", browserAction);
