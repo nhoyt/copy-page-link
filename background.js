@@ -1,7 +1,6 @@
 /*
 *   background.js
 */
-
 var options;
 
 function copyToClipboard (str) {
