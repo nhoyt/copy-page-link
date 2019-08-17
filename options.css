@@ -30,7 +30,7 @@ input[type=text] {
 
 label[for] {
   display: inline;
-  padding-top: 4px;
+  line-height: 30px;
 }
 
 option, select {
