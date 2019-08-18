@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Copy Link",
   "version": "1.0.0",
-  "description" : "Insert the title and URL of the current page into the preferred link format, and copy the result to the clipboard, for pasting into an external document. If text is selected on the page, it will supersede the page title.",
+  "description" : "Inserts the title and URL of the current page into the preferred link format, and copies the result to the clipboard, for pasting into an external document. If text is selected on the page, the selection is used in place of the page title.",
   "developer": {
     "name": "Nicholas Hoyt"
   },
