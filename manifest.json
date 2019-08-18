@@ -3,9 +3,8 @@
   "name": "Copy Link",
   "version": "1.0.0",
   "description" : "Inserts the title and URL of the current page into the preferred link format, and copies the result to the clipboard, for pasting into an external document. If text is selected on the page, the selection is used in place of the page title.",
-  "developer": {
-    "name": "Nicholas Hoyt"
-  },
+  "homepage_url": "https://github.com/nhoyt/copy-link",
+  "author": "Nicholas Hoyt",
 
   "icons": {
     "48": "copy-to-clipboard.png"
