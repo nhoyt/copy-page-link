@@ -5,20 +5,17 @@ const defaultFormat = 'markdown';
 const defaultTimeout = '3000';
 let message;
 
-// Call background script function for platform info
-function onGot (page) {
-  page.getPlatform();   // Sends message that this script listens for
-}
-
-// Generic helper function
+/*
+*   Generic function for handling Promise objects
+*/
 function onError (error) {
   console.log(`Error: ${error}`);
 }
 
-let getting = browser.runtime.getBackgroundPage();
-getting.then(onGot, onError);
-
-// Called when message is received from background script
+/*
+*   Set the message text to be displayed when options are saved. This function
+*   is called when the platform message is received from the background script.
+*/
 function setMessage (platform) {
   switch (platform) {
     case 'mac':
@@ -30,6 +27,9 @@ function setMessage (platform) {
   }
 }
 
+/*
+*   Save user options in browser.storage
+*/
 function saveOptions(e) {
   e.preventDefault();
 
@@ -99,14 +99,26 @@ function restoreOptions() {
 }
 
 /*
-*   Add the event listeners for saving and restoring options
+*   Request platform info from background script via message
 */
-document.addEventListener('DOMContentLoaded', restoreOptions);
-document.querySelector('form').addEventListener('submit', saveOptions);
+function onGot (page) {
+  page.getPlatform();
+}
 
-// Listen for messages from the background script
+let getting = browser.runtime.getBackgroundPage();
+getting.then(onGot, onError);
+
+/*
+*   Add runtime event listener for background script message
+*/
 browser.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     setMessage(request);
   }
 );
+
+/*
+*   Add event listeners for saving and restoring options
+*/
+document.addEventListener('DOMContentLoaded', restoreOptions);
+document.querySelector('form').addEventListener('submit', saveOptions);
