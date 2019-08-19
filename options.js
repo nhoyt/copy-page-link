@@ -3,7 +3,32 @@
 */
 const defaultFormat = 'markdown';
 const defaultTimeout = '3000';
-const message = 'Preferences saved!';
+let message;
+
+// Call background script function for platform info
+function onGot (page) {
+  page.getPlatform();   // Sends message that this script listens for
+}
+
+// Generic helper function
+function onError (error) {
+  console.log(`Error: ${error}`);
+}
+
+let getting = browser.runtime.getBackgroundPage();
+getting.then(onGot, onError);
+
+// Called when message is received from background script
+function setMessage (platform) {
+  switch (platform) {
+    case 'mac':
+      message = 'Preferences saved!';
+      break;
+    default:
+      message = 'Options saved!';
+      break;
+  }
+}
 
 function saveOptions(e) {
   e.preventDefault();
@@ -28,14 +53,11 @@ function saveOptions(e) {
   function notifyUser () {
     let status = document.getElementById('status');
     status.textContent = message;
+
     setTimeout(function () {
       status.textContent = '';
     }, 750);
     console.log(message);
-  }
-
-  function onError (error) {
-    console.log(`Error: ${error}`);
   }
 
   if (selectedFormat) {
@@ -72,10 +94,6 @@ function restoreOptions() {
     console.log(options);
   }
 
-  function onError (error) {
-    console.log(`Error: ${error}`);
-  }
-
   let getting = browser.storage.sync.get();
   getting.then(setPreferences, onError);
 }
@@ -85,3 +103,10 @@ function restoreOptions() {
 */
 document.addEventListener('DOMContentLoaded', restoreOptions);
 document.querySelector('form').addEventListener('submit', saveOptions);
+
+// Listen for messages from the background script
+browser.runtime.onMessage.addListener(
+  function (request, sender, sendResponse) {
+    setMessage(request);
+  }
+);

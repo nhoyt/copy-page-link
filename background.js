@@ -3,6 +3,14 @@
 */
 var options;
 
+function getPlatform () {
+  function gotPlatformInfo (info) {
+    browser.runtime.sendMessage(info.os);
+  }
+  let gettingInfo = browser.runtime.getPlatformInfo();
+  gettingInfo.then(gotPlatformInfo);
+}
+
 function copyToClipboard (str) {
   let listener = function (event) {
     event.clipboardData.setData('text/plain', str);
@@ -71,7 +79,7 @@ function processActiveTab () {
 
 // Listen for messages from the content script
 browser.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
+  function (request, sender, sendResponse) {
     processLinkData(request);
   }
 );
