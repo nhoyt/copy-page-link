@@ -19,10 +19,6 @@ fieldset div:last-child     { margin-bottom: 0.25em; }
   grid-gap: 5px;
 }
 
-.grid-formats label {
-  line-height: 25px;
-}
-
 .grid-identifiers {
   display: grid;
   grid-template-columns: 20% auto;
