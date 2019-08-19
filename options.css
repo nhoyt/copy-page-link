@@ -13,8 +13,14 @@ fieldset div:nth-child(n+3) { margin-top: 0.75em; }
 fieldset div:nth-child(2)   { margin-top: 0.25em; }
 fieldset div:last-child     { margin-bottom: 0.25em; }
 
-fieldset#formats div {
-  line-height: 20px;
+.grid-formats {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  grid-gap: 5px;
+}
+
+.grid-formats label {
+  line-height: 25px;
 }
 
 .grid-identifiers {
