@@ -11,13 +11,25 @@
       <fieldset id="formats">
         <legend>Link Format</legend>
         <div>
-          <label><input type="radio" name="format" id="markdown" value="markdown"> Markdown: [title | selection](url)</label>
+          <input type="radio" name="format" value="markdown" id="markdown">
+          <label for="markdown">Markdown</label>
         </div>
         <div>
-          <label><input type="radio" name="format" id="html" value="html"> HTML: &lt;a href="url"&gt;title | selection&lt;/a&gt;</label>
+          <input type="radio" name="format" value="html" id="html">
+          <label for="html">HTML</label>
         </div>
         <div>
-          <label><input type="radio" name="format" id="xml" value="xml"> XML: configured below</label>
+          <input type="radio" name="format" value="xml" id="xml">
+          <label for="xml">XML</label>
+        </div>
+      </fieldset>
+
+      <fieldset id="identifiers">
+        <legend>XML Identifiers</legend>
+        <div class="grid-identifiers">
+          <label for="link">Link element:</label><input type="text" id="link">
+          <label for="href">URL attribute:</label><input type="text" id="href">
+          <label for="name">Title element:</label><input type="text" id="name">
         </div>
       </fieldset>
 
@@ -35,15 +47,6 @@
             <option value="4000">4.0</option>
             <option value="4500">4.5</option>
           </select> seconds</label>
-        </div>
-      </fieldset>
-
-      <fieldset id="identifiers">
-        <legend>XML Identifiers</legend>
-        <div class="grid-container">
-          <label for="link">Link element:</label><input type="text" id="link">
-          <label for="href">URL attribute:</label><input type="text" id="href">
-          <label for="name">Title element:</label><input type="text" id="name">
         </div>
       </fieldset>
 

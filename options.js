@@ -8,6 +8,12 @@ const message = 'Preferences saved!';
 function saveOptions(e) {
   e.preventDefault();
 
+  // For use during development
+  if (false) {
+    let clearing = browser.storage.sync.clear();
+    return;
+  }
+
   let formats = document.getElementById('formats');
   let inputs = formats.getElementsByTagName('input');
   let selectedFormat = null;

@@ -5,22 +5,27 @@ body {
 
 fieldset {
   border: 1px solid #bbb;
-  margin-top: 1em;
+  margin-top: 1.25em;
 }
 
 fieldset div { font-size: 92.5%; }
 fieldset div:nth-child(n+3) { margin-top: 0.75em; }
 fieldset div:nth-child(2)   { margin-top: 0.25em; }
-fieldset div:last-child     { margin-bottom: 0.5em; }
+fieldset div:last-child     { margin-bottom: 0.25em; }
 
-.grid-container {
+fieldset#formats div {
+  line-height: 20px;
+}
+
+.grid-identifiers {
   display: grid;
   grid-template-columns: 20% auto;
   grid-gap: 5px;
 }
 
-input[type=checkbox] {
-  transform: scale(1.1);
+.grid-identifiers label {
+  display: inline;
+  line-height: 30px;
 }
 
 input[type=text] {
@@ -28,16 +33,11 @@ input[type=text] {
   width: 40%;
 }
 
-label[for] {
-  display: inline;
-  line-height: 30px;
-}
-
 option, select {
   font-size: 100%;
 }
 
-div#status { margin: 0.75em 0 0.5em; color: cyan; }
+div#status { margin: 0.75em 0 0.5em; color: #0a84ff; }
 
 button {
   width: 80px;
