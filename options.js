@@ -101,12 +101,12 @@ function restoreOptions() {
 /*
 *   Request platform info from background script via message
 */
-function onGot (page) {
+function onGotBackgroundPage (page) {
   page.getPlatform();
 }
 
 let getting = browser.runtime.getBackgroundPage();
-getting.then(onGot, onError);
+getting.then(onGotBackgroundPage, onError);
 
 /*
 *   Add runtime event listener for background script message
