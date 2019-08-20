@@ -1,8 +1,11 @@
 /*
 *   background.js
 */
-var options;
+var options; // User options retrieved and set by options.js
 
+/*
+*   Called from options.js for customizing 'options saved' message
+*/
 function getPlatform () {
   function gotPlatformInfo (info) {
     browser.runtime.sendMessage(info.os);
@@ -10,6 +13,10 @@ function getPlatform () {
   let gettingInfo = browser.runtime.getPlatformInfo();
   gettingInfo.then(gotPlatformInfo);
 }
+
+/* -------------------------------------------------------- */
+/*   Functions for extracting and processing link info      */
+/* -------------------------------------------------------- */
 
 function copyToClipboard (str) {
   let listener = function (event) {

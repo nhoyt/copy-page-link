@@ -1,16 +1,26 @@
 /*
-*   Save user options to browser.storage
+*   options.js
 */
 const defaultFormat = 'markdown';
 const defaultTimeout = '3000';
 let message;
 
 /*
-*   Generic function for handling Promise objects
+*   Generic handler of Promise failure condition
 */
 function onError (error) {
   console.log(`Error: ${error}`);
 }
+
+/*
+*   Request platform info from background script via extension messaging
+*/
+function onGotBackgroundPage (page) {
+  page.getPlatform();
+}
+
+let getting = browser.runtime.getBackgroundPage();
+getting.then(onGotBackgroundPage, onError);
 
 /*
 *   Set the message text to be displayed when options are saved. This function
@@ -28,7 +38,20 @@ function setMessage (platform) {
 }
 
 /*
-*   Save user options in browser.storage
+*   Add event listener for background script message
+*/
+browser.runtime.onMessage.addListener(
+  function (request, sender, sendResponse) {
+    setMessage(request);
+  }
+);
+
+/* -------------------------------------------------------- */
+/*   Functions for saving and restoring user options        */
+/* -------------------------------------------------------- */
+
+/*
+*   Save user options in browser.storage and display message
 */
 function saveOptions(e) {
   e.preventDefault();
@@ -97,25 +120,6 @@ function restoreOptions() {
   let getting = browser.storage.sync.get();
   getting.then(setPreferences, onError);
 }
-
-/*
-*   Request platform info from background script via message
-*/
-function onGotBackgroundPage (page) {
-  page.getPlatform();
-}
-
-let getting = browser.runtime.getBackgroundPage();
-getting.then(onGotBackgroundPage, onError);
-
-/*
-*   Add runtime event listener for background script message
-*/
-browser.runtime.onMessage.addListener(
-  function (request, sender, sendResponse) {
-    setMessage(request);
-  }
-);
 
 /*
 *   Add event listeners for saving and restoring options
