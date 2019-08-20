@@ -4,7 +4,11 @@
 const defaultFormat = 'markdown';
 const defaultTimeout = 3000;
 
-function browserAction () {
+/*
+*   Called in lieu of browserAction firing an onClicked event, which
+*   would then be listened for and handled in the background script.
+*/
+function popupAction () {
 
   function startProcessing (options) {
 
@@ -35,4 +39,4 @@ function browserAction () {
   getting.then(startProcessing, onError);
 }
 
-window.addEventListener("load", browserAction);
+window.addEventListener("load", popupAction);
