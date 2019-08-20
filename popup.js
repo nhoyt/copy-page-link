@@ -5,8 +5,18 @@ const defaultFormat = 'markdown';
 const defaultTimeout = 3000;
 
 /*
-*   Called in lieu of browserAction firing an onClicked event, which
-*   would then be listened for and handled in the background script.
+*   The popup does not have any interactive elements; its function is simply
+*   to inform the user that the link information was copied to the clipboard
+*   and in which link format it was copied.
+*
+*   Therefore, the popup's load event is used to initiate processing, which
+*   is handled by the popupAction function.
+*
+*   This architecture is used in lieu of what typically happens: either the
+*   popup would have interactive elements that would fire events handled by
+*   the background script, or there would be no popup, in which case the
+*   toolbar button would fire the browserAction.onClicked event, passing it
+*   the active tab, likewise to be handled by the background script.
 */
 function popupAction () {
 
