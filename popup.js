@@ -50,3 +50,22 @@ function popupAction () {
 }
 
 window.addEventListener("load", popupAction);
+
+/*
+*   Handler for click event on the 'Change Format' button.
+*/
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("options")) {
+
+    function onOpened() {
+      console.log('Options page opened!');
+    }
+
+    function onError(error) {
+      console.log(`Error: ${error}`);
+    }
+
+    let opening = browser.runtime.openOptionsPage();
+    opening.then(onOpened, onError);
+  }
+});

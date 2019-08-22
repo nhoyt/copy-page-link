@@ -4,24 +4,15 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="popup.css"/>
-  <style>
-    body {
-      font-family: arial, helvetica, sans-serif;
-      font-size: 14px;
-      min-width: 80px;
-      padding: 0.5em 2em 1em;
-    }
-    div#format {
-      font-size: 18px;
-      font-weight: 500;
-    }
-  </style>
 </head>
 
 <body>
   <div aria-live="polite">
     <p>Link copied using format:</p>
     <div id="format"></div>
+    <div id="button">
+      <button class="options">Change Format</button>
+    </div>
   </div>
   <script src="popup.js"></script>
 </body>
