@@ -15,7 +15,7 @@ fieldset div:last-child     { margin-bottom: 0.25em; }
 
 .grid-formats {
   display: grid;
-  grid-template-columns: 30% 30% 30%;
+  grid-template-columns: 25% 25% 25% 25%;
   grid-gap: 5px;
 }
 
