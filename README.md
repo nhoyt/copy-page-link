@@ -1,6 +1,6 @@
-# Copy Link
+# Copy Page Link
 
-Copy Link is a Firefox browser add-on that builds a formatted link to the
+Copy Page Link is a Firefox browser add-on that builds a formatted link to the
 current page in the active tab and copies it to the clipboard. You can then
 paste the resulting link markup into an external document.
 
@@ -8,7 +8,7 @@ By default, the page title is used as the display text for the link. You can
 override this behavior by selecting a text string within the document — that
 string will then be used as the display text instead of the page title.
 
-The Copy Link Preferences page allows you to select from the following link
+The Copy Page Link Preferences page allows you to select from the following link
 formats:
 
 * Markdown: \[title | selection\]\(url\)
@@ -27,7 +27,7 @@ The structure of the XML markup, with default names, is:
 
 ## About the Notification Popup
 
-When the Copy Link toolbar button is activated, the extension displays a popup
+When the Copy Page Link toolbar button is activated, the extension displays a popup
 notification window that, by default, will close automatically after a few
 seconds.
 
