@@ -1,7 +1,15 @@
 /*
 *   background.js
 */
-var options; // User options retrieved and set by options.js
+const defaultFormat = 'markdown';
+var options; // Initialized by startProcessing in popup.js
+
+/*
+*   Generic error handler
+*/
+function onError (error) {
+  console.log(`Error: ${error}`);
+}
 
 /*
 *   Called from options.js for customizing 'options saved' message
@@ -30,7 +38,7 @@ function copyToClipboard (str) {
 
 function getFormattedLink (data) {
   let name = data.selection ? data.selection : data.title;
-  let format = options.format || 'markdown';
+  let format = options.format || defaultFormat;
 
   switch (format) {
     case 'markdown':
@@ -77,10 +85,6 @@ function processActiveTab () {
         processLinkData({ href: tab.url, title: '', selection: '' });
       }
     }
-  }
-
-  function onError(error) {
-    console.log(`Error: ${error}`);
   }
 
   let querying = browser.tabs.query({currentWindow: true, active: true});

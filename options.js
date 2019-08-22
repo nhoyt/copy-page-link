@@ -6,7 +6,7 @@ const defaultTimeout = '3000';
 let message;
 
 /*
-*   Generic handler of Promise failure condition
+*   Generic error handler
 */
 function onError (error) {
   console.log(`Error: ${error}`);
