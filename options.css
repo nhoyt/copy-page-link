@@ -42,11 +42,18 @@ option, select {
 div#status { margin: 0.75em 0 0.5em; color: #0a84ff; }
 
 button {
-  width: 80px;
-  background-color: #ddd;
+  color: #ffffff;
+  background: #0060df;
   font-size: 92.5%;
-  margin-top: 0.5em;
-  margin-bottom: 1em;
-  padding: 2px 0 3px;
-  text-align: center;
+  padding: 4px 12px;
+  margin: 0.5em 0 1em;
+
+  border: 0;
+  border-radius: 2px;
+}
+button:hover {
+  background: #003eaa;
+}
+button:active {
+  background: #002275;
 }
