@@ -40,7 +40,7 @@ function getFormattedLink (data) {
       return `<a href="${data.href}">${name}</a>`;
 
     case 'latex':
-      return `\\href{${data.href}}{${name}}`
+      return `\\href{${data.href}}{${name}}`;
 
     case 'xml':
       return `      <${options.link} ${options.href}="${data.href}">\n` +
