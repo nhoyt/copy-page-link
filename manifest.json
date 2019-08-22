@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
-  "name": "Copy Link",
-  "version": "1.0.0",
+  "name": "Copy Page Link",
+  "version": "1.0.1",
   "description" : "Inserts the title and URL of the current page into the preferred link format, and copies the result to the clipboard, for pasting into an external document. If text is selected on the page, the selection is used in place of the page title.",
-  "homepage_url": "https://github.com/nhoyt/copy-link",
+  "homepage_url": "https://github.com/nhoyt/copy-page-link",
   "author": "Nicholas Hoyt",
 
   "icons": {
@@ -34,7 +34,7 @@
 
   "browser_specific_settings": {
     "gecko": {
-      "id": "copy-link@github.com"
+      "id": "copy-page-link@github.com"
     }
   }
 }
