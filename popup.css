@@ -4,26 +4,30 @@ body {
   min-width: 80px;
   padding: 0.25em 1em 1em;
 }
+
 div#format {
   font-size: 18px;
   font-weight: 500;
 }
+
 div#format, div#button {
   display: flex;
   justify-content: center;
 }
+
 button.options {
   font-size: 12px;
-  padding: 4px 8px;
-  margin-top: 15px;
-
   border: 0;
   border-radius: 2px;
+  padding: 4px 8px;
+  margin-top: 15px;
   background: rgba(12, 12, 13, 0.1);
 }
+
 button.options:hover {
   background: rgba(12, 12, 13, 0.2);
 }
+
 button.options:active {
   background: rgba(12, 12, 13, 0.3);
 }
