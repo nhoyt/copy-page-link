@@ -12,6 +12,43 @@ function onError (error) {
 }
 
 /*
+*   Request platform info from background script via extension messaging
+*/
+function onGotBackgroundPage (page) {
+  page.getPlatform();
+}
+
+let getting = browser.runtime.getBackgroundPage();
+getting.then(onGotBackgroundPage, onError);
+
+/*
+*   Set the button label based on the platform. This function is called when
+*   the platform message is received from the background script.
+*/
+function setLabel (platform) {
+  let button = document.getElementById('options');
+  let suffix = '&#x2026;';
+
+  switch (platform) {
+    case 'mac':
+      button.innerHTML = 'Preferences' + suffix;
+      break;
+    default:
+      button.innerHTML = 'Options' + suffix;
+      break;
+  }
+}
+
+/*
+*   Add event listener for background script message
+*/
+browser.runtime.onMessage.addListener(
+  function (request, sender, sendResponse) {
+    setLabel(request);
+  }
+);
+
+/*
 *   The main function of the popup is to inform the user that the page link
 *   information was copied to the clipboard and in which link format it was
 *   copied. While it does have one interactive element, the 'Change Format'
@@ -57,7 +94,7 @@ function popupAction () {
 window.addEventListener("load", popupAction);
 
 /*
-*   Handler for click event on the 'Change Format' button.
+*   Handler for click event on options button
 */
 document.addEventListener("click", function (e) {
   if (e.target.classList.contains("options")) {
