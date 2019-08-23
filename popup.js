@@ -35,6 +35,11 @@ function onError (error) {
 */
 function popupAction () {
 
+  function buttonHasFocus () {
+    let button = document.getElementsByTagName('button')[0];
+    return button === document.activeElement;
+  }
+
   function startProcessing (options) {
 
     // Set options var and initiate processing in background script
@@ -54,7 +59,8 @@ function popupAction () {
     if (auto) {
       timeoutID = setTimeout(function () {
         timeoutExpired = true;
-        if (mouseEnterCount > mouseLeaveCount) {
+        // console.log(`buttonHasFocus: ${buttonHasFocus()}`);
+        if (buttonHasFocus() || (mouseEnterCount > mouseLeaveCount)) {
           clearTimeout(timeoutID);
         }
         else {
@@ -90,10 +96,12 @@ document.addEventListener("click", function (e) {
 */
 document.body.addEventListener("mouseenter", e => {
   mouseEnterCount++;
+  // console.log(`mouseEnterCount: ${mouseEnterCount}`);
 });
 
 document.body.addEventListener("mouseleave", e => {
   mouseLeaveCount++;
+  // console.log(`mouseLeaveCount: ${mouseLeaveCount}`);
   if (timeoutExpired) {
     setTimeout(function () { window.close(); }, 500);
   }
