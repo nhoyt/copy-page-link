@@ -4,6 +4,12 @@
 const defaultFormat = 'markdown';
 const defaultTimeout = 3000;
 
+let mouseEnterCount = 0;
+let mouseLeaveCount = 0;
+
+let timeoutID;
+let timeoutExpired = false;
+
 /*
 *   Generic error handler
 */
@@ -46,7 +52,15 @@ function popupAction () {
     let auto = (typeof options.auto === 'undefined') ? true : options.auto;
     let msec = options.msec || defaultTimeout;
     if (auto) {
-      setTimeout(function () { window.close(); }, msec);
+      timeoutID = setTimeout(function () {
+        timeoutExpired = true;
+        if (mouseEnterCount > mouseLeaveCount) {
+          clearTimeout(timeoutID);
+        }
+        else {
+          window.close();
+        }
+      }, msec);
     }
   }
 
@@ -68,5 +82,19 @@ document.addEventListener("click", function (e) {
 
     let opening = browser.runtime.openOptionsPage();
     opening.then(onOpened, onError);
+  }
+});
+
+/*
+*   Handlers for mouseenter and mouseleave
+*/
+document.body.addEventListener("mouseenter", e => {
+  mouseEnterCount++;
+});
+
+document.body.addEventListener("mouseleave", e => {
+  mouseLeaveCount++;
+  if (timeoutExpired) {
+    setTimeout(function () { window.close(); }, 500);
   }
 });
