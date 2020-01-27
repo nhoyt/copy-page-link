@@ -43,9 +43,13 @@ function popupAction () {
   function startProcessing (options) {
 
     // Set options var and initiate processing in background script
-    let backgroundPage = browser.extension.getBackgroundPage();
-    backgroundPage.options = options;
-    backgroundPage.processActiveTab();
+    function onGotBackgroundPage (page) {
+      page.options = options;
+      page.processActiveTab();
+    }
+
+    let getting = browser.runtime.getBackgroundPage();
+    getting.then(onGotBackgroundPage, onError);
 
     // Update popup content and conditionally close the popup window
     // automatically after user-specified delay.
@@ -70,14 +74,18 @@ function popupAction () {
     }
   }
 
+  // Get the options data saved in browser.storage
   let getting = browser.storage.sync.get();
   getting.then(startProcessing, onError);
 }
 
+/*
+*   Handle popup window load event (stand-in for browserAction.onClicked)
+*/
 window.addEventListener("load", popupAction);
 
 /*
-*   Handler for click event on options button
+*   Handle popup window options button click event
 */
 document.addEventListener("click", function (e) {
   if (e.target.classList.contains("options")) {
