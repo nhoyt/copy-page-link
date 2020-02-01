@@ -4,12 +4,12 @@
 const defaultFormat = 'markdown';
 var options; // Initialized by startProcessing in popup.js
 
-// Generic error handler
+#ifdef FIREFOX
+// Generic error handler for API methods that return Promise
 function onError (error) {
   console.log(`Error: ${error}`);
 }
-
-/* ---------------------------------------------------------------- */
+#endif
 
 // Called from options.js for customizing 'options saved' message
 
@@ -25,7 +25,7 @@ function getPlatform () {
 function getPlatform () {
   chrome.runtime.getPlatformInfo(function (info) {
     chrome.runtime.sendMessage(info.os);
-  }, onError);
+  });
 }
 #endif
 

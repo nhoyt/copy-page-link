@@ -5,29 +5,30 @@ const defaultFormat = 'markdown';
 const defaultTimeout = '3000';
 let message;
 
-// Generic error handler
+#ifdef FIREFOX
+// Generic error handler for API methods that return Promise
 function onError (error) {
   console.log(`Error: ${error}`);
 }
+#endif
 
 // Request platform info from background script via extension messaging
 
+#ifdef FIREFOX
 function onGotBackgroundPage (page) {
   page.getPlatform();
 }
-
-#ifdef FIREFOX
 browser.runtime.getBackgroundPage().then(onGotBackgroundPage, onError);
 #endif
-
 #ifdef CHROME
-chrome.runtime.getBackgroundPage(onGotBackgroundPage, onError);
+chrome.runtime.getBackgroundPage(function (page) {
+  page.getPlatform();
+});
 #endif
 
-/*
-*   Set the message text to be displayed when options are saved. This function
-*   is called when the platform message is received from the background script.
-*/
+// Set the message text to be displayed when options are saved. This function
+// is called when the platform message is received from the background script.
+
 function setMessage (platform) {
   switch (platform) {
     case 'mac':
@@ -39,28 +40,35 @@ function setMessage (platform) {
   }
 }
 
-/*
-*   Add event listener for background script message
-*/
-browser.runtime.onMessage.addListener(
-  function (request, sender, sendResponse) {
-    setMessage(request);
-  }
-);
+// Add event listener for background script message
+#ifdef FIREFOX
+browser.runtime.onMessage.addListener(function (request, sender) {
+  setMessage(request);
+});
+#endif
+#ifdef CHROME
+chrome.runtime.onMessage.addListener(function (request, sender) {
+  setMessage(request);
+});
+#endif
 
 /* -------------------------------------------------------- */
 /*   Functions for saving and restoring user options        */
 /* -------------------------------------------------------- */
 
-/*
-*   Save user options in browser.storage and display message
-*/
+// Save user options in browser.storage and display message
+
 function saveOptions(e) {
   e.preventDefault();
 
   // For use during development
   if (false) {
-    let clearing = browser.storage.sync.clear();
+#ifdef FIREFOX
+    browser.storage.sync.clear();
+#endif
+#ifdef CHROME
+    chrome.storage.sync.clear();
+#endif
     return;
   }
 
@@ -86,7 +94,7 @@ function saveOptions(e) {
   }
 
   if (selectedFormat) {
-    let setting = browser.storage.sync.set({
+    let options = {
       format: selectedFormat,
       auto: document.getElementById('auto').checked,
       msec: document.getElementById('msec').value,
@@ -94,8 +102,15 @@ function saveOptions(e) {
       link: document.getElementById('link').value,
       href: document.getElementById('href').value,
       name: document.getElementById('name').value
-    });
+    };
+
+#ifdef FIREFOX
+    let setting = browser.storage.sync.set(options);
     setting.then(notifyUser, onError);
+#endif
+#ifdef CHROME
+    chrome.storage.sync.set(options, notifyUser);
+#endif
   }
 }
 
@@ -119,8 +134,15 @@ function restoreOptions() {
     console.log(options);
   }
 
+#ifdef FIREFOX
   let getting = browser.storage.sync.get();
   getting.then(setPreferences, onError);
+#endif
+#ifdef CHROME
+  chrome.storage.sync.get(function (options) {
+    setPreferences(options);
+  });
+#endif
 }
 
 /*
