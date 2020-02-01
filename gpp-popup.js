@@ -56,6 +56,7 @@ function popupAction () {
       onGotBackgroundPage(page);
     });
 #endif
+
     // Update popup content and conditionally close the popup window
     // automatically after user-specified delay.
 
