@@ -114,9 +114,8 @@ function saveOptions(e) {
   }
 }
 
-/*
-*   Restore HTML form values based on user options saved in browser.storage
-*/
+// Restore HTML form values based on user options saved in browser.storage
+
 function restoreOptions() {
 
   function setPreferences (options) {
@@ -145,8 +144,7 @@ function restoreOptions() {
 #endif
 }
 
-/*
-*   Add event listeners for saving and restoring options
-*/
+// Add event listeners for saving and restoring options
+
 document.addEventListener('DOMContentLoaded', restoreOptions);
 document.querySelector('form').addEventListener('submit', saveOptions);
