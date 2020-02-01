@@ -55,12 +55,12 @@ function getFormattedLink (data) {
       return `<a href="${data.href}">${name}</a>`;
 
     case 'latex':
-      return `\\href{${data.href}}{${name}}`;
+      return `\\\\href{${data.href}}{${name}}`;
 
     case 'xml':
-      return `      <${options.link} ${options.href}="${data.href}">\n` +
-             `        <${options.name}>${name}</${options.name}>\n` +
-             `      </${options.link}>\n`;
+      return `      <${options.link} ${options.href}="${data.href}">\\n` +
+             `        <${options.name}>${name}</${options.name}>\\n` +
+             `      </${options.link}>\\n`;
 
     default:
       return 'Error: Unknown format option';
