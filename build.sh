@@ -7,7 +7,7 @@ GPPFILES=(
   popup
 )
 
-# Run gpp on gpp-*.js files and output in chrome and firefox folders
+# Process extension JS files: output to browser folders
 
 for FNAME in ${GPPFILES[@]}
 do
@@ -19,12 +19,7 @@ do
   gpp -DFIREFOX=1 -o firefox/${FNAME}.js gpp-${FNAME}.js
 done
 
-#for FNAME in ${GPPFILES[@]}
-#do
-#  echo gpp -DFIREFOX=1 -o firefox/${FNAME}.js gpp-${FNAME}.js
-#done
-
-# Copy shared extension files to both browser folders
+# Copy shared extension files to browser folders
 
 for FNAME in ./shared/*
 do
