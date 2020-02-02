@@ -16,7 +16,7 @@ done
 
 for FNAME in ${GPPFILES[@]}
 do
-  gpp -DFIREFOX=1 -o test/${FNAME}.js gpp-${FNAME}.js
+  gpp -DFIREFOX=1 -o firefox/${FNAME}.js gpp-${FNAME}.js
 done
 
 #for FNAME in ${GPPFILES[@]}
@@ -28,6 +28,6 @@ done
 
 for FNAME in ./shared/*
 do
-  echo cp ${FNAME} ./chrome/
-  echo cp ${FNAME} ./firefox/
+  cp ${FNAME} ./chrome/
+  cp ${FNAME} ./firefox/
 done
