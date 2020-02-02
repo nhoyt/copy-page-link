@@ -1,9 +1,11 @@
 body {
   font-family: arial, helvetica, sans-serif;
   font-size: 14px;
-  min-width: 80px;
+  min-width: 150px;
   padding: 0.25em 1em 1em;
 }
+
+p { text-align: center; }
 
 div#format {
   font-size: 18px;
