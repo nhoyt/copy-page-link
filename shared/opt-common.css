@@ -24,7 +24,7 @@ fieldset div:last-child     { margin-bottom: 0.25em; }
 }
 
 input[type=text] {
-  width: 60%;
+  font-size: 100%;
 }
 
 option, select {
