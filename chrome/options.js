@@ -3,20 +3,13 @@
 */
 const defaultFormat = 'markdown';
 const defaultTimeout = '3000';
-let message;
+var message;
 
 
-// Request platform info from background script via extension messaging
+// Set the message text to be displayed when options are saved
 
-chrome.runtime.getBackgroundPage(function (page) {
-  page.getPlatform();
-});
-
-// Set the message text to be displayed when options are saved. This function
-// is called when the platform message is received from the background script.
-
-function setMessage (platform) {
-  switch (platform) {
+function setMessage (info) {
+  switch (info.os) {
     case 'mac':
       message = 'Preferences saved!';
       break;
@@ -26,7 +19,12 @@ function setMessage (platform) {
   }
 }
 
+chrome.runtime.getPlatformInfo().then(function (info) {
+ setMessage(info);
+});
+
 // Add event listener for background script message
+
 chrome.runtime.onMessage.addListener(function (request, sender) {
   setMessage(request);
 });

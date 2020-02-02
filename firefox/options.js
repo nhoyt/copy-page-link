@@ -3,25 +3,17 @@
 */
 const defaultFormat = 'markdown';
 const defaultTimeout = '3000';
-let message;
+var message;
 
 // Generic error handler for API methods that return Promise
 function onError (error) {
   console.log(`Error: ${error}`);
 }
 
-// Request platform info from background script via extension messaging
+// Set the message text to be displayed when options are saved
 
-function onGotBackgroundPage (page) {
-  page.getPlatform();
-}
-browser.runtime.getBackgroundPage().then(onGotBackgroundPage, onError);
-
-// Set the message text to be displayed when options are saved. This function
-// is called when the platform message is received from the background script.
-
-function setMessage (platform) {
-  switch (platform) {
+function setMessage (info) {
+  switch (info.os) {
     case 'mac':
       message = 'Preferences saved!';
       break;
@@ -31,7 +23,10 @@ function setMessage (platform) {
   }
 }
 
+browser.runtime.getPlatformInfo().then(setMessage, onError);
+
 // Add event listener for background script message
+
 browser.runtime.onMessage.addListener(function (request, sender) {
   setMessage(request);
 });

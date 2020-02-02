@@ -5,14 +5,6 @@ const defaultFormat = 'markdown';
 var options; // Initialized by startProcessing in popup.js
 
 
-// Called from options.js for customizing 'options saved' message
-
-function getPlatform () {
-  chrome.runtime.getPlatformInfo(function (info) {
-    chrome.runtime.sendMessage(info.os);
-  });
-}
-
 /* -------------------------------------------------------- */
 /*   Functions for extracting and processing link info      */
 /* -------------------------------------------------------- */

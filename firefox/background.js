@@ -9,15 +9,6 @@ function onError (error) {
   console.log(`Error: ${error}`);
 }
 
-// Called from options.js for customizing 'options saved' message
-
-function getPlatform () {
-  function gotPlatformInfo (info) {
-    browser.runtime.sendMessage(info.os);
-  }
-  browser.runtime.getPlatformInfo().then(gotPlatformInfo, onError);
-}
-
 /* -------------------------------------------------------- */
 /*   Functions for extracting and processing link info      */
 /* -------------------------------------------------------- */

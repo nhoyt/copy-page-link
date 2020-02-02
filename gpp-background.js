@@ -11,24 +11,6 @@ function onError (error) {
 }
 #endif
 
-// Called from options.js for customizing 'options saved' message
-
-#ifdef FIREFOX
-function getPlatform () {
-  function gotPlatformInfo (info) {
-    browser.runtime.sendMessage(info.os);
-  }
-  browser.runtime.getPlatformInfo().then(gotPlatformInfo, onError);
-}
-#endif
-#ifdef CHROME
-function getPlatform () {
-  chrome.runtime.getPlatformInfo(function (info) {
-    chrome.runtime.sendMessage(info.os);
-  });
-}
-#endif
-
 /* -------------------------------------------------------- */
 /*   Functions for extracting and processing link info      */
 /* -------------------------------------------------------- */

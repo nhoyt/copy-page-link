@@ -3,7 +3,7 @@
 */
 const defaultFormat = 'markdown';
 const defaultTimeout = '3000';
-let message;
+var message;
 
 #ifdef FIREFOX
 // Generic error handler for API methods that return Promise
@@ -12,25 +12,10 @@ function onError (error) {
 }
 #endif
 
-// Request platform info from background script via extension messaging
+// Set the message text to be displayed when options are saved
 
-#ifdef FIREFOX
-function onGotBackgroundPage (page) {
-  page.getPlatform();
-}
-browser.runtime.getBackgroundPage().then(onGotBackgroundPage, onError);
-#endif
-#ifdef CHROME
-chrome.runtime.getBackgroundPage(function (page) {
-  page.getPlatform();
-});
-#endif
-
-// Set the message text to be displayed when options are saved. This function
-// is called when the platform message is received from the background script.
-
-function setMessage (platform) {
-  switch (platform) {
+function setMessage (info) {
+  switch (info.os) {
     case 'mac':
       message = 'Preferences saved!';
       break;
@@ -40,7 +25,17 @@ function setMessage (platform) {
   }
 }
 
+#ifdef FIREFOX
+browser.runtime.getPlatformInfo().then(setMessage, onError);
+#endif
+#ifdef CHROME
+chrome.runtime.getPlatformInfo().then(function (info) {
+ setMessage(info);
+});
+#endif
+
 // Add event listener for background script message
+
 #ifdef FIREFOX
 browser.runtime.onMessage.addListener(function (request, sender) {
   setMessage(request);
