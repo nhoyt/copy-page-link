@@ -5,27 +5,21 @@ const defaultFormat = 'markdown';
 const defaultTimeout = '3000';
 let message;
 
-/*
-*   Generic error handler
-*/
+// Generic error handler for API methods that return Promise
 function onError (error) {
   console.log(`Error: ${error}`);
 }
 
-/*
-*   Request platform info from background script via extension messaging
-*/
+// Request platform info from background script via extension messaging
+
 function onGotBackgroundPage (page) {
   page.getPlatform();
 }
+browser.runtime.getBackgroundPage().then(onGotBackgroundPage, onError);
 
-let getting = browser.runtime.getBackgroundPage();
-getting.then(onGotBackgroundPage, onError);
+// Set the message text to be displayed when options are saved. This function
+// is called when the platform message is received from the background script.
 
-/*
-*   Set the message text to be displayed when options are saved. This function
-*   is called when the platform message is received from the background script.
-*/
 function setMessage (platform) {
   switch (platform) {
     case 'mac':
@@ -37,28 +31,23 @@ function setMessage (platform) {
   }
 }
 
-/*
-*   Add event listener for background script message
-*/
-browser.runtime.onMessage.addListener(
-  function (request, sender, sendResponse) {
-    setMessage(request);
-  }
-);
+// Add event listener for background script message
+browser.runtime.onMessage.addListener(function (request, sender) {
+  setMessage(request);
+});
 
 /* -------------------------------------------------------- */
 /*   Functions for saving and restoring user options        */
 /* -------------------------------------------------------- */
 
-/*
-*   Save user options in browser.storage and display message
-*/
+// Save user options in browser.storage and display message
+
 function saveOptions(e) {
   e.preventDefault();
 
   // For use during development
   if (false) {
-    let clearing = browser.storage.sync.clear();
+    browser.storage.sync.clear();
     return;
   }
 
@@ -84,7 +73,7 @@ function saveOptions(e) {
   }
 
   if (selectedFormat) {
-    let setting = browser.storage.sync.set({
+    let options = {
       format: selectedFormat,
       auto: document.getElementById('auto').checked,
       msec: document.getElementById('msec').value,
@@ -92,14 +81,15 @@ function saveOptions(e) {
       link: document.getElementById('link').value,
       href: document.getElementById('href').value,
       name: document.getElementById('name').value
-    });
+    };
+
+    let setting = browser.storage.sync.set(options);
     setting.then(notifyUser, onError);
   }
 }
 
-/*
-*   Restore HTML form values based on user options saved in browser.storage
-*/
+// Restore HTML form values based on user options saved in browser.storage
+
 function restoreOptions() {
 
   function setPreferences (options) {
@@ -121,8 +111,7 @@ function restoreOptions() {
   getting.then(setPreferences, onError);
 }
 
-/*
-*   Add event listeners for saving and restoring options
-*/
+// Add event listeners for saving and restoring options
+
 document.addEventListener('DOMContentLoaded', restoreOptions);
 document.querySelector('form').addEventListener('submit', saveOptions);

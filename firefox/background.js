@@ -4,22 +4,18 @@
 const defaultFormat = 'markdown';
 var options; // Initialized by startProcessing in popup.js
 
-/*
-*   Generic error handler
-*/
+// Generic error handler for API methods that return Promise
 function onError (error) {
   console.log(`Error: ${error}`);
 }
 
-/*
-*   Called from options.js for customizing 'options saved' message
-*/
+// Called from options.js for customizing 'options saved' message
+
 function getPlatform () {
   function gotPlatformInfo (info) {
     browser.runtime.sendMessage(info.os);
   }
-  let gettingInfo = browser.runtime.getPlatformInfo();
-  gettingInfo.then(gotPlatformInfo);
+  browser.runtime.getPlatformInfo().then(gotPlatformInfo, onError);
 }
 
 /* -------------------------------------------------------- */
@@ -69,6 +65,8 @@ function processLinkData (data) {
   copyToClipboard(getFormattedLink(data));
 }
 
+/* ---------------------------------------------------------------- */
+
 // Because we've declared a popup for the extension, we need an entry point
 // function we can call from the popup script that replicates what the
 // browserAction.onClicked event handler would have done.
@@ -91,9 +89,12 @@ function processActiveTab () {
   querying.then(onGotActiveTab, onError);
 }
 
+/* ---------------------------------------------------------------- */
+
 // Listen for messages from the content script
+
 browser.runtime.onMessage.addListener(
-  function (request, sender, sendResponse) {
+  function (request, sender) {
     processLinkData(request);
   }
 );

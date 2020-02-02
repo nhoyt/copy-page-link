@@ -48,8 +48,7 @@ function popupAction () {
       page.processActiveTab();
     }
 
-    let getting = browser.runtime.getBackgroundPage();
-    getting.then(onGotBackgroundPage, onError);
+    browser.runtime.getBackgroundPage().then(onGotBackgroundPage, onError);
 
     // Update popup content and conditionally close the popup window
     // automatically after user-specified delay.
@@ -75,8 +74,7 @@ function popupAction () {
   }
 
   // Get the options data saved in browser.storage
-  let getting = browser.storage.sync.get();
-  getting.then(startProcessing, onError);
+  browser.storage.sync.get().then(startProcessing, onError);
 }
 
 /*
@@ -94,8 +92,7 @@ document.addEventListener("click", function (e) {
       console.log('Options page opened!');
     }
 
-    let opening = browser.runtime.openOptionsPage();
-    opening.then(onOpened, onError);
+    browser.runtime.openOptionsPage().then(onOpened, onError);
   }
 });
 
