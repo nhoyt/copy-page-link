@@ -7,7 +7,7 @@ body {
 
 .grid-formats {
   grid-template-columns: 50% 50%;
-  grid-row-gap: 10px;
+  grid-row-gap: 2px;
 }
 
 .grid-identifiers {
@@ -19,3 +19,7 @@ input[type=text] {
 }
 
 fieldset:first-of-type { margin-top: 0; }
+
+fieldset div label {
+  line-height: 225%;
+}
