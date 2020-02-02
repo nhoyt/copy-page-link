@@ -1,1 +1,13 @@
+chrome/copy-to-clipboard.png
+chrome/options.css
+chrome/options.html
+chrome/popup.css
+chrome/popup.html
+
+firefox/copy-to-clipboard.png
+firefox/options.css
+firefox/options.html
+firefox/popup.css
+firefox/popup.html
+
 web-ext-artifacts/
