@@ -25,12 +25,6 @@ function setMessage (info) {
 
 browser.runtime.getPlatformInfo().then(setMessage, onError);
 
-// Add event listener for background script message
-
-browser.runtime.onMessage.addListener(function (request, sender) {
-  setMessage(request);
-});
-
 /* -------------------------------------------------------- */
 /*   Functions for saving and restoring user options        */
 /* -------------------------------------------------------- */

@@ -23,12 +23,6 @@ chrome.runtime.getPlatformInfo().then(function (info) {
  setMessage(info);
 });
 
-// Add event listener for background script message
-
-chrome.runtime.onMessage.addListener(function (request, sender) {
-  setMessage(request);
-});
-
 /* -------------------------------------------------------- */
 /*   Functions for saving and restoring user options        */
 /* -------------------------------------------------------- */
