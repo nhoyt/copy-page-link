@@ -11,6 +11,9 @@ function onError (error) {
   console.log(`Error: ${error}`);
 }
 #endif
+#ifdef CHROME
+const log = chrome.extension.getBackgroundPage().console.log;
+#endif
 
 // Set the message text to be displayed when options are saved
 
@@ -29,9 +32,7 @@ function setMessage (info) {
 browser.runtime.getPlatformInfo().then(setMessage, onError);
 #endif
 #ifdef CHROME
-chrome.runtime.getPlatformInfo().then(function (info) {
- setMessage(info);
-});
+chrome.runtime.getPlatformInfo(setMessage);
 #endif
 
 /* -------------------------------------------------------- */

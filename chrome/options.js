@@ -5,6 +5,7 @@ const defaultFormat = 'markdown';
 const defaultTimeout = '3000';
 var message;
 
+const log = chrome.extension.getBackgroundPage().console.log;
 
 // Set the message text to be displayed when options are saved
 
@@ -19,9 +20,7 @@ function setMessage (info) {
   }
 }
 
-chrome.runtime.getPlatformInfo().then(function (info) {
- setMessage(info);
-});
+chrome.runtime.getPlatformInfo(setMessage);
 
 /* -------------------------------------------------------- */
 /*   Functions for saving and restoring user options        */
