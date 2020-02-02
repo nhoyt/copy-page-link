@@ -72,8 +72,7 @@ function saveOptions(e) {
       name: document.getElementById('name').value
     };
 
-    let setting = browser.storage.sync.set(options);
-    setting.then(notifyUser, onError);
+    browser.storage.sync.set(options).then(notifyUser, onError);
   }
 }
 

@@ -87,8 +87,7 @@ function saveOptions(e) {
     };
 
 #ifdef FIREFOX
-    let setting = browser.storage.sync.set(options);
-    setting.then(notifyUser, onError);
+    browser.storage.sync.set(options).then(notifyUser, onError);
 #endif
 #ifdef CHROME
     chrome.storage.sync.set(options, notifyUser);
