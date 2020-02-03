@@ -11,7 +11,7 @@ string will then be used as the display text instead of the page title.
 
 ## Preferences / Options
 
-### Format section
+### Link Format section
 
 This section of the Preferences page allows you to select from the following
 link formats:
