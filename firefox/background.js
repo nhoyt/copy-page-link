@@ -58,26 +58,31 @@ function processLinkData (data) {
 
 /* ---------------------------------------------------------------- */
 
-// Because we've declared a popup for the extension, we need an entry point
-// function we can call from the popup script that replicates what the
-// browserAction.onClicked event handler would have done.
+// Because we've declared a popup for the extension, we need an entry
+// point function we can call from the popup script that replicates what
+// the browserAction.onClicked event handler would have done. That entry
+// point is the processActiveTab function.
+
+const queryInfo = {currentWindow: true, active: true};
+
+// Security policy only allows us to inject the content script that
+// accesses title and selection for pages loaded with http or https.
+
+function checkUrlProtocol (tab) {
+  return (tab.url.indexOf('http:') === 0 || tab.url.indexOf('https:') === 0);
+}
 
 function processActiveTab () {
   function onGotActiveTab (tabs) {
-    for (let tab of tabs) {
-      // Security policy only allows us to inject the content script that
-      // accesses title and selection for pages loaded with http or https.
-      if (tab.url.indexOf('http:') === 0 || tab.url.indexOf('https:') === 0) {
-        browser.tabs.executeScript(null, { file: 'content.js' });
-      }
-      else {
-        processLinkData({ href: tab.url, title: '', selection: '' });
-      }
+    if (checkUrlProtocol(tabs[0])) {
+      browser.tabs.executeScript(null, { file: 'content.js' });
+    }
+    else {
+      processLinkData({ href: tabs[0].url, title: '', selection: '' });
     }
   }
 
-  let querying = browser.tabs.query({currentWindow: true, active: true});
-  querying.then(onGotActiveTab, onError);
+  browser.tabs.query(queryInfo).then(onGotActiveTab, onError);
 }
 
 /* ---------------------------------------------------------------- */
