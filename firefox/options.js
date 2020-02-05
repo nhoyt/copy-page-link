@@ -5,7 +5,7 @@ const defaultFormat = 'markdown';
 const defaultTimeout = '3000';
 var message;
 
-// Generic error handler for API methods that return Promise
+// Error handler for Firefox API methods that return Promise object
 function onError (error) {
   console.log(`Error: ${error}`);
 }
@@ -95,8 +95,7 @@ function restoreOptions() {
     console.log(options);
   }
 
-  let getting = browser.storage.sync.get();
-  getting.then(setPreferences, onError);
+  browser.storage.sync.get().then(setPreferences, onError);
 }
 
 // Add event listeners for saving and restoring options

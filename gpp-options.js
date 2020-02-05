@@ -6,13 +6,24 @@ const defaultTimeout = '3000';
 var message;
 
 #ifdef FIREFOX
-// Generic error handler for API methods that return Promise
+// Error handler for Firefox API methods that return Promise object
 function onError (error) {
   console.log(`Error: ${error}`);
 }
 #endif
 #ifdef CHROME
-const log = chrome.extension.getBackgroundPage().console.log;
+// Redefine console for Chrome extension logging
+var console = chrome.extension.getBackgroundPage().console;
+
+// If lastError is undefined, return true. Otherwise, log the error
+// message to the console and return false.
+function notLastError () {
+  if (!chrome.runtime.lastError) { return true; }
+  else {
+    console.log(chrome.runtime.lastError.message);
+    return false;
+  }
+}
 #endif
 
 // Set the message text to be displayed when options are saved
@@ -91,7 +102,9 @@ function saveOptions(e) {
     browser.storage.sync.set(options).then(notifyUser, onError);
 #endif
 #ifdef CHROME
-    chrome.storage.sync.set(options, notifyUser);
+    chrome.storage.sync.set(options, function () {
+      if (notLastError()) notifyUser();
+    });
 #endif
   }
 }
@@ -116,12 +129,11 @@ function restoreOptions() {
   }
 
 #ifdef FIREFOX
-  let getting = browser.storage.sync.get();
-  getting.then(setPreferences, onError);
+  browser.storage.sync.get().then(setPreferences, onError);
 #endif
 #ifdef CHROME
   chrome.storage.sync.get(function (options) {
-    setPreferences(options);
+    if (notLastError()) setPreferences(options);
   });
 #endif
 }

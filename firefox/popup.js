@@ -10,9 +10,7 @@ let mouseLeaveCount = 0;
 let timeoutID;
 let timeoutExpired = false;
 
-/*
-*   Generic error handler
-*/
+// Error handler for Firefox API methods that return Promise object
 function onError (error) {
   console.log(`Error: ${error}`);
 }
@@ -62,7 +60,6 @@ function popupAction () {
     if (auto) {
       timeoutID = setTimeout(function () {
         timeoutExpired = true;
-        // console.log(`buttonHasFocus: ${buttonHasFocus()}`);
         if (buttonHasFocus() || (mouseEnterCount > mouseLeaveCount)) {
           clearTimeout(timeoutID);
         }
@@ -89,7 +86,8 @@ document.addEventListener("click", function (e) {
   if (e.target.classList.contains("options")) {
 
     function onOpened () {
-      console.log('Options page opened!');
+      let msg = 'Options page opened!';
+      console.log(msg);
     }
 
     browser.runtime.openOptionsPage().then(onOpened, onError);
@@ -101,12 +99,10 @@ document.addEventListener("click", function (e) {
 */
 document.body.addEventListener("mouseenter", e => {
   mouseEnterCount++;
-  // console.log(`mouseEnterCount: ${mouseEnterCount}`);
 });
 
 document.body.addEventListener("mouseleave", e => {
   mouseLeaveCount++;
-  // console.log(`mouseLeaveCount: ${mouseLeaveCount}`);
   if (timeoutExpired) {
     setTimeout(function () { window.close(); }, 500);
   }

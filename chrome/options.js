@@ -5,7 +5,18 @@ const defaultFormat = 'markdown';
 const defaultTimeout = '3000';
 var message;
 
-const log = chrome.extension.getBackgroundPage().console.log;
+// Redefine console for Chrome extension logging
+var console = chrome.extension.getBackgroundPage().console;
+
+// If lastError is undefined, return true. Otherwise, log the error
+// message to the console and return false.
+function notLastError () {
+  if (!chrome.runtime.lastError) { return true; }
+  else {
+    console.log(chrome.runtime.lastError.message);
+    return false;
+  }
+}
 
 // Set the message text to be displayed when options are saved
 
@@ -69,7 +80,9 @@ function saveOptions(e) {
       name: document.getElementById('name').value
     };
 
-    chrome.storage.sync.set(options, notifyUser);
+    chrome.storage.sync.set(options, function () {
+      if (notLastError()) notifyUser();
+    });
   }
 }
 
@@ -93,7 +106,7 @@ function restoreOptions() {
   }
 
   chrome.storage.sync.get(function (options) {
-    setPreferences(options);
+    if (notLastError()) setPreferences(options);
   });
 }
 

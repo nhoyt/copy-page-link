@@ -10,12 +10,26 @@ let mouseLeaveCount = 0;
 let timeoutID;
 let timeoutExpired = false;
 
-/*
-*   Generic error handler
-*/
+#ifdef FIREFOX
+// Error handler for Firefox API methods that return Promise object
 function onError (error) {
   console.log(`Error: ${error}`);
 }
+#endif
+#ifdef CHROME
+// Redefine console for Chrome extension logging
+var console = chrome.extension.getBackgroundPage().console;
+
+// If lastError is undefined, return true. Otherwise, log the error
+// message to the console and return false.
+function notLastError () {
+  if (!chrome.runtime.lastError) { return true; }
+  else {
+    console.log(chrome.runtime.lastError.message);
+    return false;
+  }
+}
+#endif
 
 /*
 *   The main function of the popup is to inform the user that the page link
@@ -52,9 +66,7 @@ function popupAction () {
     browser.runtime.getBackgroundPage().then(onGotBackgroundPage, onError);
 #endif
 #ifdef CHROME
-    chrome.runtime.getBackgroundPage(function (page) {
-      onGotBackgroundPage(page);
-    });
+    chrome.runtime.getBackgroundPage(onGotBackgroundPage);
 #endif
 
     // Update popup content and conditionally close the popup window
@@ -69,7 +81,6 @@ function popupAction () {
     if (auto) {
       timeoutID = setTimeout(function () {
         timeoutExpired = true;
-        // console.log(`buttonHasFocus: ${buttonHasFocus()}`);
         if (buttonHasFocus() || (mouseEnterCount > mouseLeaveCount)) {
           clearTimeout(timeoutID);
         }
@@ -86,7 +97,7 @@ function popupAction () {
 #endif
 #ifdef CHROME
   chrome.storage.sync.get(function (options) {
-    startProcessing(options);
+    if (notLastError()) startProcessing(options);
   });
 #endif
 }
@@ -103,7 +114,8 @@ document.addEventListener("click", function (e) {
   if (e.target.classList.contains("options")) {
 
     function onOpened () {
-      console.log('Options page opened!');
+      let msg = 'Options page opened!';
+      console.log(msg);
     }
 
 #ifdef FIREFOX
@@ -120,12 +132,10 @@ document.addEventListener("click", function (e) {
 */
 document.body.addEventListener("mouseenter", e => {
   mouseEnterCount++;
-  // console.log(`mouseEnterCount: ${mouseEnterCount}`);
 });
 
 document.body.addEventListener("mouseleave", e => {
   mouseLeaveCount++;
-  // console.log(`mouseLeaveCount: ${mouseLeaveCount}`);
   if (timeoutExpired) {
     setTimeout(function () { window.close(); }, 500);
   }
