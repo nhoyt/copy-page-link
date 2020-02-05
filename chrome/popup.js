@@ -1,6 +1,7 @@
 /*
 *   popup.js
 */
+const debug = false;
 const defaultFormat = 'markdown';
 const defaultTimeout = 3000;
 
@@ -96,8 +97,7 @@ document.addEventListener("click", function (e) {
   if (e.target.classList.contains("options")) {
 
     function onOpened () {
-      let msg = 'Options page opened!';
-      console.log(msg);
+      if (debug) console.log('Options page opened!');
     }
 
     chrome.runtime.openOptionsPage(onOpened);

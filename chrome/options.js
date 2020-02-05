@@ -1,6 +1,7 @@
 /*
 *   options.js
 */
+const debug = false;
 const defaultFormat = 'markdown';
 const defaultTimeout = '3000';
 var message;
@@ -66,7 +67,7 @@ function saveOptions(e) {
     setTimeout(function () {
       status.textContent = '';
     }, 750);
-    console.log(message);
+    if (debug) console.log(message);
   }
 
   if (selectedFormat) {
@@ -102,7 +103,7 @@ function restoreOptions() {
     document.getElementById('href').value = options.href || 'href';
     document.getElementById('name').value = options.name || 'name';
 
-    console.log(options);
+    if (debug) console.log(options);
   }
 
   chrome.storage.sync.get(function (options) {

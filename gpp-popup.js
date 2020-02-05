@@ -1,6 +1,7 @@
 /*
 *   popup.js
 */
+const debug = false;
 const defaultFormat = 'markdown';
 const defaultTimeout = 3000;
 
@@ -11,7 +12,7 @@ let timeoutID;
 let timeoutExpired = false;
 
 #ifdef FIREFOX
-// Error handler for Firefox API methods that return Promise object
+// Generic error handler for API methods that return Promise
 function onError (error) {
   console.log(`Error: ${error}`);
 }
@@ -114,8 +115,7 @@ document.addEventListener("click", function (e) {
   if (e.target.classList.contains("options")) {
 
     function onOpened () {
-      let msg = 'Options page opened!';
-      console.log(msg);
+      if (debug) console.log('Options page opened!');
     }
 
 #ifdef FIREFOX
