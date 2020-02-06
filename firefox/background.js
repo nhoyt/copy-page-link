@@ -1,6 +1,7 @@
 /*
 *   background.js
 */
+const debug = false;
 const defaultFormat = 'markdown';
 var options; // Initialized by startProcessing in popup.js
 
@@ -17,6 +18,7 @@ function copyToClipboard (str) {
   let listener = function (event) {
     event.clipboardData.setData('text/plain', str);
     event.preventDefault();
+    if (debug) console.log(str);
   };
   document.addEventListener('copy', listener);
   document.execCommand('copy', false, null);
