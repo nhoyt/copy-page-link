@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.3.1
+* Add debug variable for conditional console.log output
+
 ## v1.3.0
 * Add use of GPP for multi-browser development
 * Update Options section: rename to 'Notification'

@@ -1,12 +1,10 @@
 chrome/copy-to-clipboard.png
-chrome/manifest.json
 chrome/opt-common.css
 chrome/options.html
 chrome/popup.css
 chrome/popup.html
 
 firefox/copy-to-clipboard.png
-firefox/manifest.json
 firefox/opt-common.css
 firefox/options.html
 firefox/popup.css
