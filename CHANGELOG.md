@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.3.2
+* Add keyboard shortcut Ctrl+Shift+U
+
 ## v1.3.1
 * Add debug variable for conditional console.log output
 
