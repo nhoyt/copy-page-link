@@ -35,6 +35,9 @@ function getFormattedLink (data) {
     case 'markdown':
       return `[${name}](${data.href})`;
 
+    case 'dokuwiki':
+      return `[[${data.href}|${name}]]`;
+
     case 'html':
       return `<a href="${data.href}">${name}</a>`;
 

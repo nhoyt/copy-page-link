@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.3.2.1
+* Add DokuWiki format option
+
 ## v1.3.2
 * Add keyboard shortcut Ctrl+Shift+U
 
