@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.0
+* No longer using popup: instead using notifications and browserAction tooltip.
+* This allows for fewer permissions: activeTab instead of tabs and all_urls.
+
 ## v1.3.2
 * Add keyboard shortcut Ctrl+Shift+U
 

@@ -55,20 +55,7 @@ function popupAction () {
     return button === document.activeElement;
   }
 
-  function startProcessing (options) {
-
-    // Set options var and initiate processing in background script
-    function onGotBackgroundPage (page) {
-      page.options = options;
-      page.processActiveTab();
-    }
-
-#ifdef FIREFOX
-    browser.runtime.getBackgroundPage().then(onGotBackgroundPage, onError);
-#endif
-#ifdef CHROME
-    chrome.runtime.getBackgroundPage(onGotBackgroundPage);
-#endif
+  function initPopup (options) {
 
     // Update popup content and conditionally close the popup window
     // automatically after user-specified delay.
@@ -94,11 +81,11 @@ function popupAction () {
 
   // Get the options data saved in browser.storage
 #ifdef FIREFOX
-  browser.storage.sync.get().then(startProcessing, onError);
+  browser.storage.sync.get().then(initPopup, onError);
 #endif
 #ifdef CHROME
   chrome.storage.sync.get(function (options) {
-    if (notLastError()) startProcessing(options);
+    if (notLastError()) initPopup(options);
   });
 #endif
 }

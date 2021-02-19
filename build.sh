@@ -4,7 +4,6 @@ GPPFILES=(
   background
   content
   options
-  popup
 )
 
 # Process extension JS files: output to browser folders

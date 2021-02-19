@@ -47,6 +47,18 @@ browser.runtime.getPlatformInfo().then(setMessage, onError);
 chrome.runtime.getPlatformInfo(setMessage);
 #endif
 
+function setTooltip (options) {
+  function callBackgroundPageFn (page) {
+    page.setTooltip(options);
+  }
+#ifdef FIREFOX
+    browser.runtime.getBackgroundPage().then(callBackgroundPageFn, onError);
+#endif
+#ifdef CHROME
+    chrome.runtime.getBackgroundPage(callBackgroundPageFn);
+#endif
+}
+
 /* -------------------------------------------------------- */
 /*   Functions for saving and restoring user options        */
 /* -------------------------------------------------------- */
@@ -98,6 +110,7 @@ function saveOptions(e) {
       href: document.getElementById('href').value,
       name: document.getElementById('name').value
     };
+    setTooltip(options);
 
 #ifdef FIREFOX
     browser.storage.sync.set(options).then(notifyUser, onError);
@@ -122,11 +135,12 @@ function restoreOptions() {
 
     document.getElementById('msec').value = options.msec || defaultTimeout;
 
-    document.getElementById('link').value = options.link || 'link';
+    document.getElementById('link').value = options.link || 'site';
     document.getElementById('href').value = options.href || 'href';
     document.getElementById('name').value = options.name || 'name';
 
     if (debug) console.log(options);
+    setTooltip(options);
   }
 
 #ifdef FIREFOX

@@ -34,6 +34,13 @@ function setMessage (info) {
 
 chrome.runtime.getPlatformInfo(setMessage);
 
+function setTooltip (options) {
+  function callBackgroundPageFn (page) {
+    page.setTooltip(options);
+  }
+    chrome.runtime.getBackgroundPage(callBackgroundPageFn);
+}
+
 /* -------------------------------------------------------- */
 /*   Functions for saving and restoring user options        */
 /* -------------------------------------------------------- */
@@ -80,6 +87,7 @@ function saveOptions(e) {
       href: document.getElementById('href').value,
       name: document.getElementById('name').value
     };
+    setTooltip(options);
 
     chrome.storage.sync.set(options, function () {
       if (notLastError()) notifyUser();
@@ -99,11 +107,12 @@ function restoreOptions() {
 
     document.getElementById('msec').value = options.msec || defaultTimeout;
 
-    document.getElementById('link').value = options.link || 'link';
+    document.getElementById('link').value = options.link || 'site';
     document.getElementById('href').value = options.href || 'href';
     document.getElementById('name').value = options.name || 'name';
 
     if (debug) console.log(options);
+    setTooltip(options);
   }
 
   chrome.storage.sync.get(function (options) {

@@ -3,29 +3,53 @@
 */
 const debug = false;
 const defaultFormat = 'markdown';
-var options; // Initialized by startProcessing in popup.js
+const extensionName = 'Copy Page Link';
 
 // Generic error handler for API methods that return Promise
 function onError (error) {
   console.log(`Error: ${error}`);
 }
 
-/* -------------------------------------------------------- */
-/*   Functions for extracting and processing link info      */
+(function initExtension() {
+  browser.storage.sync.get()
+  .then(setTooltip, onError);
+})();
+
 /* -------------------------------------------------------- */
 
-function copyToClipboard (str) {
-  let listener = function (event) {
-    event.clipboardData.setData('text/plain', str);
-    event.preventDefault();
-    if (debug) console.log(str);
-  };
-  document.addEventListener('copy', listener);
-  document.execCommand('copy', false, null);
-  document.removeEventListener('copy', listener);
+function setTooltip (options) {
+  let format = getCapitalizedFormat(options);
+  browser.browserAction.setTitle({ title: `${extensionName}: ${format}` });
 }
 
-function getFormattedLink (data) {
+function getCapitalizedFormat (options) {
+  switch (options.format) {
+    case 'markdown':
+      return 'Markdown';
+    case 'html':
+      return 'HTML';
+    case 'latex':
+      return 'LaTeX';
+    case 'xml':
+      return 'XML';
+    default:
+      return 'Markdown';
+  }
+}
+
+/* -------------------------------------------------------- */
+
+//  getFormattedLink: The main function for extracting and processing
+//  the data used for creating the formatted link markup.
+
+function getFormattedLink (data, options) {
+  // Truncate selection string if length exceeds maximum
+  const maxLength = 120;
+  if (data.selection && data.selection.length > maxLength) {
+    data.selection = data.selection.substring(0, maxLength) + '…';
+  }
+
+  // Construct and return the link markup based on format option
   let name = data.selection ? data.selection : data.title;
   let format = options.format || defaultFormat;
 
@@ -49,42 +73,59 @@ function getFormattedLink (data) {
   }
 }
 
+/* ---------------------------------------------------------------- */
+
+//  processLinkData: Called by the content script or copyPageLink directly,
+//  depending on protocol of page link. First gets the extension options and
+//  calls copyToClipboard. If successful, calls the notifySuccess function.
+
 function processLinkData (data) {
-  // Truncate selection string if length exceeds maximum
-  const maxLength = 120;
-  if (data.selection && data.selection.length > maxLength) {
-    data.selection = data.selection.substring(0, maxLength) + '…';
+
+  function copyToClipboard (options) {
+    return new Promise (function (resolve, reject) {
+      let str = getFormattedLink(data, options);
+      navigator.clipboard.writeText(str);
+      resolve(options);
+      reject(new Error('clipboard.writeText error'));
+    });
   }
-  copyToClipboard(getFormattedLink(data));
+
+  function notifySuccess (options) {
+    setTooltip(options);
+    let format = getCapitalizedFormat(options);
+    let message = `${format} formatted link copied to clipboard.`;
+
+    browser.notifications.create({
+      "type": "basic",
+      "title": "Copy Page Link",
+      "message": message
+    });
+  }
+
+  // Get the options data saved in browser.storage
+  browser.storage.sync.get()
+  .then(copyToClipboard, onError)
+  .then(notifySuccess, onError);
 }
 
 /* ---------------------------------------------------------------- */
 
-// Because we've declared a popup for the extension, we need an entry
-// point function we can call from the popup script that replicates what
-// the browserAction.onClicked event handler would have done. That entry
-// point is the processActiveTab function.
+//  copyPageLink: The handler for the browserAction.onClicked event and thus
+//  the main entry point to the extension.
 
-const queryInfo = {currentWindow: true, active: true};
-
-// Security policy only allows us to inject the content script that
-// accesses title and selection for pages loaded with http or https.
-
-function checkUrlProtocol (tab) {
-  return (tab.url.indexOf('http:') === 0 || tab.url.indexOf('https:') === 0);
-}
-
-function processActiveTab () {
-  function onGotActiveTab (tabs) {
-    if (checkUrlProtocol(tabs[0])) {
-      browser.tabs.executeScript(null, { file: 'content.js' });
-    }
-    else {
-      processLinkData({ href: tabs[0].url, title: '', selection: '' });
-    }
+function copyPageLink (tab) {
+  // Security policy only allows us to inject the content script that
+  // accesses title and selection for pages loaded with http or https.
+  function checkUrlProtocol (tab) {
+    return (tab.url.indexOf('http:') === 0 || tab.url.indexOf('https:') === 0);
   }
 
-  browser.tabs.query(queryInfo).then(onGotActiveTab, onError);
+  if (checkUrlProtocol(tab)) {
+    browser.tabs.executeScript(null, { file: 'content.js' });
+  }
+  else {
+    processLinkData({ href: tab.url, title: '', selection: '' });
+  }
 }
 
 /* ---------------------------------------------------------------- */
@@ -96,3 +137,7 @@ browser.runtime.onMessage.addListener(
     processLinkData(request);
   }
 );
+
+// Listen for toolbar button activation
+
+browser.browserAction.onClicked.addListener(copyPageLink);
