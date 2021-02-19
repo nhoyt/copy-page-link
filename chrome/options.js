@@ -3,7 +3,6 @@
 */
 const debug = false;
 const defaultFormat = 'markdown';
-const defaultTimeout = '3000';
 var message;
 
 // Redefine console for Chrome extension logging
@@ -80,9 +79,6 @@ function saveOptions(e) {
   if (selectedFormat) {
     let options = {
       format: selectedFormat,
-      auto: document.getElementById('auto').checked,
-      msec: document.getElementById('msec').value,
-
       link: document.getElementById('link').value,
       href: document.getElementById('href').value,
       name: document.getElementById('name').value
@@ -101,12 +97,6 @@ function restoreOptions() {
 
   function setPreferences (options) {
     document.getElementById(options.format || defaultFormat).checked = true;
-
-    document.getElementById('auto').checked =
-      (typeof options.auto === 'undefined') ? true : options.auto;
-
-    document.getElementById('msec').value = options.msec || defaultTimeout;
-
     document.getElementById('link').value = options.link || 'site';
     document.getElementById('href').value = options.href || 'href';
     document.getElementById('name').value = options.name || 'name';
