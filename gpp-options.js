@@ -54,7 +54,7 @@ function setTooltip (options) {
   browser.runtime.getBackgroundPage().then(callBackgroundPageFn, onError);
 #endif
 #ifdef CHROME
-   chrome.runtime.getBackgroundPage(callBackgroundPageFn);
+  chrome.runtime.getBackgroundPage(callBackgroundPageFn);
 #endif
 }
 

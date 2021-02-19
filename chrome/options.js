@@ -37,7 +37,7 @@ function setTooltip (options) {
   function callBackgroundPageFn (page) {
     page.setTooltip(options);
   }
-   chrome.runtime.getBackgroundPage(callBackgroundPageFn);
+  chrome.runtime.getBackgroundPage(callBackgroundPageFn);
 }
 
 /* -------------------------------------------------------- */
