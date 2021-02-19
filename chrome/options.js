@@ -37,7 +37,7 @@ function setTooltip (options) {
   function callBackgroundPageFn (page) {
     page.setTooltip(options);
   }
-    chrome.runtime.getBackgroundPage(callBackgroundPageFn);
+   chrome.runtime.getBackgroundPage(callBackgroundPageFn);
 }
 
 /* -------------------------------------------------------- */
@@ -55,6 +55,16 @@ function saveOptions(e) {
     return;
   }
 
+  function notifyUser () {
+    let status = document.getElementById('status');
+    status.textContent = message;
+
+    setTimeout(function () {
+      status.textContent = '';
+    }, 750);
+    if (debug) console.log(message);
+  }
+
   let formats = document.getElementById('formats');
   let inputs = formats.getElementsByTagName('input');
   let selectedFormat = null;
@@ -64,16 +74,6 @@ function saveOptions(e) {
       selectedFormat = inputs[i].value;
       break;
     }
-  }
-
-  function notifyUser () {
-    let status = document.getElementById('status');
-    status.textContent = message;
-
-    setTimeout(function () {
-      status.textContent = '';
-    }, 750);
-    if (debug) console.log(message);
   }
 
   if (selectedFormat) {

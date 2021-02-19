@@ -51,10 +51,10 @@ function setTooltip (options) {
     page.setTooltip(options);
   }
 #ifdef FIREFOX
-    browser.runtime.getBackgroundPage().then(callBackgroundPageFn, onError);
+  browser.runtime.getBackgroundPage().then(callBackgroundPageFn, onError);
 #endif
 #ifdef CHROME
-    chrome.runtime.getBackgroundPage(callBackgroundPageFn);
+   chrome.runtime.getBackgroundPage(callBackgroundPageFn);
 #endif
 }
 
