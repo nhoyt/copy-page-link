@@ -9,6 +9,20 @@ By default, the page title is used as the display text for the link. You can
 override this behavior by selecting a text string within the document — that
 string will then be used as the display text instead of the page title.
 
+## Notifications
+
+When the Copy Page Link toolbar button is activated, a notification is created
+with behaviors that are based on how you have configured Notifications within
+your operating system preferences. For example, you can choose to be alerted
+by notifications as banners or you can turn off all notifications for your
+browser, among other options.
+
+The notification message, which displays in the Notification Center, indicates
+the format in which the link was copied.
+
+Additionally, the tooltip displayed when you hover over the Copy Page Link
+toolbar button indicates the currently selected link format.
+
 ## Preferences / Options
 
 ### Link Format section
@@ -30,24 +44,9 @@ To configure the XML format, this section allows you to specify:
 * The name of the container element for the link
 * The name of the attribute on the container element that specifies the URL
   for the link
-* The name of the element that describes the link (by default, it will contain
-  the page title)
+* The name of the element that describes the link (by default, the page title)
 
-The structure of the XML markup, with default names/identifiers of `link`,
+The structure of the XML markup, with default names/identifiers of `site`,
 `href` and `name`, is:
 
-`<link href="url"><name>page-title-or-selection</name></link>`
-
-### Notification section
-
-When the Copy Page Link toolbar button is activated, the extension displays a
-popup notification window indicating the format in which the link was copied,
-and that, by default, will close automatically after a few seconds.
-
-The 'Notification' section of the Preferences page allows you to customize
-this behavior as follows:
-
-* Uncheck the 'Automatically close' checkbox: This will cause the popup to
-  stay open until you press 'Escape' or click elsewhere in the browser window.
-* Check the 'Automatically close' checkbox and select the notification delay
-  time for automatically closing the window, from 1.5 to 4.5 seconds.
+`<site href="url"><name>page-title-or-selection</name></link>`
