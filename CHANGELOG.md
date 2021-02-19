@@ -1,8 +1,11 @@
 # CHANGELOG
 
 ## v2.0
-* No longer using popup: instead using notifications and browserAction tooltip.
+* The extension no longer uses a popup window as the notification vehicle.
+  Instead, OS-based notifications are used.
 * This allows for fewer permissions: activeTab instead of tabs and all_urls.
+* The toolbar button is used to indicate the currently selected link format,
+  for example `Copy Page Link: HTML`.
 
 ## v1.3.2
 * Add keyboard shortcut Ctrl+Shift+U
