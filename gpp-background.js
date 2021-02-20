@@ -114,7 +114,7 @@ function processLinkData (data) {
       let str = getFormattedLink(data, options);
       navigator.clipboard.writeText(str);
       resolve(options);
-      reject(new Error('clipboard.writeText error'));
+      reject(new Error('copyToClipboard'));
     });
 #endif
 #ifdef CHROME

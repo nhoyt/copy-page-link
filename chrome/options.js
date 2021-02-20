@@ -95,17 +95,27 @@ function saveOptions(e) {
 function updateOptionsForm() {
 
   function updateForm (options) {
-    document.getElementById(options.format || defaultFormat).checked = true;
-    document.getElementById('link').value = options.link || 'site';
-    document.getElementById('href').value = options.href || 'href';
-    document.getElementById('name').value = options.name || 'name';
-
     if (debug) console.log(options);
-    setTooltip(options);
+
+    return new Promise (function (resolve, reject) {
+      // Set the form element states and values
+      document.getElementById(options.format || defaultFormat).checked = true;
+      document.getElementById('link').value = options.link || 'site';
+      document.getElementById('href').value = options.href || 'href';
+      document.getElementById('name').value = options.name || 'name';
+
+      resolve(options);
+      reject(new Error('updateForm'));
+    });
   }
 
   chrome.storage.sync.get(function (options) {
-    if (notLastError()) updateForm(options);
+    if (notLastError()) {
+      updateForm(options);
+      if (notLastError()) {
+        setTooltip(options);
+      }
+    }
   });
 }
 
