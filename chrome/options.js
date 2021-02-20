@@ -3,7 +3,7 @@
 */
 const debug = false;
 const defaultFormat = 'markdown';
-var message;
+var platformInfo;
 
 // Redefine console for Chrome extension logging
 var console = chrome.extension.getBackgroundPage().console;
@@ -18,20 +18,35 @@ function notLastError () {
   }
 }
 
-// Set the message text to be displayed when options are saved
+// Initialize platformInfo when script loads
 
-function setMessage (info) {
-  switch (info.os) {
-    case 'mac':
-      message = 'Preferences saved!';
-      break;
-    default:
-      message = 'Options saved!';
-      break;
-  }
+chrome.runtime.getPlatformInfo(info => { platformInfo = info; });
+
+// Functions for displaying messages
+
+function displayMessage (message) {
+  let status = document.getElementById('status');
+  status.textContent = message;
+
+  setTimeout(function () { status.textContent = ''; }, 1500);
+  if (debug) console.log(message);
 }
 
-chrome.runtime.getPlatformInfo(setMessage);
+function notifySaved () {
+  let str = (platformInfo.os === 'mac') ? 'Preferences' : 'Options';
+  displayMessage(`${str} saved!`);
+}
+
+function notifyRestored () {
+  let str = (platformInfo.os === 'mac') ? 'preferences' : 'options';
+  displayMessage(`Default values for ${str} restored!`);
+}
+
+// Utility functions
+
+function clearOptions () {
+  chrome.storage.sync.clear();
+}
 
 function setTooltip (options) {
   function callBackgroundPageFn (page) {
@@ -44,26 +59,10 @@ function setTooltip (options) {
 /*   Functions for saving and restoring user options        */
 /* -------------------------------------------------------- */
 
-// Save user options in browser.storage and display message
+// Save user options in storage.sync and display message
 
 function saveOptions(e) {
   e.preventDefault();
-
-  // For use during development
-  if (false) {
-    chrome.storage.sync.clear();
-    return;
-  }
-
-  function notifyUser () {
-    let status = document.getElementById('status');
-    status.textContent = message;
-
-    setTimeout(function () {
-      status.textContent = '';
-    }, 750);
-    if (debug) console.log(message);
-  }
 
   let formats = document.getElementById('formats');
   let inputs = formats.getElementsByTagName('input');
@@ -86,16 +85,16 @@ function saveOptions(e) {
     setTooltip(options);
 
     chrome.storage.sync.set(options, function () {
-      if (notLastError()) notifyUser();
+      if (notLastError()) { notifySaved(); }
     });
   }
 }
 
-// Restore HTML form values based on user options saved in browser.storage
+// Update HTML form values based on user options saved in storage.sync
 
-function restoreOptions() {
+function updateOptionsForm() {
 
-  function setPreferences (options) {
+  function updateForm (options) {
     document.getElementById(options.format || defaultFormat).checked = true;
     document.getElementById('link').value = options.link || 'site';
     document.getElementById('href').value = options.href || 'href';
@@ -106,11 +105,37 @@ function restoreOptions() {
   }
 
   chrome.storage.sync.get(function (options) {
-    if (notLastError()) setPreferences(options);
+    if (notLastError()) updateForm(options);
   });
+}
+
+// Restore the default values for all options in storage.sync
+
+function restoreDefaults (e) {
+  e.preventDefault();
+
+  const defaultOptions = {
+    format: defaultFormat,
+    link:   'site',
+    href:   'href',
+    name:   'name'
+  };
+
+  // First, clear everything...
+  clearOptions();
+
+  // Save the default values...
+  chrome.storage.sync.set(defaultOptions, function () {
+    if (notLastError()) { notifyRestored(); }
+  });
+
+  // Finally, update the UI...
+  setTooltip(defaultOptions);
+  updateOptionsForm();
 }
 
 // Add event listeners for saving and restoring options
 
-document.addEventListener('DOMContentLoaded', restoreOptions);
+document.addEventListener('DOMContentLoaded', updateOptionsForm);
 document.querySelector('form').addEventListener('submit', saveOptions);
+document.querySelector('form button#restore').addEventListener('click', restoreDefaults);
