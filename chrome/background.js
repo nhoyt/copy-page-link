@@ -103,7 +103,7 @@ function processLinkData (data) {
   function notifySuccess (options) {
     setTooltip(options);
     let format = getCapitalizedFormat(options);
-    let message = `${format} formatted link copied to clipboard.`;
+    let message = `${format}-formatted link copied to clipboard.`;
 
     chrome.notifications.create({
       "type": "basic",
