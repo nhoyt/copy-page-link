@@ -4,6 +4,9 @@
 const debug = false;
 const defaultFormat = 'markdown';
 const extensionName = 'Copy Page Link';
+const iconFilename = 'logo-48.png';
+
+const iconUrl = chrome.extension.getURL(iconFilename);
 
 // If lastError is undefined, return true. Otherwise, log the error
 // message to the console and return false.
@@ -107,7 +110,7 @@ function processLinkData (data) {
 
     chrome.notifications.create({
       "type": "basic",
-      "iconUrl": chrome.extension.getURL("icon-48.png"),
+      "iconUrl": iconUrl,
       "title": "Copy Page Link",
       "message": message
     });

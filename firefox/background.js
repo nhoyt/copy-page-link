@@ -4,6 +4,9 @@
 const debug = false;
 const defaultFormat = 'markdown';
 const extensionName = 'Copy Page Link';
+const iconFilename = 'logo-48.png';
+
+const iconUrl = browser.extension.getURL(iconFilename);
 
 // Generic error handler for API methods that return Promise
 function onError (error) {
@@ -97,7 +100,7 @@ function processLinkData (data) {
 
     browser.notifications.create({
       "type": "basic",
-      "iconUrl": browser.extension.getURL("icon-48.png"),
+      "iconUrl": iconUrl,
       "title": "Copy Page Link",
       "message": message
     });
