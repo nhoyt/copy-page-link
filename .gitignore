@@ -1,7 +1,7 @@
-chrome/copy-to-clipboard.png
+chrome/*.png
 chrome/opt-common.css
 chrome/options.html
-firefox/copy-to-clipboard.png
+firefox/*.png
 firefox/opt-common.css
 firefox/options.html
 web-ext-artifacts/

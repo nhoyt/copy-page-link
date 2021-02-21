@@ -97,6 +97,7 @@ function processLinkData (data) {
 
     browser.notifications.create({
       "type": "basic",
+      "iconUrl": browser.extension.getURL("icon-48.png"),
       "title": "Copy Page Link",
       "message": message
     });

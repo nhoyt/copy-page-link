@@ -107,7 +107,7 @@ function processLinkData (data) {
 
     chrome.notifications.create({
       "type": "basic",
-      "iconUrl": chrome.extension.getURL("copy-to-clipboard.png"),
+      "iconUrl": chrome.extension.getURL("icon-48.png"),
       "title": "Copy Page Link",
       "message": message
     });

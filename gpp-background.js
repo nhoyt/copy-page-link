@@ -137,6 +137,7 @@ function processLinkData (data) {
 #ifdef FIREFOX
     browser.notifications.create({
       "type": "basic",
+      "iconUrl": browser.extension.getURL("icon-48.png"),
       "title": "Copy Page Link",
       "message": message
     });
@@ -144,7 +145,7 @@ function processLinkData (data) {
 #ifdef CHROME
     chrome.notifications.create({
       "type": "basic",
-      "iconUrl": chrome.extension.getURL("copy-to-clipboard.png"),
+      "iconUrl": chrome.extension.getURL("icon-48.png"),
       "title": "Copy Page Link",
       "message": message
     });
