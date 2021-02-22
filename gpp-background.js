@@ -120,9 +120,10 @@ function processLinkData (data) {
 #ifdef FIREFOX
     return new Promise (function (resolve, reject) {
       let str = getFormattedLink(data, options);
-      navigator.clipboard.writeText(str);
-      resolve(options);
-      reject(new Error('copyToClipboard'));
+      let promise = navigator.clipboard.writeText(str);
+      promise.then(
+        () => { resolve(options); },
+        msg => { reject(new Error(`copyToClipboard: ${msg}`)); });
     });
 #endif
 #ifdef CHROME

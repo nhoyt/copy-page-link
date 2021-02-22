@@ -87,9 +87,10 @@ function processLinkData (data) {
   function copyToClipboard (options) {
     return new Promise (function (resolve, reject) {
       let str = getFormattedLink(data, options);
-      navigator.clipboard.writeText(str);
-      resolve(options);
-      reject(new Error('copyToClipboard'));
+      let promise = navigator.clipboard.writeText(str);
+      promise.then(
+        () => { resolve(options); },
+        msg => { reject(new Error(`copyToClipboard: ${msg}`)); });
     });
   }
 
