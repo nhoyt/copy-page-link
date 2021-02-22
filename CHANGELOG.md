@@ -1,8 +1,8 @@
 # CHANGELOG
 
 ## v2.2
-* Added NOTES.md file for documentation notes
-* Corrected the use of JavaScript promises
+* Add NOTES.md file for add-on documentation
+* Update the way that custom JavaScript promises are used
 
 ## v2.1
 * Update icon and logo images
