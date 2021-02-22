@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v2.2
+* Added NOTES.md file for documentation notes
+* Corrected the use of JavaScript promises
+
+## v2.1
+* Update icon and logo images
+
 ## v2.0
 * The extension no longer uses a popup window as the notification vehicle.
   Instead, OS-based notifications are used.
