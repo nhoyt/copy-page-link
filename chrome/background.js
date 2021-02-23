@@ -4,7 +4,7 @@
 const debug = false;
 const defaultFormat = 'markdown';
 const extensionName = 'Copy Page Link';
-const iconFilename = 'logo-48.png';
+const iconFilename = 'images/logo-48.png';
 
 const iconUrl = chrome.extension.getURL(iconFilename);
 
@@ -104,24 +104,23 @@ function processLinkData (data) {
   }
 
   function notifySuccess (options) {
-    setTooltip(options);
     let format = getCapitalizedFormat(options);
     let message = `${format}-formatted link copied to clipboard.`;
-
-    chrome.notifications.create({
-      "type": "basic",
-      "iconUrl": iconUrl,
-      "title": "Copy Page Link",
-      "message": message
-    });
+    let notificationOptions = {
+      type: "basic",
+      iconUrl: iconUrl,
+      title: "Copy Page Link",
+      message: message
+    };
+    chrome.notifications.create(notificationOptions);
   }
 
-  // Get the options data saved in browser.storage
   chrome.storage.sync.get(function (options) {
     if (notLastError()) {
       copyToClipboard(options);
       if (notLastError()) {
         notifySuccess(options);
+        notLastError();
       }
     }
   });

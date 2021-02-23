@@ -4,7 +4,7 @@
 const debug = false;
 const defaultFormat = 'markdown';
 const extensionName = 'Copy Page Link';
-const iconFilename = 'logo-48.png';
+const iconFilename = 'images/logo-48.png';
 
 #ifdef FIREFOX
 const iconUrl = browser.extension.getURL(iconFilename);
@@ -117,17 +117,17 @@ function getFormattedLink (data, options) {
 function processLinkData (data) {
 
   function copyToClipboard (options) {
+    let str = getFormattedLink(data, options);
 #ifdef FIREFOX
     return new Promise (function (resolve, reject) {
-      let str = getFormattedLink(data, options);
       let promise = navigator.clipboard.writeText(str);
       promise.then(
         () => { resolve(options); },
-        msg => { reject(new Error(`copyToClipboard: ${msg}`)); });
+        msg => { reject(new Error(`copyToClipboard: ${msg}`)); }
+      );
     });
 #endif
 #ifdef CHROME
-    let str = getFormattedLink(data, options);
     let listener = function (event) {
       event.clipboardData.setData('text/plain', str);
       event.preventDefault();
@@ -139,29 +139,27 @@ function processLinkData (data) {
   }
 
   function notifySuccess (options) {
-    setTooltip(options);
     let format = getCapitalizedFormat(options);
     let message = `${format}-formatted link copied to clipboard.`;
-
+    let notificationOptions = {
+      type: "basic",
+      iconUrl: iconUrl,
+      title: "Copy Page Link",
+      message: message
+    };
 #ifdef FIREFOX
-    browser.notifications.create({
-      "type": "basic",
-      "iconUrl": iconUrl,
-      "title": "Copy Page Link",
-      "message": message
+    return new Promise (function (resolve, reject) {
+      let promise = browser.notifications.create(notificationOptions);
+      promise.catch(
+        msg => { reject(new Error(`notifySuccess: ${msg}`)); }
+      );
     });
 #endif
 #ifdef CHROME
-    chrome.notifications.create({
-      "type": "basic",
-      "iconUrl": iconUrl,
-      "title": "Copy Page Link",
-      "message": message
-    });
+    chrome.notifications.create(notificationOptions);
 #endif
   }
 
-  // Get the options data saved in browser.storage
 #ifdef FIREFOX
   browser.storage.sync.get()
   .then(copyToClipboard)
@@ -174,6 +172,7 @@ function processLinkData (data) {
       copyToClipboard(options);
       if (notLastError()) {
         notifySuccess(options);
+        notLastError();
       }
     }
   });
