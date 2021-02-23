@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Copy Page Link",
-  "version": "2.2",
+  "version": "2.3",
   "description" : "Creates link markup for the current page in the selected format and copies it to the clipboard for pasting into another document.",
   "homepage_url": "https://github.com/nhoyt/copy-page-link",
   "author": "Nicholas Hoyt",
@@ -15,7 +15,7 @@
   ],
 
   "browser_action": {
-    "default_icon": "icon-32.png"
+    "default_icon": "images/icon-32.png"
   },
 
   "background": {
@@ -37,10 +37,10 @@
   },
 
   "icons": {
-    "16": "icon-16.png",
-    "32": "icon-32.png",
-    "48": "logo-48.png",
-    "64": "icon-64.png",
-    "96": "icon-96.png"
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/logo-48.png",
+    "64": "images/icon-64.png",
+    "96": "images/icon-96.png"
   }
 }

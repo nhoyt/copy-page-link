@@ -29,3 +29,11 @@ do
   cp ${FNAME} ./chrome/
   cp ${FNAME} ./firefox/
 done
+
+# Copy image files to browser folders
+
+for FNAME in ./images/*
+do
+  cp ${FNAME} ./chrome/images/
+  cp ${FNAME} ./firefox/images/
+done

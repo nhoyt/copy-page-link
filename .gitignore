@@ -1,7 +1,9 @@
-chrome/*.png
+chrome/images/
+chrome/LICENSE
 chrome/opt-common.css
 chrome/options.html
-firefox/*.png
+firefox/images/
+firefox/LICENSE
 firefox/opt-common.css
 firefox/options.html
 web-ext-artifacts/
