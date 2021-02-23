@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.3
+* Refactor background script: use of promises
+* Move image files to images subdirectory
+
 ## v2.2
 * Add NOTES.md file for add-on documentation
 * Update the way that custom JavaScript promises are used
