@@ -107,9 +107,9 @@ function processLinkData (data) {
     let format = getCapitalizedFormat(options);
     let message = `${format}-formatted link copied to clipboard.`;
     let notificationOptions = {
-      type: "basic",
+      type: 'basic',
       iconUrl: iconUrl,
-      title: "Copy Page Link",
+      title: 'Copy Page Link',
       message: message
     };
     chrome.notifications.create(notificationOptions);
