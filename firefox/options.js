@@ -12,7 +12,8 @@ function onError (error) {
 
 // Initialize platformInfo when script loads
 
-browser.runtime.getPlatformInfo().then(info => { platformInfo = info; }, onError);
+browser.runtime.getPlatformInfo()
+.then(info => { platformInfo = info; }, onError);
 
 // Functions for displaying messages
 
@@ -44,7 +45,8 @@ function setTooltip (options) {
   function callBackgroundPageFn (page) {
     page.setTooltip(options);
   }
-  browser.runtime.getBackgroundPage().then(callBackgroundPageFn, onError);
+  browser.runtime.getBackgroundPage()
+  .then(callBackgroundPageFn, onError);
 }
 
 /* -------------------------------------------------------- */
@@ -76,7 +78,8 @@ function saveOptions(e) {
     };
     setTooltip(options);
 
-    browser.storage.sync.set(options).then(notifySaved, onError);
+    browser.storage.sync.set(options)
+    .then(notifySaved, onError);
   }
 }
 
@@ -97,7 +100,8 @@ function updateOptionsForm() {
     setTooltip(options);
   }
 
-  browser.storage.sync.get().then(updateForm, onError);
+  browser.storage.sync.get()
+  .then(updateForm, onError);
 }
 
 // Restore the default values for all options in storage.sync
@@ -116,7 +120,8 @@ function restoreDefaults (e) {
   clearOptions();
 
   // Save the default values...
-  browser.storage.sync.set(defaultOptions).then(notifyRestored, onError);
+  browser.storage.sync.set(defaultOptions)
+  .then(notifyRestored, onError);
 
   // Finally, update the UI...
   setTooltip(defaultOptions);

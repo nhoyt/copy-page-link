@@ -29,7 +29,8 @@ function notLastError () {
 // Initialize platformInfo when script loads
 
 #ifdef FIREFOX
-browser.runtime.getPlatformInfo().then(info => { platformInfo = info; }, onError);
+browser.runtime.getPlatformInfo()
+.then(info => { platformInfo = info; }, onError);
 #endif
 #ifdef CHROME
 chrome.runtime.getPlatformInfo(info => { platformInfo = info; });
@@ -71,7 +72,8 @@ function setTooltip (options) {
     page.setTooltip(options);
   }
 #ifdef FIREFOX
-  browser.runtime.getBackgroundPage().then(callBackgroundPageFn, onError);
+  browser.runtime.getBackgroundPage()
+  .then(callBackgroundPageFn, onError);
 #endif
 #ifdef CHROME
   chrome.runtime.getBackgroundPage(callBackgroundPageFn);
@@ -108,7 +110,8 @@ function saveOptions(e) {
     setTooltip(options);
 
 #ifdef FIREFOX
-    browser.storage.sync.set(options).then(notifySaved, onError);
+    browser.storage.sync.set(options)
+    .then(notifySaved, onError);
 #endif
 #ifdef CHROME
     chrome.storage.sync.set(options, function () {
@@ -136,7 +139,8 @@ function updateOptionsForm() {
   }
 
 #ifdef FIREFOX
-  browser.storage.sync.get().then(updateForm, onError);
+  browser.storage.sync.get()
+  .then(updateForm, onError);
 #endif
 #ifdef CHROME
   chrome.storage.sync.get(function (options) {
@@ -162,7 +166,8 @@ function restoreDefaults (e) {
 
   // Save the default values...
 #ifdef FIREFOX
-  browser.storage.sync.set(defaultOptions).then(notifyRestored, onError);
+  browser.storage.sync.set(defaultOptions)
+  .then(notifyRestored, onError);
 #endif
 #ifdef CHROME
   chrome.storage.sync.set(defaultOptions, function () {
