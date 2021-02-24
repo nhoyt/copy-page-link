@@ -109,7 +109,7 @@ function processLinkData (data) {
     let notificationOptions = {
       type: 'basic',
       iconUrl: iconUrl,
-      title: 'Copy Page Link',
+      title: extensionName,
       message: message
     };
     chrome.notifications.create(notificationOptions);

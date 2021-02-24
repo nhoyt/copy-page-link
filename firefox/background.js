@@ -101,7 +101,7 @@ function processLinkData (data) {
     let notificationOptions = {
       type: 'basic',
       iconUrl: iconUrl,
-      title: 'Copy Page Link',
+      title: extensionName,
       message: message
     };
     return new Promise (function (resolve, reject) {
