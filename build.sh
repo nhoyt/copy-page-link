@@ -26,14 +26,14 @@ gpp -DFIREFOX=1 -o firefox/manifest.json manifest.json
 
 for FNAME in ./shared/*
 do
-  cp ${FNAME} ./chrome/
-  cp ${FNAME} ./firefox/
+  cp -p ${FNAME} ./chrome/
+  cp -p ${FNAME} ./firefox/
 done
 
 # Copy image files to browser folders
 
 for FNAME in ./images/*
 do
-  cp ${FNAME} ./chrome/images/
-  cp ${FNAME} ./firefox/images/
+  cp -p ${FNAME} ./chrome/images/
+  cp -p ${FNAME} ./firefox/images/
 done
