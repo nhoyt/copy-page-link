@@ -6,10 +6,7 @@ const defaultFormat = 'markdown';
 const extensionName = 'Copy Page Link';
 const iconFilename = 'images/logo-48.png';
 
-const iconUrl = chrome.extension.getURL(iconFilename);
-
-// If lastError is undefined, return true. Otherwise, log the error
-// message to the console and return false.
+// Generic error handler
 function notLastError () {
   if (!chrome.runtime.lastError) { return true; }
   else {
@@ -18,13 +15,11 @@ function notLastError () {
   }
 }
 
-(function initExtension() {
-  chrome.storage.sync.get(function (options) {
-    if (notLastError()) {
-      setTooltip(options);
-    }
-  });
-})();
+// Initialize extension variables and settings
+const iconUrl = chrome.extension.getURL(iconFilename);
+chrome.storage.sync.get(function (options) {
+  if (notLastError()) { setTooltip(options); }
+});
 
 /* -------------------------------------------------------- */
 
@@ -35,16 +30,10 @@ function setTooltip (options) {
 
 function getCapitalizedFormat (options) {
   switch (options.format) {
-    case 'markdown':
-      return 'Markdown';
-    case 'html':
-      return 'HTML';
-    case 'latex':
-      return 'LaTeX';
-    case 'xml':
-      return 'XML';
-    default:
-      return 'Markdown';
+    case 'markdown': return 'Markdown';
+    case 'html':     return 'HTML';
+    case 'latex':    return 'LaTeX';
+    case 'xml':      return 'XML';
   }
 }
 
@@ -151,9 +140,7 @@ function copyPageLink (tab) {
 // Listen for messages from the content script
 
 chrome.runtime.onMessage.addListener(
-  function (request, sender) {
-    processLinkData(request);
-  }
+  (data, sender) => { processLinkData(data); }
 );
 
 // Listen for toolbar button activation

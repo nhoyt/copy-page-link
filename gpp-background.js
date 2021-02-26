@@ -6,22 +6,13 @@ const defaultFormat = 'markdown';
 const extensionName = 'Copy Page Link';
 const iconFilename = 'images/logo-48.png';
 
+// Generic error handler
 #ifdef FIREFOX
-const iconUrl = browser.extension.getURL(iconFilename);
-#endif
-#ifdef CHROME
-const iconUrl = chrome.extension.getURL(iconFilename);
-#endif
-
-#ifdef FIREFOX
-// Generic error handler for API methods that return Promise
 function onError (error) {
-  console.log(`Error: ${error}`);
+  console.log(`${extensionName}: ${error}`);
 }
 #endif
 #ifdef CHROME
-// If lastError is undefined, return true. Otherwise, log the error
-// message to the console and return false.
 function notLastError () {
   if (!chrome.runtime.lastError) { return true; }
   else {
@@ -31,19 +22,17 @@ function notLastError () {
 }
 #endif
 
-(function initExtension() {
+// Initialize extension variables and settings
 #ifdef FIREFOX
-  browser.storage.sync.get()
-  .then(setTooltip, onError);
+const iconUrl = browser.extension.getURL(iconFilename);
+browser.storage.sync.get().then(setTooltip, onError);
 #endif
 #ifdef CHROME
-  chrome.storage.sync.get(function (options) {
-    if (notLastError()) {
-      setTooltip(options);
-    }
-  });
+const iconUrl = chrome.extension.getURL(iconFilename);
+chrome.storage.sync.get(function (options) {
+  if (notLastError()) { setTooltip(options); }
+});
 #endif
-})();
 
 /* -------------------------------------------------------- */
 
@@ -59,16 +48,10 @@ function setTooltip (options) {
 
 function getCapitalizedFormat (options) {
   switch (options.format) {
-    case 'markdown':
-      return 'Markdown';
-    case 'html':
-      return 'HTML';
-    case 'latex':
-      return 'LaTeX';
-    case 'xml':
-      return 'XML';
-    default:
-      return 'Markdown';
+    case 'markdown': return 'Markdown';
+    case 'html':     return 'HTML';
+    case 'latex':    return 'LaTeX';
+    case 'xml':      return 'XML';
   }
 }
 
@@ -210,16 +193,12 @@ function copyPageLink (tab) {
 
 #ifdef FIREFOX
 browser.runtime.onMessage.addListener(
-  function (request, sender) {
-    processLinkData(request);
-  }
+  (data, sender) => { processLinkData(data); }
 );
 #endif
 #ifdef CHROME
 chrome.runtime.onMessage.addListener(
-  function (request, sender) {
-    processLinkData(request);
-  }
+  (data, sender) => { processLinkData(data); }
 );
 #endif
 

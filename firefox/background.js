@@ -6,17 +6,14 @@ const defaultFormat = 'markdown';
 const extensionName = 'Copy Page Link';
 const iconFilename = 'images/logo-48.png';
 
-const iconUrl = browser.extension.getURL(iconFilename);
-
-// Generic error handler for API methods that return Promise
+// Generic error handler
 function onError (error) {
-  console.log(`Error: ${error}`);
+  console.log(`${extensionName}: ${error}`);
 }
 
-(function initExtension() {
-  browser.storage.sync.get()
-  .then(setTooltip, onError);
-})();
+// Initialize extension variables and settings
+const iconUrl = browser.extension.getURL(iconFilename);
+browser.storage.sync.get().then(setTooltip, onError);
 
 /* -------------------------------------------------------- */
 
@@ -27,16 +24,10 @@ function setTooltip (options) {
 
 function getCapitalizedFormat (options) {
   switch (options.format) {
-    case 'markdown':
-      return 'Markdown';
-    case 'html':
-      return 'HTML';
-    case 'latex':
-      return 'LaTeX';
-    case 'xml':
-      return 'XML';
-    default:
-      return 'Markdown';
+    case 'markdown': return 'Markdown';
+    case 'html':     return 'HTML';
+    case 'latex':    return 'LaTeX';
+    case 'xml':      return 'XML';
   }
 }
 
@@ -143,9 +134,7 @@ function copyPageLink (tab) {
 // Listen for messages from the content script
 
 browser.runtime.onMessage.addListener(
-  function (request, sender) {
-    processLinkData(request);
-  }
+  (data, sender) => { processLinkData(data); }
 );
 
 // Listen for toolbar button activation
