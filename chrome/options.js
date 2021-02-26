@@ -2,17 +2,10 @@
 *   options.js
 */
 const debug = false;
-var defaultFormat;
-var extensionName;
+const defaultFormat = 'markdown';
+const extensionName = 'Copy Page Link';
 var platformInfo;
 
-// Initialize script variables
-function initVariables (page) {
-  defaultFormat = page.defaultFormat;
-  extensionName = page.extensionName;
-}
-
-chrome.runtime.getBackgroundPage(initVariables);
 chrome.runtime.getPlatformInfo(info => { platformInfo = info; });
 
 // Redefine console for Chrome extension

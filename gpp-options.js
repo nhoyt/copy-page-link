@@ -2,24 +2,15 @@
 *   options.js
 */
 const debug = false;
-var defaultFormat;
-var extensionName;
+const defaultFormat = 'markdown';
+const extensionName = 'Copy Page Link';
 var platformInfo;
 
-// Initialize script variables
-function initVariables (page) {
-  defaultFormat = page.defaultFormat;
-  extensionName = page.extensionName;
-}
-
 #ifdef FIREFOX
-browser.runtime.getBackgroundPage()
-.then(initVariables, onError);
 browser.runtime.getPlatformInfo()
 .then(info => { platformInfo = info; }, onError);
 #endif
 #ifdef CHROME
-chrome.runtime.getBackgroundPage(initVariables);
 chrome.runtime.getPlatformInfo(info => { platformInfo = info; });
 #endif
 
