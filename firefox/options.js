@@ -2,18 +2,25 @@
 *   options.js
 */
 const debug = false;
-const defaultFormat = 'markdown';
+var defaultFormat;
+var extensionName;
 var platformInfo;
 
-// Generic error handler for API methods that return Promise
-function onError (error) {
-  console.log(`Error: ${error}`);
+// Initialize script variables
+function initVariables (page) {
+  defaultFormat = page.defaultFormat;
+  extensionName = page.extensionName;
 }
 
-// Initialize platformInfo when script loads
-
+browser.runtime.getBackgroundPage()
+.then(initVariables, onError);
 browser.runtime.getPlatformInfo()
 .then(info => { platformInfo = info; }, onError);
+
+// Generic error handler
+function onError (error) {
+  console.log(`${extensionName}: ${error}`);
+}
 
 // Functions for displaying messages
 
@@ -37,16 +44,11 @@ function notifyRestored () {
 
 // Utility functions
 
-function clearOptions () {
-  browser.storage.sync.clear();
-}
-
 function setTooltip (options) {
-  function callBackgroundPageFn (page) {
-    page.setTooltip(options);
-  }
-  browser.runtime.getBackgroundPage()
-  .then(callBackgroundPageFn, onError);
+  browser.runtime.getBackgroundPage().then(
+    (page) => { page.setTooltip(options); },
+    onError
+  );
 }
 
 /* -------------------------------------------------------- */
@@ -117,7 +119,7 @@ function restoreDefaults (e) {
   };
 
   // First, clear everything...
-  clearOptions();
+  browser.storage.sync.clear();
 
   // Save the default values...
   browser.storage.sync.set(defaultOptions)

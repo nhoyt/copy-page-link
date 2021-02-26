@@ -2,14 +2,23 @@
 *   options.js
 */
 const debug = false;
-const defaultFormat = 'markdown';
+var defaultFormat;
+var extensionName;
 var platformInfo;
 
-// Redefine console for Chrome extension logging
+// Initialize script variables
+function initVariables (page) {
+  defaultFormat = page.defaultFormat;
+  extensionName = page.extensionName;
+}
+
+chrome.runtime.getBackgroundPage(initVariables);
+chrome.runtime.getPlatformInfo(info => { platformInfo = info; });
+
+// Redefine console for Chrome extension
 var console = chrome.extension.getBackgroundPage().console;
 
-// If lastError is undefined, return true. Otherwise, log the error
-// message to the console and return false.
+// Generic error handler
 function notLastError () {
   if (!chrome.runtime.lastError) { return true; }
   else {
@@ -17,10 +26,6 @@ function notLastError () {
     return false;
   }
 }
-
-// Initialize platformInfo when script loads
-
-chrome.runtime.getPlatformInfo(info => { platformInfo = info; });
 
 // Functions for displaying messages
 
@@ -44,15 +49,10 @@ function notifyRestored () {
 
 // Utility functions
 
-function clearOptions () {
-  chrome.storage.sync.clear();
-}
-
 function setTooltip (options) {
-  function callBackgroundPageFn (page) {
-    page.setTooltip(options);
-  }
-  chrome.runtime.getBackgroundPage(callBackgroundPageFn);
+  chrome.runtime.getBackgroundPage(
+    (page) => { page.setTooltip(options); }
+  );
 }
 
 /* -------------------------------------------------------- */
@@ -125,7 +125,7 @@ function restoreDefaults (e) {
   };
 
   // First, clear everything...
-  clearOptions();
+  chrome.storage.sync.clear();
 
   // Save the default values...
   chrome.storage.sync.set(defaultOptions, function () {

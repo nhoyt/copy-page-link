@@ -2,21 +2,38 @@
 *   options.js
 */
 const debug = false;
-const defaultFormat = 'markdown';
+var defaultFormat;
+var extensionName;
 var platformInfo;
 
+// Initialize script variables
+function initVariables (page) {
+  defaultFormat = page.defaultFormat;
+  extensionName = page.extensionName;
+}
+
 #ifdef FIREFOX
-// Generic error handler for API methods that return Promise
+browser.runtime.getBackgroundPage()
+.then(initVariables, onError);
+browser.runtime.getPlatformInfo()
+.then(info => { platformInfo = info; }, onError);
+#endif
+#ifdef CHROME
+chrome.runtime.getBackgroundPage(initVariables);
+chrome.runtime.getPlatformInfo(info => { platformInfo = info; });
+#endif
+
+#ifdef FIREFOX
+// Generic error handler
 function onError (error) {
-  console.log(`Error: ${error}`);
+  console.log(`${extensionName}: ${error}`);
 }
 #endif
 #ifdef CHROME
-// Redefine console for Chrome extension logging
+// Redefine console for Chrome extension
 var console = chrome.extension.getBackgroundPage().console;
 
-// If lastError is undefined, return true. Otherwise, log the error
-// message to the console and return false.
+// Generic error handler
 function notLastError () {
   if (!chrome.runtime.lastError) { return true; }
   else {
@@ -24,16 +41,6 @@ function notLastError () {
     return false;
   }
 }
-#endif
-
-// Initialize platformInfo when script loads
-
-#ifdef FIREFOX
-browser.runtime.getPlatformInfo()
-.then(info => { platformInfo = info; }, onError);
-#endif
-#ifdef CHROME
-chrome.runtime.getPlatformInfo(info => { platformInfo = info; });
 #endif
 
 // Functions for displaying messages
@@ -58,25 +65,17 @@ function notifyRestored () {
 
 // Utility functions
 
-function clearOptions () {
-#ifdef FIREFOX
-  browser.storage.sync.clear();
-#endif
-#ifdef CHROME
-  chrome.storage.sync.clear();
-#endif
-}
-
 function setTooltip (options) {
-  function callBackgroundPageFn (page) {
-    page.setTooltip(options);
-  }
 #ifdef FIREFOX
-  browser.runtime.getBackgroundPage()
-  .then(callBackgroundPageFn, onError);
+  browser.runtime.getBackgroundPage().then(
+    (page) => { page.setTooltip(options); },
+    onError
+  );
 #endif
 #ifdef CHROME
-  chrome.runtime.getBackgroundPage(callBackgroundPageFn);
+  chrome.runtime.getBackgroundPage(
+    (page) => { page.setTooltip(options); }
+  );
 #endif
 }
 
@@ -162,7 +161,12 @@ function restoreDefaults (e) {
   };
 
   // First, clear everything...
-  clearOptions();
+#ifdef FIREFOX
+  browser.storage.sync.clear();
+#endif
+#ifdef CHROME
+  chrome.storage.sync.clear();
+#endif
 
   // Save the default values...
 #ifdef FIREFOX
