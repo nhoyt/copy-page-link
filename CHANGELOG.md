@@ -1,7 +1,8 @@
 # CHANGELOG
 
 ## v2.3
-* Refactor background script: use of promises
+* Refactor background script: chaining of promises
+* Use messaging to initialize options script variables and call background script function
 * Move image files to images subdirectory
 
 ## v2.2

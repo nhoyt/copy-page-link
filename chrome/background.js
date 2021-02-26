@@ -140,17 +140,18 @@ function copyPageLink (tab) {
 
 // Listen for messages from other scripts
 
-chrome.runtime.onMessage.addListener(
-  (data, sender) => {
-    if (data.id === 'content') { processLinkData(data); }
-    if (data.id === 'options') {
-      chrome.runtime.sendMessage({
-        id: 'background',
-        values: [defaultFormat, extensionName]
-      });
-    }
+function messageHandler (data, sender) {
+  if (data.id === 'content') { processLinkData(data); }
+  if (data.id === 'tooltip') { setTooltip(data.options); }
+  if (data.id === 'options') {
+    chrome.runtime.sendMessage({
+      id: 'background',
+      values: [defaultFormat, extensionName]
+    });
   }
-);
+}
+
+chrome.runtime.onMessage.addListener(messageHandler);
 
 // Listen for toolbar button activation
 

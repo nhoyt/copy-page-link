@@ -6,31 +6,24 @@ var defaultFormat;
 var extensionName;
 var platformInfo;
 
+function messageHandler (data, sender) {
+  if (data.id === 'background') {
+    [defaultFormat, extensionName] = data.values;
+    if (debug) console.log(data);
+  }
+}
+
 // Initialize variables
 #ifdef FIREFOX
 browser.runtime.getPlatformInfo()
 .then(info => { platformInfo = info; }, onError);
 browser.runtime.sendMessage({ id: 'options' });
-browser.runtime.onMessage.addListener(
-  (data, sender) => {
-    if (data.id === 'background') {
-      [defaultFormat, extensionName] = data.values;
-      if (debug) console.log(data);
-    }
-  }
-);
+browser.runtime.onMessage.addListener(messageHandler);
 #endif
 #ifdef CHROME
 chrome.runtime.getPlatformInfo(info => { platformInfo = info; });
 chrome.runtime.sendMessage({ id: 'options' });
-chrome.runtime.onMessage.addListener(
-  (data, sender) => {
-    if (data.id === 'background') {
-      [defaultFormat, extensionName] = data.values;
-      if (debug) console.log(data);
-    }
-  }
-);
+chrome.runtime.onMessage.addListener(messageHandler);
 #endif
 
 #ifdef FIREFOX
@@ -77,15 +70,16 @@ function notifyRestored () {
 
 function setTooltip (options) {
 #ifdef FIREFOX
-  browser.runtime.getBackgroundPage().then(
-    (page) => { page.setTooltip(options); },
-    onError
-  );
+  browser.runtime.sendMessage({
+    id: 'tooltip',
+    options: options
+  });
 #endif
 #ifdef CHROME
-  chrome.runtime.getBackgroundPage(
-    (page) => { page.setTooltip(options); }
-  );
+  chrome.runtime.sendMessage({
+    id: 'tooltip',
+    options: options
+  });
 #endif
 }
 

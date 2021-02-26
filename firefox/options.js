@@ -6,18 +6,18 @@ var defaultFormat;
 var extensionName;
 var platformInfo;
 
+function messageHandler (data, sender) {
+  if (data.id === 'background') {
+    [defaultFormat, extensionName] = data.values;
+    if (debug) console.log(data);
+  }
+}
+
 // Initialize variables
 browser.runtime.getPlatformInfo()
 .then(info => { platformInfo = info; }, onError);
 browser.runtime.sendMessage({ id: 'options' });
-browser.runtime.onMessage.addListener(
-  (data, sender) => {
-    if (data.id === 'background') {
-      [defaultFormat, extensionName] = data.values;
-      if (debug) console.log(data);
-    }
-  }
-);
+browser.runtime.onMessage.addListener(messageHandler);
 
 // Generic error handler
 function onError (error) {
@@ -47,10 +47,10 @@ function notifyRestored () {
 // Utility functions
 
 function setTooltip (options) {
-  browser.runtime.getBackgroundPage().then(
-    (page) => { page.setTooltip(options); },
-    onError
-  );
+  browser.runtime.sendMessage({
+    id: 'tooltip',
+    options: options
+  });
 }
 
 /* -------------------------------------------------------- */

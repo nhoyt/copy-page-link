@@ -192,31 +192,30 @@ function copyPageLink (tab) {
 
 // Listen for messages from other scripts
 
+function messageHandler (data, sender) {
+  if (data.id === 'content') { processLinkData(data); }
+  if (data.id === 'tooltip') { setTooltip(data.options); }
+  if (data.id === 'options') {
 #ifdef FIREFOX
-browser.runtime.onMessage.addListener(
-  (data, sender) => {
-    if (data.id === 'content') { processLinkData(data); }
-    if (data.id === 'options') {
-      browser.runtime.sendMessage({
-        id: 'background',
-        values: [defaultFormat, extensionName]
-      });
-    }
-  }
-);
+    browser.runtime.sendMessage({
+      id: 'background',
+      values: [defaultFormat, extensionName]
+    });
 #endif
 #ifdef CHROME
-chrome.runtime.onMessage.addListener(
-  (data, sender) => {
-    if (data.id === 'content') { processLinkData(data); }
-    if (data.id === 'options') {
-      chrome.runtime.sendMessage({
-        id: 'background',
-        values: [defaultFormat, extensionName]
-      });
-    }
+    chrome.runtime.sendMessage({
+      id: 'background',
+      values: [defaultFormat, extensionName]
+    });
+#endif
   }
-);
+}
+
+#ifdef FIREFOX
+browser.runtime.onMessage.addListener(messageHandler);
+#endif
+#ifdef CHROME
+chrome.runtime.onMessage.addListener(messageHandler);
 #endif
 
 // Listen for toolbar button activation

@@ -6,17 +6,17 @@ var defaultFormat;
 var extensionName;
 var platformInfo;
 
+function messageHandler (data, sender) {
+  if (data.id === 'background') {
+    [defaultFormat, extensionName] = data.values;
+    if (debug) console.log(data);
+  }
+}
+
 // Initialize variables
 chrome.runtime.getPlatformInfo(info => { platformInfo = info; });
 chrome.runtime.sendMessage({ id: 'options' });
-chrome.runtime.onMessage.addListener(
-  (data, sender) => {
-    if (data.id === 'background') {
-      [defaultFormat, extensionName] = data.values;
-      if (debug) console.log(data);
-    }
-  }
-);
+chrome.runtime.onMessage.addListener(messageHandler);
 
 // Redefine console for Chrome extension
 var console = chrome.extension.getBackgroundPage().console;
@@ -53,9 +53,10 @@ function notifyRestored () {
 // Utility functions
 
 function setTooltip (options) {
-  chrome.runtime.getBackgroundPage(
-    (page) => { page.setTooltip(options); }
-  );
+  chrome.runtime.sendMessage({
+    id: 'tooltip',
+    options: options
+  });
 }
 
 /* -------------------------------------------------------- */
