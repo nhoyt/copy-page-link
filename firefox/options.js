@@ -2,12 +2,22 @@
 *   options.js
 */
 const debug = false;
-const defaultFormat = 'markdown';
-const extensionName = 'Copy Page Link';
+var defaultFormat;
+var extensionName;
 var platformInfo;
 
+// Initialize variables
 browser.runtime.getPlatformInfo()
 .then(info => { platformInfo = info; }, onError);
+browser.runtime.sendMessage({ id: 'options' });
+browser.runtime.onMessage.addListener(
+  (data, sender) => {
+    if (data.id === 'background') {
+      [defaultFormat, extensionName] = data.values;
+      if (debug) console.log(data);
+    }
+  }
+);
 
 // Generic error handler
 function onError (error) {

@@ -77,6 +77,7 @@ function processLinkData (data) {
 
   function copyToClipboard (options) {
     let str = getFormattedLink(data, options);
+    if (debug) console.log(str);
     return new Promise (function (resolve, reject) {
       let promise = navigator.clipboard.writeText(str);
       promise.then(
@@ -131,10 +132,18 @@ function copyPageLink (tab) {
 
 /* ---------------------------------------------------------------- */
 
-// Listen for messages from the content script
+// Listen for messages from other scripts
 
 browser.runtime.onMessage.addListener(
-  (data, sender) => { processLinkData(data); }
+  (data, sender) => {
+    if (data.id === 'content') { processLinkData(data); }
+    if (data.id === 'options') {
+      browser.runtime.sendMessage({
+        id: 'background',
+        values: [defaultFormat, extensionName]
+      });
+    }
+  }
 );
 
 // Listen for toolbar button activation

@@ -2,11 +2,21 @@
 *   options.js
 */
 const debug = false;
-const defaultFormat = 'markdown';
-const extensionName = 'Copy Page Link';
+var defaultFormat;
+var extensionName;
 var platformInfo;
 
+// Initialize variables
 chrome.runtime.getPlatformInfo(info => { platformInfo = info; });
+chrome.runtime.sendMessage({ id: 'options' });
+chrome.runtime.onMessage.addListener(
+  (data, sender) => {
+    if (data.id === 'background') {
+      [defaultFormat, extensionName] = data.values;
+      if (debug) console.log(data);
+    }
+  }
+);
 
 // Redefine console for Chrome extension
 var console = chrome.extension.getBackgroundPage().console;
