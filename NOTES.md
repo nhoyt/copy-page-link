@@ -2,11 +2,15 @@
 
 ### Version 2.x
 
-Copy Page Link creates a formatted link to the current page and copies it to the clipboard. Once copied, it can be pasted elsewhere using the standard keyboard shortcuts or menu actions for Paste.
+Copy Page Link creates a formatted link to the current page and copies it to the clipboard. The preferences page provides four choices for link format:
 
-The formatted link consists of two main items: (1) the descriptive link text and (2) the URL of the page. By default, the page title is used as the link text. However, if there is a text selection on the web page, Copy Page Link will use it as the link text instead of the page title.
-
-The Copy Page Link preferences/options page provides four choices for link format: Markdown (the default), HTML, LaTeX and XML. It also allows you to specify the element and attribute names for the XML format.
+<ul>
+<li>Markdown (default)</li>
+<li>HTML</li>
+<li>LaTeX</li>
+<li>XML</li>
+</ul>
+The formatted link consists of (1) the descriptive link text and (2) the URL of the page. By default, the <em>page title</em> is used as the link text. However, if there is a <em>text selection</em> on the web page, Copy Page Link will use it as the link text <em>instead of</em> the page title.
 
 ### Version 1.x
 
