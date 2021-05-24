@@ -7,22 +7,12 @@ import {
   saveOptions
 } from './storage.js';
 
-var platformInfo;
-const status = document.getElementById('status');
 const debug = false;
-
-// Initialize variables
-browser.runtime.getPlatformInfo()
-.then(info => { platformInfo = info; }, onError);
-
-// Generic error handler
-function onError (error) {
-  console.log(`${extensionName}: ${error}`);
-}
 
 // Functions for displaying messages
 
 function displayMessage (message) {
+  const status = document.getElementById('status');
   status.textContent = message;
 
   setTimeout(function () { status.textContent = ''; }, 1500);
@@ -30,13 +20,11 @@ function displayMessage (message) {
 }
 
 function notifySaved () {
-  let str = (platformInfo.os === 'mac') ? 'Preferences' : 'Options';
-  displayMessage(`${str} saved!`);
+  displayMessage('Options saved!');
 }
 
 function notifyRestored () {
-  let str = (platformInfo.os === 'mac') ? 'preferences' : 'options';
-  displayMessage(`Default values for ${str} restored!`);
+  displayMessage('Default values for options restored!');
 }
 
 // Utility functions
@@ -122,6 +110,11 @@ function logOptions (context, objName, obj) {
     output.push(`${prop}: '${obj[prop]}'`);
   }
   console.log(`${context}: ${objName}: ${output.join(', ')}`);
+}
+
+// Generic error handler
+function onError (error) {
+  console.log(`${extensionName}: ${error}`);
 }
 
 // Add event listeners for saving and restoring options

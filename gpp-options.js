@@ -7,42 +7,12 @@ import {
   saveOptions
 } from './storage.js';
 
-var platformInfo;
-const status = document.getElementById('status');
 const debug = false;
-
-// Initialize variables
-#ifdef FIREFOX
-browser.runtime.getPlatformInfo()
-.then(info => { platformInfo = info; }, onError);
-#endif
-#ifdef CHROME
-chrome.runtime.getPlatformInfo(info => { platformInfo = info; });
-#endif
-
-#ifdef FIREFOX
-// Generic error handler
-function onError (error) {
-  console.log(`${extensionName}: ${error}`);
-}
-#endif
-#ifdef CHROME
-// Redefine console for Chrome extension
-var console = chrome.extension.getBackgroundPage().console;
-
-// Generic error handler
-function notLastError () {
-  if (!chrome.runtime.lastError) { return true; }
-  else {
-    console.log(chrome.runtime.lastError.message);
-    return false;
-  }
-}
-#endif
 
 // Functions for displaying messages
 
 function displayMessage (message) {
+  const status = document.getElementById('status');
   status.textContent = message;
 
   setTimeout(function () { status.textContent = ''; }, 1500);
@@ -50,13 +20,11 @@ function displayMessage (message) {
 }
 
 function notifySaved () {
-  let str = (platformInfo.os === 'mac') ? 'Preferences' : 'Options';
-  displayMessage(`${str} saved!`);
+  displayMessage('Options saved!');
 }
 
 function notifyRestored () {
-  let str = (platformInfo.os === 'mac') ? 'preferences' : 'options';
-  displayMessage(`Default values for ${str} restored!`);
+  displayMessage('Default values for options restored!');
 }
 
 // Utility functions
@@ -151,6 +119,26 @@ function logOptions (context, objName, obj) {
   }
   console.log(`${context}: ${objName}: ${output.join(', ')}`);
 }
+
+#ifdef FIREFOX
+// Generic error handler
+function onError (error) {
+  console.log(`${extensionName}: ${error}`);
+}
+#endif
+#ifdef CHROME
+// Redefine console for Chrome extension
+var console = chrome.extension.getBackgroundPage().console;
+
+// Generic error handler
+function notLastError () {
+  if (!chrome.runtime.lastError) { return true; }
+  else {
+    console.log(chrome.runtime.lastError.message);
+    return false;
+  }
+}
+#endif
 
 // Add event listeners for saving and restoring options
 

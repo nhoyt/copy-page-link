@@ -7,28 +7,12 @@ import {
   saveOptions
 } from './storage.js';
 
-var platformInfo;
-const status = document.getElementById('status');
 const debug = false;
-
-// Initialize variables
-chrome.runtime.getPlatformInfo(info => { platformInfo = info; });
-
-// Redefine console for Chrome extension
-var console = chrome.extension.getBackgroundPage().console;
-
-// Generic error handler
-function notLastError () {
-  if (!chrome.runtime.lastError) { return true; }
-  else {
-    console.log(chrome.runtime.lastError.message);
-    return false;
-  }
-}
 
 // Functions for displaying messages
 
 function displayMessage (message) {
+  const status = document.getElementById('status');
   status.textContent = message;
 
   setTimeout(function () { status.textContent = ''; }, 1500);
@@ -36,13 +20,11 @@ function displayMessage (message) {
 }
 
 function notifySaved () {
-  let str = (platformInfo.os === 'mac') ? 'Preferences' : 'Options';
-  displayMessage(`${str} saved!`);
+  displayMessage('Options saved!');
 }
 
 function notifyRestored () {
-  let str = (platformInfo.os === 'mac') ? 'preferences' : 'options';
-  displayMessage(`Default values for ${str} restored!`);
+  displayMessage('Default values for options restored!');
 }
 
 // Utility functions
@@ -128,6 +110,18 @@ function logOptions (context, objName, obj) {
     output.push(`${prop}: '${obj[prop]}'`);
   }
   console.log(`${context}: ${objName}: ${output.join(', ')}`);
+}
+
+// Redefine console for Chrome extension
+var console = chrome.extension.getBackgroundPage().console;
+
+// Generic error handler
+function notLastError () {
+  if (!chrome.runtime.lastError) { return true; }
+  else {
+    console.log(chrome.runtime.lastError.message);
+    return false;
+  }
 }
 
 // Add event listeners for saving and restoring options
