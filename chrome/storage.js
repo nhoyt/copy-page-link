@@ -1,0 +1,60 @@
+/* storage.js */
+
+export const defaultFormat = 'markdown';
+export const extensionName = 'Copy Page Link';
+
+const iconFilename = 'images/logo-48.png';
+export const iconUrl = chrome.extension.getURL(iconFilename);
+
+export const defaultOptions = {
+  format: 'markdown',
+  link:   'site',
+  href:   'href',
+  name:   'name'
+};
+
+/*
+** getOptions
+*/
+export function getOptions () {
+  return new Promise (function (resolve, reject) {
+    chrome.storage.sync.get(function (options) {
+      if (notLastError()) { resolve(options) }
+    });
+  });
+}
+
+/*
+** saveOptions
+*/
+export function saveOptions (options) {
+  return new Promise (function (resolve, reject) {
+    chrome.storage.sync.set(options, function () {
+      if (notLastError()) { resolve () }
+    });
+  });
+}
+
+/*
+**  initStorage
+*/
+function initStorage (options) {
+  if (Object.entries(options).length === 0) {
+    saveOptions(defaultOptions);
+  }
+}
+
+chrome.storage.sync.get(function (options) {
+  if (notLastError()) { initStorage(options); }
+});
+
+/*
+**  Generic error handler
+*/
+function notLastError () {
+  if (!chrome.runtime.lastError) { return true; }
+  else {
+    console.log(chrome.runtime.lastError.message);
+    return false;
+  }
+}
