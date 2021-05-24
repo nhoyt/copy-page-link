@@ -1,7 +1,6 @@
 /* options.js */
 
 import {
-  defaultFormat,
   extensionName,
   defaultOptions,
   getOptions,
@@ -10,7 +9,7 @@ import {
 
 var platformInfo;
 const status = document.getElementById('status');
-const debug = true;
+const debug = false;
 
 // Initialize variables
 browser.runtime.getPlatformInfo()
@@ -49,17 +48,14 @@ function setTooltip (options) {
   });
 }
 
-/* -------------------------------------------------------- */
-/*   Functions for saving and restoring user options        */
-/* -------------------------------------------------------- */
-
-// Save user options in storage.sync and display message
-
+/*
+**  saveFormOptions: Save user options in storage.sync and display message
+*/
 function saveFormOptions(e) {
   e.preventDefault();
 
-  let formats = document.getElementById('formats');
-  let inputs = formats.getElementsByTagName('input');
+  const formats = document.getElementById('formats');
+  const inputs = formats.getElementsByTagName('input');
   let selectedFormat = null;
 
   for (let i = 0; i < inputs.length; i++) {
@@ -70,30 +66,32 @@ function saveFormOptions(e) {
   }
 
   if (selectedFormat) {
-    let options = {
+    const options = {
       format: selectedFormat,
       link: document.getElementById('link').value,
       href: document.getElementById('href').value,
       name: document.getElementById('name').value
     };
 
+    if (debug) logOptions('saveFormOptions', 'options', options)
     saveOptions(options).then(notifySaved);
     setTooltip(options);
   }
 }
 
-// Update HTML form values based on user options saved in storage.sync
-
+/*
+**  updateOptionsForm: Update HTML form values based on user options
+*/
 function updateOptionsForm() {
 
   function updateForm (options) {
-    if (debug) console.log(options);
+    if (debug) logOptions('updateForm', 'options', options);;
 
     // Set the form element states and values
-    document.getElementById(options.format || defaultFormat).checked = true;
-    document.getElementById('link').value = options.link || 'site';
-    document.getElementById('href').value = options.href || 'href';
-    document.getElementById('name').value = options.name || 'name';
+    document.getElementById(options.format).checked = true;
+    document.getElementById('link').value = options.link;
+    document.getElementById('href').value = options.href;
+    document.getElementById('name').value = options.name;
 
     // Update button tooltip
     setTooltip(options);
@@ -102,10 +100,13 @@ function updateOptionsForm() {
   getOptions().then(updateForm);
 }
 
-// Restore the default values for all options in storage.sync
-
+/*
+**  restoreDefaults: Restore default values for all options in storage.sync
+*/
 function restoreDefaults (e) {
   e.preventDefault();
+
+  if (debug) logOptions('restoreDefaults', 'defaultOptions', defaultOptions);
 
   // Save defaultOptions
   saveOptions(defaultOptions).then(notifyRestored);
@@ -113,6 +114,14 @@ function restoreDefaults (e) {
   // Update the UI
   setTooltip(defaultOptions);
   updateOptionsForm();
+}
+
+function logOptions (context, objName, obj) {
+  let output = [];
+  for (const prop in obj) {
+    output.push(`${prop}: '${obj[prop]}'`);
+  }
+  console.log(`${context}: ${objName}: ${output.join(', ')}`);
 }
 
 // Add event listeners for saving and restoring options

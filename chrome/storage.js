@@ -1,6 +1,5 @@
 /* storage.js */
 
-export const defaultFormat = 'markdown';
 export const extensionName = 'Copy Page Link';
 
 const iconFilename = 'images/logo-48.png';
@@ -45,6 +44,13 @@ function initStorage (options) {
 }
 
 getOptions().then(initStorage);
+
+/*
+**  clearStorage: Used for testing
+*/
+export function clearStorage () {
+  chrome.storage.sync.clear();
+}
 
 /*
 **  Generic error handler

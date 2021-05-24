@@ -1,19 +1,19 @@
 /* background.js */
 
 import {
-  defaultFormat,
   extensionName,
   iconUrl,
   getOptions
 } from './storage.js';
 
-const debug = false;
+const debug = true;
 
-// Initialize extension variables and settings
 getOptions().then(setTooltip);
 
-/* -------------------------------------------------------- */
-
+/*
+**  setTooltip: Set the extension button tooltip to show the
+**  extension name and the currently selected format option.
+*/
 function setTooltip (options) {
   let format = getCapitalizedFormat(options);
 #ifdef FIREFOX
@@ -35,11 +35,10 @@ function getCapitalizedFormat (options) {
   }
 }
 
-/* -------------------------------------------------------- */
-
-//  getFormattedLink: The main function for extracting and processing
-//  the data used for creating the formatted link markup.
-
+/*
+**  getFormattedLink: The main function for extracting and processing
+**  the data used for creating the formatted link markup.
+*/
 function getFormattedLink (data, options) {
   // Truncate selection string if length exceeds maximum
   const maxLength = 120;
@@ -49,7 +48,7 @@ function getFormattedLink (data, options) {
 
   // Construct and return the link markup based on format option
   let name = data.selection ? data.selection : data.title;
-  let format = options.format || defaultFormat;
+  let format = options.format;
 
   switch (format) {
     case 'markdown':
@@ -86,7 +85,10 @@ function processLinkData (data) {
 
   function copyToClipboard (options) {
     let str = getFormattedLink(data, options);
-    if (debug) console.log(str);
+    if (debug) {
+      console.log('copyToClipboard:');
+      console.log(str);
+    }
 #ifdef FIREFOX
     return new Promise (function (resolve, reject) {
       let promise = navigator.clipboard.writeText(str);

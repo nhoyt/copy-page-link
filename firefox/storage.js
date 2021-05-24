@@ -1,6 +1,5 @@
 /* storage.js */
 
-export const defaultFormat = 'markdown';
 export const extensionName = 'Copy Page Link';
 
 const iconFilename = 'images/logo-48.png';
@@ -31,7 +30,7 @@ export function getOptions () {
 */
 export function saveOptions (options) {
   return new Promise (function (resolve, reject) {
-    let promise = browser.storage.set(options);
+    let promise = browser.storage.sync.set(options);
     promise.then(
       () => { resolve() },
       message => { reject(new Error(`getOptions: ${message}`)) }
@@ -49,6 +48,13 @@ function initStorage (options) {
 }
 
 getOptions().then(initStorage);
+
+/*
+**  clearStorage: Used for testing
+*/
+export function clearStorage () {
+  browser.storage.sync.clear();
+}
 
 /*
 **  Generic error handler
