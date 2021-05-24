@@ -1,13 +1,16 @@
 /* background.js */
 
-import {
-  extensionName,
-  iconUrl,
-  getOptions
-} from './storage.js';
-
+import { extensionName, getOptions } from './storage.js';
 const debug = true;
 
+// Initialize notification icon and button tooltip
+const iconFilename = 'images/logo-48.png';
+#ifdef FIREFOX
+const iconUrl = browser.extension.getURL(iconFilename);
+#endif
+#ifdef CHROME
+const iconUrl = chrome.extension.getURL(iconFilename);
+#endif
 getOptions().then(setTooltip);
 
 /*
@@ -85,10 +88,7 @@ function processLinkData (data) {
 
   function copyToClipboard (options) {
     let str = getFormattedLink(data, options);
-    if (debug) {
-      console.log('copyToClipboard:');
-      console.log(str);
-    }
+    if (debug) console.log(str);
 #ifdef FIREFOX
     return new Promise (function (resolve, reject) {
       let promise = navigator.clipboard.writeText(str);

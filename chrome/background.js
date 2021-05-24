@@ -1,13 +1,11 @@
 /* background.js */
 
-import {
-  extensionName,
-  iconUrl,
-  getOptions
-} from './storage.js';
-
+import { extensionName, getOptions } from './storage.js';
 const debug = true;
 
+// Initialize notification icon and button tooltip
+const iconFilename = 'images/logo-48.png';
+const iconUrl = chrome.extension.getURL(iconFilename);
 getOptions().then(setTooltip);
 
 /*
@@ -80,10 +78,7 @@ function processLinkData (data) {
 
   function copyToClipboard (options) {
     let str = getFormattedLink(data, options);
-    if (debug) {
-      console.log('copyToClipboard:');
-      console.log(str);
-    }
+    if (debug) console.log(str);
     let listener = function (event) {
       event.clipboardData.setData('text/plain', str);
       event.preventDefault();

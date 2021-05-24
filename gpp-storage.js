@@ -2,14 +2,6 @@
 
 export const extensionName = 'Copy Page Link';
 
-const iconFilename = 'images/logo-48.png';
-#ifdef FIREFOX
-export const iconUrl = browser.extension.getURL(iconFilename);
-#endif
-#ifdef CHROME
-export const iconUrl = chrome.extension.getURL(iconFilename);
-#endif
-
 export const defaultOptions = {
   format: 'markdown',
   link:   'site',
