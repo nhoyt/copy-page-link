@@ -30,13 +30,13 @@ export function getOptions () {
 export function saveOptions (options) {
   return new Promise (function (resolve, reject) {
     chrome.storage.sync.set(options, function () {
-      if (notLastError()) { resolve () }
+      if (notLastError()) { resolve() }
     });
   });
 }
 
 /*
-**  initStorage
+**  initStorage: Called each time script is run
 */
 function initStorage (options) {
   if (Object.entries(options).length === 0) {
@@ -44,9 +44,7 @@ function initStorage (options) {
   }
 }
 
-chrome.storage.sync.get(function (options) {
-  if (notLastError()) { initStorage(options); }
-});
+getOptions().then(initStorage);
 
 /*
 **  Generic error handler

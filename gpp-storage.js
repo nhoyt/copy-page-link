@@ -46,20 +46,20 @@ export function saveOptions (options) {
 #ifdef FIREFOX
     let promise = browser.storage.set(options);
     promise.then(
-      () => { resolve ()},
+      () => { resolve() },
       message => { reject(new Error(`getOptions: ${message}`)) }
     );
 #endif
 #ifdef CHROME
     chrome.storage.sync.set(options, function () {
-      if (notLastError()) { resolve () }
+      if (notLastError()) { resolve() }
     });
 #endif
   });
 }
 
 /*
-**  initStorage
+**  initStorage: Called each time script is run
 */
 function initStorage (options) {
   if (Object.entries(options).length === 0) {
@@ -67,14 +67,7 @@ function initStorage (options) {
   }
 }
 
-#ifdef FIREFOX
-browser.storage.sync.get().then(initStorage, onError);
-#endif
-#ifdef CHROME
-chrome.storage.sync.get(function (options) {
-  if (notLastError()) { initStorage(options); }
-});
-#endif
+getOptions().then(initStorage);
 
 /*
 **  Generic error handler

@@ -33,14 +33,14 @@ export function saveOptions (options) {
   return new Promise (function (resolve, reject) {
     let promise = browser.storage.set(options);
     promise.then(
-      () => { resolve ()},
+      () => { resolve() },
       message => { reject(new Error(`getOptions: ${message}`)) }
     );
   });
 }
 
 /*
-**  initStorage
+**  initStorage: Called each time script is run
 */
 function initStorage (options) {
   if (Object.entries(options).length === 0) {
@@ -48,7 +48,7 @@ function initStorage (options) {
   }
 }
 
-browser.storage.sync.get().then(initStorage, onError);
+getOptions().then(initStorage);
 
 /*
 **  Generic error handler

@@ -1,9 +1,11 @@
 chrome/images/
 chrome/LICENSE
+chrome/background.html
 chrome/opt-common.css
 chrome/options.html
 firefox/images/
 firefox/LICENSE
+firefox/background.html
 firefox/opt-common.css
 firefox/options.html
 web-ext-artifacts/

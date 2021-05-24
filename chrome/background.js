@@ -7,7 +7,7 @@ import {
   getOptions
 } from './storage.js';
 
-const debug = true;
+const debug = false;
 
 // Initialize extension variables and settings
 getOptions().then(setTooltip);
