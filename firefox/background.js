@@ -1,19 +1,16 @@
-/*
-*   background.js
-*/
-const debug = false;
-const defaultFormat = 'markdown';
-const extensionName = 'Copy Page Link';
-const iconFilename = 'images/logo-48.png';
+/* background.js */
 
-// Generic error handler
-function onError (error) {
-  console.log(`${extensionName}: ${error}`);
-}
+import {
+  defaultFormat,
+  extensionName,
+  iconUrl,
+  getOptions
+} from './storage.js';
+
+const debug = true;
 
 // Initialize extension variables and settings
-const iconUrl = browser.extension.getURL(iconFilename);
-browser.storage.sync.get().then(setTooltip, onError);
+getOptions().then(setTooltip);
 
 /* -------------------------------------------------------- */
 
@@ -27,6 +24,8 @@ function getCapitalizedFormat (options) {
     case 'markdown': return 'Markdown';
     case 'html':     return 'HTML';
     case 'latex':    return 'LaTeX';
+    case 'wiki':     return 'Wiki';
+    case 'bbcode':   return 'BBCode';
     case 'xml':      return 'XML';
   }
 }
@@ -57,6 +56,12 @@ function getFormattedLink (data, options) {
     case 'latex':
       return `\\href{${data.href}}{${name}}`;
 
+    case 'wiki':
+      return `[${data.href} ${name}]`;
+
+    case 'bbcode':
+      return `[url=${data.href}]${name}[/url]`
+
     case 'xml':
       return `      <${options.link} ${options.href}="${data.href}">\n` +
              `        <${options.name}>${name}</${options.name}>\n` +
@@ -67,12 +72,11 @@ function getFormattedLink (data, options) {
   }
 }
 
-/* ---------------------------------------------------------------- */
-
-//  processLinkData: Called by the content script or copyPageLink directly,
-//  depending on protocol of page link. First gets the extension options and
-//  calls copyToClipboard. If successful, calls the notifySuccess function.
-
+/*
+**  processLinkData: Called by the content script or copyPageLink directly,
+**  depending on protocol of page link. First gets the extension options and
+**  calls copyToClipboard. If successful, calls the notifySuccess function.
+*/
 function processLinkData (data) {
 
   function copyToClipboard (options) {
@@ -104,17 +108,13 @@ function processLinkData (data) {
     });
   }
 
-  browser.storage.sync.get()
-  .then(copyToClipboard)
-  .then(notifySuccess)
-  .catch(onError);
+  getOptions().then(copyToClipboard).then(notifySuccess).catch(onError);
 }
 
-/* ---------------------------------------------------------------- */
-
-//  copyPageLink: The handler for the browserAction.onClicked event and thus
-//  the main entry point to the extension.
-
+/*
+**  copyPageLink: The handler for the browserAction.onClicked event and thus
+**  the main entry point to the extension.
+*/
 function copyPageLink (tab) {
   // Security policy only allows us to inject the content script that
   // accesses title and selection for pages loaded with http or https.
@@ -130,19 +130,16 @@ function copyPageLink (tab) {
   }
 }
 
-/* ---------------------------------------------------------------- */
+// Generic error handler
+function onError (error) {
+  console.log(`${extensionName}: ${error}`);
+}
 
 // Listen for messages from other scripts
 
 function messageHandler (data, sender) {
   if (data.id === 'content') { processLinkData(data); }
   if (data.id === 'tooltip') { setTooltip(data.options); }
-  if (data.id === 'options') {
-    browser.runtime.sendMessage({
-      id: 'background',
-      values: [defaultFormat, extensionName]
-    });
-  }
 }
 
 browser.runtime.onMessage.addListener(messageHandler);

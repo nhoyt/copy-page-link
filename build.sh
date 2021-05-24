@@ -4,6 +4,7 @@ GPPFILES=(
   background
   content
   options
+  storage
 )
 
 # Process extension JS files: output to browser folders

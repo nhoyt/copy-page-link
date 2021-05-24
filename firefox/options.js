@@ -1,23 +1,20 @@
-/*
-*   options.js
-*/
-const debug = false;
-var defaultFormat;
-var extensionName;
-var platformInfo;
+/* options.js */
 
-function messageHandler (data, sender) {
-  if (data.id === 'background') {
-    [defaultFormat, extensionName] = data.values;
-    if (debug) console.log(data);
-  }
-}
+import {
+  defaultFormat,
+  extensionName,
+  defaultOptions,
+  getOptions,
+  saveOptions
+} from './storage.js';
+
+var platformInfo;
+const status = document.getElementById('status');
+const debug = true;
 
 // Initialize variables
 browser.runtime.getPlatformInfo()
 .then(info => { platformInfo = info; }, onError);
-browser.runtime.sendMessage({ id: 'options' });
-browser.runtime.onMessage.addListener(messageHandler);
 
 // Generic error handler
 function onError (error) {
@@ -27,7 +24,6 @@ function onError (error) {
 // Functions for displaying messages
 
 function displayMessage (message) {
-  let status = document.getElementById('status');
   status.textContent = message;
 
   setTimeout(function () { status.textContent = ''; }, 1500);
@@ -59,7 +55,7 @@ function setTooltip (options) {
 
 // Save user options in storage.sync and display message
 
-function saveOptions(e) {
+function saveFormOptions(e) {
   e.preventDefault();
 
   let formats = document.getElementById('formats');
@@ -80,10 +76,9 @@ function saveOptions(e) {
       href: document.getElementById('href').value,
       name: document.getElementById('name').value
     };
-    setTooltip(options);
 
-    browser.storage.sync.set(options)
-    .then(notifySaved, onError);
+    saveOptions(options).then(notifySaved);
+    setTooltip(options);
   }
 }
 
@@ -104,8 +99,7 @@ function updateOptionsForm() {
     setTooltip(options);
   }
 
-  browser.storage.sync.get()
-  .then(updateForm, onError);
+  getOptions().then(updateForm);
 }
 
 // Restore the default values for all options in storage.sync
@@ -113,21 +107,10 @@ function updateOptionsForm() {
 function restoreDefaults (e) {
   e.preventDefault();
 
-  const defaultOptions = {
-    format: defaultFormat,
-    link:   'site',
-    href:   'href',
-    name:   'name'
-  };
+  // Save defaultOptions
+  saveOptions(defaultOptions).then(notifyRestored);
 
-  // First, clear everything...
-  browser.storage.sync.clear();
-
-  // Save the default values...
-  browser.storage.sync.set(defaultOptions)
-  .then(notifyRestored, onError);
-
-  // Finally, update the UI...
+  // Update the UI
   setTooltip(defaultOptions);
   updateOptionsForm();
 }
@@ -135,5 +118,5 @@ function restoreDefaults (e) {
 // Add event listeners for saving and restoring options
 
 document.addEventListener('DOMContentLoaded', updateOptionsForm);
-document.querySelector('form').addEventListener('submit', saveOptions);
+document.querySelector('form').addEventListener('submit', saveFormOptions);
 document.querySelector('form button#restore').addEventListener('click', restoreDefaults);
