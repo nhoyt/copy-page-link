@@ -1,21 +1,25 @@
+html {
+  font-size: 15px;
+}
+
 fieldset {
   border: 1px solid #bbb;
   margin-top: 1.25em;
 }
 
-fieldset div { font-size: 92.5%; }
 fieldset div:nth-child(n+3) { margin-top: 0.75em; }
 fieldset div:nth-child(2)   { margin-top: 0.25em; }
 fieldset div:last-child     { margin-bottom: 0.25em; }
 
 .grid-formats {
   display: grid;
-  grid-gap: 5px;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .grid-identifiers {
   display: grid;
-  grid-gap: 5px;
+  grid-template-columns: max-content auto;
+  grid-row-gap: 8px;
 }
 
 .grid-identifiers label {
@@ -25,10 +29,7 @@ fieldset div:last-child     { margin-bottom: 0.25em; }
 
 input[type=text] {
   font-size: 100%;
-}
-
-option, select {
-  font-size: 100%;
+  margin-left: 6px;
 }
 
 div#status { margin: 0.75em 0 0.5em; color: #0a84ff; }
@@ -39,7 +40,7 @@ button {
   min-width: 6em;
   border: 0;
   border-radius: 2px;
-  padding: 4px 12px;
+  padding: 6px 12px;
   margin: 0.5em 2px 1em;
   color: #ffffff;
   background-color: #0060df;
