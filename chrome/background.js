@@ -19,12 +19,12 @@ function setTooltip (options) {
 
 function getCapitalizedFormat (options) {
   switch (options.format) {
-    case 'markdown': return 'Markdown';
-    case 'html':     return 'HTML';
-    case 'latex':    return 'LaTeX';
-    case 'wiki':     return 'Wiki';
-    case 'bbcode':   return 'BBCode';
-    case 'xml':      return 'XML';
+    case 'markdown':  return 'Markdown';
+    case 'html':      return 'HTML';
+    case 'latex':     return 'LaTeX';
+    case 'mediawiki': return 'MediaWiki';
+    case 'bbcode':    return 'BBCode';
+    case 'xml':       return 'XML';
   }
 }
 
@@ -53,7 +53,7 @@ function getFormattedLink (data, options) {
     case 'latex':
       return `\\href{${data.href}}{${name}}`;
 
-    case 'wiki':
+    case 'mediawiki':
       return `[${data.href} ${name}]`;
 
     case 'bbcode':
