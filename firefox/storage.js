@@ -53,6 +53,3 @@ export function clearStorage () {
   browser.storage.sync.clear();
 }
 
-/*
-**  Generic error handler
-*/

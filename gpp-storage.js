@@ -72,10 +72,10 @@ export function clearStorage () {
 #endif
 }
 
+#ifdef CHROME
 /*
 **  Generic error handler
 */
-#ifdef CHROME
 function notLastError () {
   if (!chrome.runtime.lastError) { return true; }
   else {
