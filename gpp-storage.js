@@ -38,7 +38,7 @@ export function saveOptions (options) {
     let promise = browser.storage.sync.set(options);
     promise.then(
       () => { resolve() },
-      message => { reject(new Error(`getOptions: ${message}`)) }
+      message => { reject(new Error(`saveOptions: ${message}`)) }
     );
 #endif
 #ifdef CHROME
@@ -75,11 +75,6 @@ export function clearStorage () {
 /*
 **  Generic error handler
 */
-#ifdef FIREFOX
-function onError (error) {
-  console.log(`${extensionName}: ${error}`);
-}
-#endif
 #ifdef CHROME
 function notLastError () {
   if (!chrome.runtime.lastError) { return true; }

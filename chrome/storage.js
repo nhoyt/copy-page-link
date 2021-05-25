@@ -10,7 +10,7 @@ export const defaultOptions = {
 };
 
 /*
-** getOptions
+**  getOptions
 */
 export function getOptions () {
   return new Promise (function (resolve, reject) {
@@ -21,7 +21,7 @@ export function getOptions () {
 }
 
 /*
-** saveOptions
+**  saveOptions
 */
 export function saveOptions (options) {
   return new Promise (function (resolve, reject) {

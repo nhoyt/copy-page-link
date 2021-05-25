@@ -10,7 +10,7 @@ export const defaultOptions = {
 };
 
 /*
-** getOptions
+**  getOptions
 */
 export function getOptions () {
   return new Promise (function (resolve, reject) {
@@ -23,14 +23,14 @@ export function getOptions () {
 }
 
 /*
-** saveOptions
+**  saveOptions
 */
 export function saveOptions (options) {
   return new Promise (function (resolve, reject) {
     let promise = browser.storage.sync.set(options);
     promise.then(
       () => { resolve() },
-      message => { reject(new Error(`getOptions: ${message}`)) }
+      message => { reject(new Error(`saveOptions: ${message}`)) }
     );
   });
 }
@@ -56,6 +56,3 @@ export function clearStorage () {
 /*
 **  Generic error handler
 */
-function onError (error) {
-  console.log(`${extensionName}: ${error}`);
-}
