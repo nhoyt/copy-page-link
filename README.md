@@ -28,14 +28,16 @@ toolbar button indicates the currently selected link format.
 ### Link Format section
 
 This section of the Preferences page allows you to select from the following
-link formats:
+link formats (placeholders are `URL` and `page-title-or-selection`):
 
-| Format   | Result                                      |
-| -------- | ------------------------------------------- |
-| Markdown | `[page-title-or-selection](url)`            |
-| HTML     | `<a href="url">page-title-or-selection</a>` |
-| LaTeX    | `\href{url}{page-title-or-selection}`       |
-| XML      | configured separately (see below)           |
+| Format    | Result                                      |
+| --------- | ------------------------------------------- |
+| Markdown  | `[page-title-or-selection](URL)`            |
+| MediaWiki | `[URL page-title-or-selection]`             |
+| BBCode    | `[url=URL]page-title-or-selection[/url]`    |
+| HTML      | `<a href="URL">page-title-or-selection</a>` |
+| LaTeX     | `\href{URL}{page-title-or-selection}`       |
+| XML       | configured separately (see below)           |
 
 ### XML Identifiers section
 
