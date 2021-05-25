@@ -2,11 +2,19 @@
 
 ### Version 2.x
 
-Copy Page Link creates a formatted link to the current page and copies it to the clipboard. The options page provides the following choices for link format: (1) Markdown (default), (2) MediaWiki, (3) BBCode, (4) HTML, (5) LaTeX and (6) XML.
+Copy Page Link creates a formatted link to the current page and copies it to
+the clipboard.
 
-The formatted link consists of (1) the page URL and (2) the link text. By default, the <em>page title</em> is used as the link text. However, if there is a <em>text selection</em> on the web page, it will be used as the link text <em>instead of</em> the page title.
+The options page provides the following choices for link format: (1) Markdown
+(default) (2) MediaWiki (3) BBCode (4) HTML (5) LaTeX and (6) XML.
 
-To use the XML format, you will typically want to configure the names of the XML elements and attributes on the add-on's options page.
+The formatted link consists of (1) the page URL and (2) the link text. By
+default, the <em>page title</em> is used as the link text. However, if there
+is a <em>text selection</em> on the web page, it will be used as the link text
+<em>instead of</em> the page title.
+
+To use the XML format, you will typically want to configure the names of the
+XML elements and attributes on the add-on's options page.
 
 ### Screenshot
 

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.4
+* Add link formats: 'mediawiki' and 'bbcode'
+* Use ES6 modules: add storage.js module
+* Refactor using storage imports
+* Update styling of options form
+
 ## v2.3
 * Refactor background script: chaining of promises
 * Use messaging to initialize options script variables and call background script function
