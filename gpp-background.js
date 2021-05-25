@@ -30,10 +30,10 @@ function setTooltip (options) {
 function getCapitalizedFormat (options) {
   switch (options.format) {
     case 'markdown':  return 'Markdown';
-    case 'html':      return 'HTML';
-    case 'latex':     return 'LaTeX';
     case 'mediawiki': return 'MediaWiki';
     case 'bbcode':    return 'BBCode';
+    case 'html':      return 'HTML';
+    case 'latex':     return 'LaTeX';
     case 'xml':       return 'XML';
   }
 }
