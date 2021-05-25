@@ -1,0 +1,23 @@
+Copy Page Link
+
+Examples of page links copied with each of the link format options selected:
+
+Markdown:
+[Wikipedia, the free encyclopedia](https://en.wikipedia.org/wiki/Main_Page)
+
+MediaWiki:
+[https://en.wikipedia.org/wiki/Main_Page Wikipedia, the free encyclopedia]
+
+BBCode:
+[url=https://en.wikipedia.org/wiki/Main_Page]Wikipedia, the free encyclopedia[/url]
+
+HTML:
+<a href="https://en.wikipedia.org/wiki/Main_Page">Wikipedia, the free encyclopedia</a>
+
+LaTeX:
+\href{https://en.wikipedia.org/wiki/Main_Page}{Wikipedia, the free encyclopedia}
+
+XML:
+<site href="https://en.wikipedia.org/wiki/Main_Page">
+  <name>Wikipedia, the free encyclopedia</name>
+</site>
