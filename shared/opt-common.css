@@ -29,7 +29,7 @@ fieldset div:last-child     { margin-bottom: 0.25em; }
 
 input[type=text] {
   font-size: 100%;
-  margin-left: 6px;
+  margin-left: 12px;
 }
 
 div#status { margin: 0.75em 0 0.5em; color: #0a84ff; }
