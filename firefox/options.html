@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Copy Link Options</title>
+  <link href="options.css" rel="stylesheet">
+  <meta charset="utf-8">
+</head>
+<body>
+  <main>
+    <form>
+      <fieldset id="formats">
+        <legend>Link Format</legend>
+        <div class="grid-formats">
+          <label><input type="radio" name="format" value="markdown" id="markdown"> Markdown</label>
+          <label><input type="radio" name="format" value="mediawiki" id="mediawiki"> MediaWiki</label>
+          <label><input type="radio" name="format" value="bbcode" id="bbcode"> BBCode</label>
+          <label><input type="radio" name="format" value="html" id="html"> HTML</label>
+          <label><input type="radio" name="format" value="latex" id="latex"> LaTeX</label>
+          <label><input type="radio" name="format" value="xml" id="xml"> XML</label>
+        </div>
+      </fieldset>
+
+      <fieldset id="identifiers">
+        <legend>XML Identifiers</legend>
+        <div class="grid-identifiers">
+          <label for="link">Link element:</label><input type="text" id="link">
+          <label for="href">URL attribute:</label><input type="text" id="href">
+          <label for="name">Title element:</label><input type="text" id="name">
+        </div>
+      </fieldset>
+
+      <div id="status" aria-live="polite"></div>
+      <button type="submit">Save</button>
+      <button type="button" id="restore">Restore Defaults</button>
+    </form>
+  </main>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

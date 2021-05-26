@@ -1,0 +1,67 @@
+html {
+  font-size: 15px;
+}
+
+fieldset {
+  border: 1px solid #bbb;
+  margin-top: 1.25em;
+}
+
+fieldset div:nth-child(n+3) { margin-top: 0.75em; }
+fieldset div:nth-child(2)   { margin-top: 0.25em; }
+fieldset div:last-child     { margin-bottom: 0.25em; }
+
+.grid-formats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-identifiers {
+  display: grid;
+  grid-template-columns: max-content auto;
+  grid-row-gap: 8px;
+}
+
+.grid-identifiers label {
+  display: inline;
+  line-height: 30px;
+}
+
+input[type=text] {
+  font-size: 100%;
+  margin-left: 12px;
+}
+
+div#status { margin: 0.75em 0 0.5em; color: #0a84ff; }
+
+button {
+  font-size: 92.5%;
+  text-align: center;
+  min-width: 6em;
+  border: 0;
+  border-radius: 2px;
+  padding: 6px 12px;
+  margin: 0.5em 2px 1em;
+  color: #ffffff;
+  background-color: #0060df;
+}
+
+button:hover {
+  background-color: #003eaa;
+}
+
+button:active {
+  background-color: #002275;
+}
+
+button:focus {
+  box-shadow: 0 0 0 1px #0a84ff inset,
+              0 0 0 1px #0a84ff,
+              0 0 0 4px rgba(10, 132, 255, 0.3);
+}
+
+button#restore {
+  float: right;
+  color: #0c0c0d;
+  background-color: rgba(12, 12, 13, 0.1);
+}
