@@ -2,8 +2,8 @@
 
 ### Version 2.x
 
-Copy Page Link creates a formatted link to the current page and copies it to
-the clipboard.
+Copy Page Link creates link markup for the current page in the selected format
+and copies it to the clipboard for pasting into another document.
 
 The options page provides the following choices for link format: (1) Markdown
 (default) (2) MediaWiki (3) BBCode (4) HTML (5) LaTeX and (6) XML.

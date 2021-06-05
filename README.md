@@ -1,6 +1,6 @@
 # Copy Page Link
 
-Copy Page Link is a browser add-on for Chrome and Firefox that builds a
+Copy Page Link is a browser add-on for Chrome and Firefox that creates a
 formatted link to the current page loaded in the active tab, and copies it
 to the clipboard. You can then paste the resulting link markup into an
 external document.
