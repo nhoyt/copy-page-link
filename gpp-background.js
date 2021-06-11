@@ -1,7 +1,7 @@
 /* background.js */
 
-import { extensionName, getOptions } from './storage.js';
-const debug = true;
+import { extensionName, getOptions, logOptions } from './storage.js';
+const debug = false;
 
 // Initialize notification icon and button tooltip
 const iconFilename = 'images/logo-48.png';
@@ -18,6 +18,7 @@ getOptions().then(setTooltip);
 **  extension name and the currently selected format option.
 */
 function setTooltip (options) {
+  if (debug) logOptions('setTooltip', 'options', options);
   let format = getCapitalizedFormat(options);
 #ifdef FIREFOX
   browser.browserAction.setTitle({ title: `${extensionName}: ${format}` });

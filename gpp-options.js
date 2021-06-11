@@ -4,7 +4,8 @@ import {
   extensionName,
   defaultOptions,
   getOptions,
-  saveOptions
+  saveOptions,
+  logOptions
 } from './storage.js';
 
 const debug = false;
@@ -110,14 +111,6 @@ function restoreDefaults (e) {
   // Update the UI
   setTooltip(defaultOptions);
   updateOptionsForm();
-}
-
-function logOptions (context, objName, obj) {
-  let output = [];
-  for (const prop in obj) {
-    output.push(`${prop}: '${obj[prop]}'`);
-  }
-  console.log(`${context}: ${objName}: ${output.join(', ')}`);
 }
 
 #ifdef FIREFOX

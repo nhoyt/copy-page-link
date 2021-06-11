@@ -15,7 +15,15 @@ export const defaultOptions = {
 export function getOptions () {
   return new Promise (function (resolve, reject) {
     chrome.storage.sync.get(function (options) {
-      if (notLastError()) { resolve(options) }
+      if (notLastError()) {
+        if (Object.entries(options).length > 0) {
+          resolve(options);
+        }
+        else {
+          saveOptions(defaultOptions)
+          resolve(defaultOptions);
+        }
+      }
     });
   });
 }
@@ -32,15 +40,15 @@ export function saveOptions (options) {
 }
 
 /*
-**  initStorage: Called each time script is run
+**  logOptions
 */
-function initStorage (options) {
-  if (Object.entries(options).length === 0) {
-    saveOptions(defaultOptions);
+export function logOptions (context, objName, obj) {
+  let output = [];
+  for (const prop in obj) {
+    output.push(`${prop}: '${obj[prop]}'`);
   }
+  console.log(`${context} > ${objName} > ${output.join(', ')}`);
 }
-
-getOptions().then(initStorage);
 
 /*
 **  clearStorage: Used for testing
@@ -49,9 +57,10 @@ export function clearStorage () {
   chrome.storage.sync.clear();
 }
 
-/*
-**  Generic error handler
-*/
+// Redefine console for Chrome extension
+var console = chrome.extension.getBackgroundPage().console;
+
+// Generic error handler
 function notLastError () {
   if (!chrome.runtime.lastError) { return true; }
   else {

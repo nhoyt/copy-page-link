@@ -17,13 +17,29 @@ export function getOptions () {
 #ifdef FIREFOX
     let promise = browser.storage.sync.get();
     promise.then(
-      options => { resolve(options) },
+      options => {
+        if (Object.entries(options).length > 0) {
+          resolve(options);
+        }
+        else {
+          saveOptions(defaultOptions);
+          resolve(defaultOptions);
+        }
+      },
       message => { reject(new Error(`getOptions: ${message}`)) }
     );
 #endif
 #ifdef CHROME
     chrome.storage.sync.get(function (options) {
-      if (notLastError()) { resolve(options) }
+      if (notLastError()) {
+        if (Object.entries(options).length > 0) {
+          resolve(options);
+        }
+        else {
+          saveOptions(defaultOptions)
+          resolve(defaultOptions);
+        }
+      }
     });
 #endif
   });
@@ -50,15 +66,15 @@ export function saveOptions (options) {
 }
 
 /*
-**  initStorage: Called each time script is run
+**  logOptions
 */
-function initStorage (options) {
-  if (Object.entries(options).length === 0) {
-    saveOptions(defaultOptions);
+export function logOptions (context, objName, obj) {
+  let output = [];
+  for (const prop in obj) {
+    output.push(`${prop}: '${obj[prop]}'`);
   }
+  console.log(`${context} > ${objName} > ${output.join(', ')}`);
 }
-
-getOptions().then(initStorage);
 
 /*
 **  clearStorage: Used for testing
@@ -73,9 +89,10 @@ export function clearStorage () {
 }
 
 #ifdef CHROME
-/*
-**  Generic error handler
-*/
+// Redefine console for Chrome extension
+var console = chrome.extension.getBackgroundPage().console;
+
+// Generic error handler
 function notLastError () {
   if (!chrome.runtime.lastError) { return true; }
   else {
