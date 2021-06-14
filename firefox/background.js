@@ -4,7 +4,7 @@ import { extensionName, getOptions, logOptions } from './storage.js';
 const debug = false;
 
 // Initialize notification icon and button tooltip
-const iconFilename = 'images/logo-48.png';
+const iconFilename = 'images/icon-48.png';
 const iconUrl = browser.extension.getURL(iconFilename);
 getOptions().then(setTooltip);
 
