@@ -28,7 +28,7 @@ getActiveTab().then(checkUrlProtocol);
 
 /*
 **  copyPageLink: Called when form is submitted. Note: The form is
-**  displayed only when checkUrlProtocol allows.
+**  displayed only when the condition in 'checkUrlProtocol' it met.
 */
 function copyPageLink (tab) {
   browser.tabs.executeScript(null, { file: 'content.js' });

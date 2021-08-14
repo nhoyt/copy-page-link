@@ -56,9 +56,9 @@ function getFormattedLink (data, options) {
 }
 
 /*
-**  processLinkData: Called by the content script or copyPageLink directly,
-**  depending on protocol of page link. First gets the extension options and
-**  calls copyToClipboard. If successful, calls the notifySuccess function.
+**  processLinkData: Called when this script (background) receives 'content'
+**  message from the content script. It first gets the extension options and
+**  then calls 'copyToClipboard'. If successful, it calls 'notifySuccess'.
 */
 function processLinkData (data) {
 
