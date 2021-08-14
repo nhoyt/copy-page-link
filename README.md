@@ -9,35 +9,17 @@ By default, the page title is used as the display text for the link. You can
 override this behavior by selecting a text string within the document — that
 string will then be used as the display text instead of the page title.
 
-## Notifications
-
-When the Copy Page Link toolbar button is activated, a notification is created
-with behaviors that are based on how you have configured Notifications within
-your operating system preferences. For example, you can choose to be alerted
-by notifications as banners or you can turn off all notifications for your
-browser, among other options.
-
-The notification message, which displays in the Notification Center, indicates
-the format in which the link was copied.
-
-Additionally, the tooltip displayed when you hover over the Copy Page Link
-toolbar button indicates the currently selected link format.
-
-## Preferences / Options
-
-### Link Format section
-
-This section of the Preferences page allows you to select from the following
-link formats (placeholders are `URL` and `page-title-or-selection`):
+## Link Formats
 
 | Format    | Result                                      |
 | --------- | ------------------------------------------- |
-| Markdown  | `[page-title-or-selection](URL)`            |
-| MediaWiki | `[URL page-title-or-selection]`             |
-| BBCode    | `[url=URL]page-title-or-selection[/url]`    |
 | HTML      | `<a href="URL">page-title-or-selection</a>` |
 | LaTeX     | `\href{URL}{page-title-or-selection}`       |
-| XML       | configured separately (see below)           |
+| Markdown  | `[page-title-or-selection](URL)`            |
+| MediaWiki | `[URL page-title-or-selection]`             |
+| XML       | configured in Options (see below)           |
+
+## Preferences / Options
 
 ### XML Identifiers section
 

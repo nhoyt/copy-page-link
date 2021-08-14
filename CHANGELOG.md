@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v3.0.0
+* Moved selection of link format to popup window
+* Added error message in popup when the protocol of the active tab is not
+  'http' or 'https'
+* Updated the options form for setting XML names only
+* Removed link format 'bbcode'
+
 ## v2.4
 * Add link formats: 'mediawiki' and 'bbcode'
 * Use ES6 modules: add storage.js module

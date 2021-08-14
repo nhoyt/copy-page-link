@@ -1,5 +1,44 @@
 ## Documentation Notes
 
+### Version 3.x
+
+Copy Page Link creates link markup for the current page in the selected format
+and copies it to the clipboard for pasting into another document.
+
+The popup form provides the following choices for link format: (1) HTML
+(2) LaTeX (3) Markdown (default) (4) MediaWiki  and (5) XML.
+
+The formatted link consists of (1) the page URL and (2) the link text. By
+default, the <em>page title</em> is used as the link text. However, if there
+is a <em>text selection</em> on the web page, it will be used as the link text
+<em>instead of</em> the page title.
+
+To use the XML format, you can configure the names of the XML elements and
+attributes on the options page.
+
+### Screenshot
+
+Copy Page Link
+
+Examples of page links copied with each of the link format options selected:
+
+HTML:
+<a href="https://en.wikipedia.org/wiki/Main_Page">Wikipedia, the free encyclopedia</a>
+
+LaTeX:
+\href{https://en.wikipedia.org/wiki/Main_Page}{Wikipedia, the free encyclopedia}
+
+Markdown:
+[Wikipedia, the free encyclopedia](https://en.wikipedia.org/wiki/Main_Page)
+
+MediaWiki:
+[https://en.wikipedia.org/wiki/Main_Page Wikipedia, the free encyclopedia]
+
+XML:
+<site href="https://en.wikipedia.org/wiki/Main_Page">
+  <name>Wikipedia, the free encyclopedia</name>
+</site>
+
 ### Version 2.x
 
 Copy Page Link creates link markup for the current page in the selected format

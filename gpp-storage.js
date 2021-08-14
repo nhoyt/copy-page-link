@@ -2,11 +2,21 @@
 
 export const extensionName = 'Copy Page Link';
 
+const formatsArray = [
+  ['html',      'HTML'],
+  ['latex',     'LaTeX'],
+  ['markdown',  'Markdown'],
+  ['mediawiki', 'MediaWiki'],
+  ['xml',       'XML']
+];
+
+export const linkFormats = new Map(formatsArray);
+
 export const defaultOptions = {
-  format: 'markdown',
-  link:   'site',
-  href:   'href',
-  name:   'name'
+  format:     'markdown',
+  link:       'site',
+  href:       'href',
+  name:       'name'
 };
 
 /*

@@ -4,6 +4,7 @@ GPPFILES=(
   background
   content
   options
+  popup
   storage
 )
 

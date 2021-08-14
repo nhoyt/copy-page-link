@@ -1,32 +1,7 @@
 /* background.js */
 
-import { extensionName, getOptions, logOptions } from './storage.js';
+import { extensionName, linkFormats, getOptions } from './storage.js';
 const debug = false;
-
-// Initialize notification icon and button tooltip
-const iconFilename = 'images/icon-48.png';
-#ifdef FIREFOX
-const iconUrl = browser.extension.getURL(iconFilename);
-#endif
-#ifdef CHROME
-const iconUrl = chrome.extension.getURL(iconFilename);
-#endif
-getOptions().then(setTooltip);
-
-/*
-**  setTooltip: Set the extension button tooltip to show the
-**  extension name and the currently selected format option.
-*/
-function setTooltip (options) {
-  if (debug) logOptions('setTooltip', 'options', options);
-  let format = getCapitalizedFormat(options);
-#ifdef FIREFOX
-  browser.browserAction.setTitle({ title: `${extensionName}: ${format}` });
-#endif
-#ifdef CHROME
-  chrome.browserAction.setTitle({ title: `${extensionName}: ${format}` });
-#endif
-}
 
 function getCapitalizedFormat (options) {
   switch (options.format) {
@@ -111,25 +86,8 @@ function processLinkData (data) {
   }
 
   function notifySuccess (options) {
-    let format = getCapitalizedFormat(options);
-    let message = `${format}-formatted link copied to clipboard.`;
-    let notificationOptions = {
-      type: 'basic',
-      iconUrl: iconUrl,
-      title: extensionName,
-      message: message
-    };
-#ifdef FIREFOX
-    return new Promise (function (resolve, reject) {
-      let promise = browser.notifications.create(notificationOptions);
-      promise.catch(
-        msg => { reject(new Error(`notifySuccess: ${msg}`)); }
-      );
-    });
-#endif
-#ifdef CHROME
-    chrome.notifications.create(notificationOptions);
-#endif
+    const format = linkFormats.get(options.format);
+    console.log(`Copied page link using ${format} format!`);
   }
 
 #ifdef FIREFOX
@@ -144,30 +102,6 @@ function processLinkData (data) {
     }
   });
 #endif
-}
-
-/*
-**  copyPageLink: The handler for the browserAction.onClicked event and thus
-**  the main entry point to the extension.
-*/
-function copyPageLink (tab) {
-  // Security policy only allows us to inject the content script that
-  // accesses title and selection for pages loaded with http or https.
-  function checkUrlProtocol (tab) {
-    return (tab.url.indexOf('http:') === 0 || tab.url.indexOf('https:') === 0);
-  }
-
-  if (checkUrlProtocol(tab)) {
-#ifdef FIREFOX
-    browser.tabs.executeScript(null, { file: 'content.js' });
-#endif
-#ifdef CHROME
-    chrome.tabs.executeScript(null, { file: 'content.js' });
-#endif
-  }
-  else {
-    processLinkData({ href: tab.url, title: '', selection: '' });
-  }
 }
 
 // Generic error handler
@@ -190,7 +124,6 @@ function notLastError () {
 
 function messageHandler (data, sender) {
   if (data.id === 'content') { processLinkData(data); }
-  if (data.id === 'tooltip') { setTooltip(data.options); }
 }
 
 #ifdef FIREFOX
@@ -198,13 +131,4 @@ browser.runtime.onMessage.addListener(messageHandler);
 #endif
 #ifdef CHROME
 chrome.runtime.onMessage.addListener(messageHandler);
-#endif
-
-// Listen for toolbar button activation
-
-#ifdef FIREFOX
-browser.browserAction.onClicked.addListener(copyPageLink);
-#endif
-#ifdef CHROME
-chrome.browserAction.onClicked.addListener(copyPageLink);
 #endif

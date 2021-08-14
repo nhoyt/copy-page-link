@@ -28,52 +28,20 @@ function notifyRestored () {
   displayMessage('Default values for options restored!');
 }
 
-// Utility functions
-
-function setTooltip (options) {
-#ifdef FIREFOX
-  browser.runtime.sendMessage({
-    id: 'tooltip',
-    options: options
-  });
-#endif
-#ifdef CHROME
-  chrome.runtime.sendMessage({
-    id: 'tooltip',
-    options: options
-  });
-#endif
-}
-
 /*
 **  saveFormOptions: Save user options in storage.sync and display message
 */
 function saveFormOptions(e) {
   e.preventDefault();
 
-  const formats = document.getElementById('formats');
-  const inputs = formats.getElementsByTagName('input');
-  let selectedFormat = null;
+  const options = {
+    link: document.getElementById('link').value,
+    href: document.getElementById('href').value,
+    name: document.getElementById('name').value
+  };
 
-  for (let i = 0; i < inputs.length; i++) {
-    if (inputs[i].checked) {
-      selectedFormat = inputs[i].value;
-      break;
-    }
-  }
-
-  if (selectedFormat) {
-    const options = {
-      format: selectedFormat,
-      link: document.getElementById('link').value,
-      href: document.getElementById('href').value,
-      name: document.getElementById('name').value
-    };
-
-    if (debug) logOptions('saveFormOptions', 'options', options)
-    saveOptions(options).then(notifySaved);
-    setTooltip(options);
-  }
+  if (debug) logOptions('saveFormOptions', 'options', options)
+  saveOptions(options).then(notifySaved);
 }
 
 /*
@@ -85,13 +53,9 @@ function updateOptionsForm() {
     if (debug) logOptions('updateForm', 'options', options);;
 
     // Set the form element states and values
-    document.getElementById(options.format).checked = true;
     document.getElementById('link').value = options.link;
     document.getElementById('href').value = options.href;
     document.getElementById('name').value = options.name;
-
-    // Update button tooltip
-    setTooltip(options);
   }
 
   getOptions().then(updateForm);
@@ -109,7 +73,6 @@ function restoreDefaults (e) {
   saveOptions(defaultOptions).then(notifyRestored);
 
   // Update the UI
-  setTooltip(defaultOptions);
   updateOptionsForm();
 }
 
