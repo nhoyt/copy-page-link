@@ -3,17 +3,6 @@
 import { extensionName, linkFormats, getOptions } from './storage.js';
 const debug = false;
 
-function getCapitalizedFormat (options) {
-  switch (options.format) {
-    case 'markdown':  return 'Markdown';
-    case 'mediawiki': return 'MediaWiki';
-    case 'bbcode':    return 'BBCode';
-    case 'html':      return 'HTML';
-    case 'latex':     return 'LaTeX';
-    case 'xml':       return 'XML';
-  }
-}
-
 /*
 **  getFormattedLink: The main function for extracting and processing
 **  the data used for creating the formatted link markup.
@@ -30,20 +19,17 @@ function getFormattedLink (data, options) {
   let format = options.format;
 
   switch (format) {
-    case 'markdown':
-      return `[${name}](${data.href})`;
-
     case 'html':
       return `<a href="${data.href}">${name}</a>`;
 
     case 'latex':
       return `\\\\href{${data.href}}{${name}}`;
 
+    case 'markdown':
+      return `[${name}](${data.href})`;
+
     case 'mediawiki':
       return `[${data.href} ${name}]`;
-
-    case 'bbcode':
-      return `[url=${data.href}]${name}[/url]`
 
     case 'xml':
       return `      <${options.link} ${options.href}="${data.href}">\\n` +
