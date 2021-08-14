@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css"/>
+</head>
+
+<body>
+  <div id="popup-content" class="hidden">
+    <form>
+      <fieldset>
+        <legend>Select Format: </legend>
+        <div class="formats">
+          <div>
+            <input type="radio" name="format" id="rb1" value="html">
+            <label for="rb1">HTML</label>
+          </div>
+          <div>
+            <input type="radio" name="format" id="rb2" value="latex">
+            <label for="rb2">LaTeX</label>
+          </div>
+          <div>
+            <input type="radio" name="format" id="rb3" value="markdown">
+            <label for="rb3">Markdown</label>
+          </div>
+          <div>
+            <input type="radio" name="format" id="rb4" value="mediawiki">
+            <label for="rb4">MediaWiki</label>
+          </div>
+          <div>
+            <input type="radio" name="format" id="rb5" value="xml">
+            <label for="rb5">XML</label>
+          </div>
+        </div>
+      </fieldset>
+      <div class="copy-button">
+        <button type="submit">Copy to Clipboard</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="error-content" class="hidden">
+    <p>Unable to process this web page.</p>
+    <p>Please try a different page.</p>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+/* popup.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+  background-color: white;
+  color: black;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  width: max-content;
+  padding: 1rem 0.5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+fieldset {
+  border: none;
+}
+
+legend {
+  background-color:  #eee;
+  padding: 5px 8px;
+}
+
+div.formats > div {
+  margin: 0.5rem 0;
+}
+
+label {
+  vertical-align: 2px;
+}
+
+button {
+  background-color: #0060df;
+  color: white;
+  border: 1px transparent;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 5px 8px;
+  margin: 0 0.25rem;
+}
