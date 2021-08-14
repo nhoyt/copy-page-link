@@ -3,10 +3,10 @@
 import { getOptions, saveOptions } from './storage.js';
 
 function initForm (options) {
-  const formatButtons = document.querySelectorAll('div.formats input');
-  for (const input of formatButtons) {
-    if (input.value === options.format) {
-      input.checked = true;
+  const formatItems = document.querySelectorAll('div.formats input');
+  for (const item of formatItems) {
+    if (item.value === options.format) {
+      item.checked = true;
     }
   }
   document.querySelector('button[type="submit"]').focus();
@@ -60,10 +60,10 @@ function getActiveTab () {
 /* ---------------------------------------------------------------- */
 
 function getSelectedFormat () {
-  const formatButtons = document.querySelectorAll('div.formats input');
-  for (const input of formatButtons) {
-    if (input.checked) {
-      return input.value;
+  const formatItems = document.querySelectorAll('div.formats input');
+  for (const item of formatItems) {
+    if (item.checked) {
+      return item.value;
     }
   }
 }
