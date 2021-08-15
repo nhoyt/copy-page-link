@@ -11,6 +11,16 @@ body {
   padding: 1rem 0.5rem;
 }
 
+h1 {
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+div#error-content > * {
+  text-align: center;
+}
+
 .hidden {
   display: none;
 }
