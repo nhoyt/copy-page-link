@@ -2,17 +2,24 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+html {
+  --default: 13px;
+  --large: 14.5px;
+  --extra-large: 16px;
+  box-sizing: border-box;
+}
+
 body {
   background-color: white;
   color: black;
   font-family: 'Roboto', sans-serif;
-  font-size: 13px;
+  font-size: var(--default);
   width: max-content;
   padding: 1rem 0.5rem;
 }
 
 h1 {
-  font-size: 18px;
+  font-size: var(--extra-large);
   margin: 0;
   padding: 0;
 }
@@ -30,6 +37,8 @@ fieldset {
 }
 
 legend {
+  font-size: var(--large);
+  font-weight: bold;
   background-color:  #eee;
   padding: 5px 8px;
 }
@@ -47,8 +56,13 @@ button {
   color: white;
   border: 1px transparent;
   border-radius: 3px;
+  outline-offset: 2px;
   font-family: inherit;
-  font-size: inherit;
-  padding: 5px 8px;
+  font-size: var(--large);
+  padding: 4px 8px;
   margin: 0 0.25rem;
+}
+
+button:hover {
+  filter: brightness(1.25);
 }
