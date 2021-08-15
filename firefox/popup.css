@@ -2,11 +2,15 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   --default: 13px;
   --large: 14.5px;
   --extra-large: 16px;
-  box-sizing: border-box;
+  --illini-orange: #ff552e;
 }
 
 body {
@@ -39,7 +43,7 @@ fieldset {
 legend {
   font-size: var(--large);
   font-weight: bold;
-  background-color:  #eee;
+  background-color: #eee;
   padding: 5px 8px;
 }
 
@@ -47,7 +51,13 @@ div.formats > div {
   margin: 0.5rem 0;
 }
 
+input:focus {
+  outline-color: var(--illini-orange);
+  outline-offset: 2px;
+}
+
 label {
+  padding: 0 2px;
   vertical-align: 2px;
 }
 
@@ -56,11 +66,15 @@ button {
   color: white;
   border: 1px transparent;
   border-radius: 3px;
-  outline-offset: 2px;
   font-family: inherit;
   font-size: var(--large);
   padding: 4px 8px;
   margin: 0 0.25rem;
+}
+
+button:focus {
+  outline-color: var(--illini-orange);
+  outline-offset: 2px;
 }
 
 button:hover {
