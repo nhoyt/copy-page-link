@@ -7,9 +7,10 @@ function initForm (options) {
   for (const item of formatItems) {
     if (item.value === options.format) {
       item.checked = true;
+      item.focus();
     }
   }
-  document.querySelector('button[type="submit"]').focus();
+  // document.querySelector('button[type="submit"]').focus();
 }
 
 function checkUrlProtocol (tab) {
