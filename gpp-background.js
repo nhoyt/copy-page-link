@@ -106,7 +106,7 @@ function notLastError () {
 }
 #endif
 
-// Listen for messages from other scripts
+// Listen for message from content script
 
 function messageHandler (data, sender) {
   if (data.id === 'content') { processLinkData(data); }

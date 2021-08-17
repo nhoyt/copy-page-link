@@ -73,7 +73,7 @@ function onError (error) {
   console.log(`${extensionName}: ${error}`);
 }
 
-// Listen for messages from other scripts
+// Listen for message from content script
 
 function messageHandler (data, sender) {
   if (data.id === 'content') { processLinkData(data); }
