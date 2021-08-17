@@ -37,6 +37,15 @@ getActiveTab().then(checkUrlProtocol);
 **  Helper functions
 */
 
+function getActiveTab () {
+  return new Promise (function (resolve, reject) {
+    chrome.tabs.query({ currentWindow: true, active: true },
+      function (tabs) {
+        if (notLastError()) { resolve(tabs[0]) }
+      });
+  });
+}
+
 // Redefine console for Chrome extension
 var console = chrome.extension.getBackgroundPage().console;
 
@@ -46,15 +55,6 @@ function notLastError () {
     console.log(chrome.runtime.lastError.message);
     return false;
   }
-}
-
-function getActiveTab () {
-  return new Promise (function (resolve, reject) {
-    chrome.tabs.query({ currentWindow: true, active: true },
-      function (tabs) {
-        if (notLastError()) { resolve(tabs[0]) }
-      });
-  });
 }
 
 /* ---------------------------------------------------------------- */

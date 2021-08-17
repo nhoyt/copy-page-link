@@ -37,19 +37,6 @@ getActiveTab().then(checkUrlProtocol);
 **  Helper functions
 */
 
-#ifdef CHROME
-// Redefine console for Chrome extension
-var console = chrome.extension.getBackgroundPage().console;
-
-function notLastError () {
-  if (!chrome.runtime.lastError) { return true; }
-  else {
-    console.log(chrome.runtime.lastError.message);
-    return false;
-  }
-}
-#endif
-
 function getActiveTab () {
   return new Promise (function (resolve, reject) {
 #ifdef FIREFOX
@@ -67,6 +54,19 @@ function getActiveTab () {
 #endif
   });
 }
+#ifdef CHROME
+
+// Redefine console for Chrome extension
+var console = chrome.extension.getBackgroundPage().console;
+
+function notLastError () {
+  if (!chrome.runtime.lastError) { return true; }
+  else {
+    console.log(chrome.runtime.lastError.message);
+    return false;
+  }
+}
+#endif
 
 /* ---------------------------------------------------------------- */
 

@@ -37,7 +37,6 @@ getActiveTab().then(checkUrlProtocol);
 **  Helper functions
 */
 
-
 function getActiveTab () {
   return new Promise (function (resolve, reject) {
     let promise = browser.tabs.query({ currentWindow: true, active: true });
