@@ -1,23 +1,24 @@
 #!/usr/bin/env bash
 
 GPPFILES=(
-  background
-  content
-  options
-  popup
-  storage
+  background.js
+  content.js
+  options.js
+  popup.css
+  popup.js
+  storage.js
 )
 
 # Process extension JS files: output to browser folders
 
 for FNAME in ${GPPFILES[@]}
 do
-  gpp -DCHROME=1 -o chrome/${FNAME}.js gpp-${FNAME}.js
+  gpp -DCHROME=1 -o chrome/${FNAME} gpp-${FNAME}
 done
 
 for FNAME in ${GPPFILES[@]}
 do
-  gpp -DFIREFOX=1 -o firefox/${FNAME}.js gpp-${FNAME}.js
+  gpp -DFIREFOX=1 -o firefox/${FNAME} gpp-${FNAME}
 done
 
 # Process manifest.json

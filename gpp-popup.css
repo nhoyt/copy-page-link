@@ -62,7 +62,9 @@ input:focus {
 
 label {
   padding: 0 2px;
+#ifdef CHROME
   vertical-align: 2px;
+#endif
 }
 
 button {
