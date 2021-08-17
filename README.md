@@ -21,16 +21,18 @@ string will then be used as the display text instead of the page title.
 
 ## Preferences / Options
 
-### XML Identifiers section
+### XML Identifiers
 
-To configure the XML format, this section allows you to specify:
+To configure the XML format, the options page allows you to specify:
 
 * The name of the container element for the link
 * The name of the attribute on the container element that specifies the URL
   for the link
 * The name of the element that describes the link (by default, the page title)
 
-The structure of the XML markup, with default names/identifiers of `site`,
-`href` and `name`, is:
+For example, with the identifiers set to `page`, `href` and `title`,
+respectively, the formatted XML markup would appear as follows:
 
-`<site href="url"><name>page-title-or-selection</name></link>`
+    <page href="url">
+      <title>page-title-or-selection</title>
+    </page>
