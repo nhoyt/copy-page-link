@@ -4,10 +4,10 @@ import { getOptions, saveOptions } from './storage.js';
 
 /*
 **  Copy Page Link can only process web pages with an 'http' or 'https'
-**  protocol. If the page URL does not have one of these protocols,
-**  'checkUrlProtocol' displays an error message. Otherwise, it displays
-**  the Copy Page Link form, initialized with the most recently used link
-**  format preselected and focused.
+**  protocol. If the page URL does not have one of these protocols, the
+**  'checkUrlProtocol' function displays an error message. Otherwise, it
+**  displays the Copy Page Link form, initialized with the most recently
+**  used link format preselected and focused.
 */
 function initForm (options) {
   const formatItems = document.querySelectorAll('div.formats input');
@@ -30,19 +30,6 @@ function checkUrlProtocol (tab) {
 }
 
 getActiveTab().then(checkUrlProtocol);
-
-/* ---------------------------------------------------------------- */
-
-/*
-**  copyPageLink: Called from the 'handleSubmit' function. It executes the
-**  content script, which extracts data from the active tab web page, and
-**  then sends the data, via message, to the background script, which in
-**  turn formats the page link markup and copies it to the clipboard.
-*/
-function copyPageLink (tab) {
-  chrome.tabs.executeScript(null, { file: 'content.js' });
-  window.close();
-}
 
 /* ---------------------------------------------------------------- */
 
@@ -73,10 +60,19 @@ function getActiveTab () {
 /* ---------------------------------------------------------------- */
 
 /*
+**  copyPageLink: Executes the content script, which extracts data from
+**  the active tab web page and then sends it to the background script,
+**  which in turn formats the link markup and copies it to the clipboard.
+*/
+function copyPageLink () {
+  chrome.tabs.executeScript(null, { file: 'content.js' });
+  window.close();
+}
+
+/*
 **  When the user submits the Copy Page Link form, 'handleSubmit' first
 **  saves the user-selected format so that it can be retrieved for use
-**  by the background script. It then calls the 'copyPageLink' function
-**  with the active tab as its argument.
+**  by the background script. It then calls the 'copyPageLink' function.
 */
 function getSelectedFormat () {
   const formatItems = document.querySelectorAll('div.formats input');
@@ -89,7 +85,7 @@ function getSelectedFormat () {
 
 function handleSubmit () {
   saveOptions({ format: getSelectedFormat() });
-  getActiveTab().then(copyPageLink);
+  copyPageLink();
 }
 
 document.querySelector('form').addEventListener('submit', handleSubmit);
