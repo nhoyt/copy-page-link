@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.1.0
+* Updated popup layout
+* Added fieldset border
+* Updated legend text content
+* Updated font sizes and button width
+
 ## v3.0.0
 * Moved selection of link format to popup window
 * Added error message in popup when the protocol of the active tab is not

@@ -7,8 +7,8 @@
 }
 
 html {
-  --default: 13px;
-  --large: 14.5px;
+  --default: 12.5px;
+  --large: 14px;
   --extra-large: 16px;
   --illini-orange: #ff552e;
 }
@@ -18,8 +18,8 @@ body {
   color: black;
   font-family: 'Roboto', sans-serif;
   font-size: var(--default);
+  padding: var(--default);
   width: max-content;
-  padding: 1rem 0.5rem;
 }
 
 h1 {
@@ -37,13 +37,14 @@ div#error-content > * {
 }
 
 fieldset {
-  border: none;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  margin: -0.25rem 0 0;
 }
 
 legend {
   font-size: var(--large);
   font-weight: bold;
-  background-color: #eee;
   padding: 5px 8px;
 }
 
@@ -71,8 +72,9 @@ button {
   border-radius: 3px;
   font-family: inherit;
   font-size: var(--large);
-  padding: 4px 8px;
-  margin: 0 0.25rem;
+  margin: 0.75rem 0 0;
+  padding: 5px 8px;
+  width: 100%;
 }
 
 button:focus {
