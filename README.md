@@ -1,5 +1,7 @@
 # Copy Page Link
 
+## Overview
+
 Copy Page Link is a browser add-on for Chrome and Firefox that creates a
 formatted link to the current page loaded in the active tab, and copies it
 to the clipboard. You can then paste the resulting link markup into an
@@ -9,7 +11,17 @@ By default, the page title is used as the display text for the link. You can
 override this behavior by selecting a text string within the document — that
 string will then be used as the display text instead of the page title.
 
-## Link Formats
+### Keyboard Accessibility
+
+* The keyboard shortcut for Copy Page Link is 'alt-1' ('option-1' on the Mac).
+* Copy Page Link "remembers" the last link format that was copied. To select
+  another link format, use 'arrow-up' or 'arrow-down' to move through the list.
+* When the desired link format is selected, press 'return' or 'enter' to copy
+  the formatted link to the clipboard.
+
+## Details
+
+### Link Formats
 
 | Format    | Result                                      |
 | --------- | ------------------------------------------- |
