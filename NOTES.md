@@ -1,15 +1,16 @@
+## Homepage URL
+
+https://github.com/nhoyt/copy-page-link
+
 ## Documentation Notes
 
-Copy Page Link creates link markup for the current page in the selected format
-and copies it to the clipboard for pasting into another document.
+Copy Page Link creates link markup for the current page in the selected format and copies it to the clipboard for pasting into another document.
 
 ### Keyboard Accessibility
 
 * The keyboard shortcut for Copy Page Link is 'alt-1' ('option-1' on the Mac).
-* Copy Page Link "remembers" the last link format that was copied. To select
-  another link format, use 'arrow-up' or 'arrow-down' to move through the list.
-* When the desired link format is selected, press 'return' or 'enter' to copy
-  the formatted link to the clipboard.
+* Copy Page Link "remembers" the last link format that was copied. To select another link format, use 'arrow-up' or 'arrow-down' to move through the list.
+* When the desired link format is selected, press 'return' or 'enter' to copy the formatted link to the clipboard.
 
 ### Details
 
@@ -21,13 +22,9 @@ Copy Page Link provides the following choices for link format:
 * MediaWiki
 * XML
 
-The formatted link consists of (1) the page URL and (2) the link text. By
-default, the <em>page title</em> is used as the link text. However, if there
-is a <em>text selection</em> on the web page, it will be used as the link text
-<em>instead of</em> the page title.
+The formatted link consists of (1) the page URL and (2) the link text. By default, the <em>page title</em> is used as the link text. However, if there is a <em>text selection</em> on the web page, it will be used as the link text <em>instead of</em> the page title.
 
-To use the XML format, you can configure the names of the XML elements and
-attributes on the options page.
+To use the XML format, you can configure the names of the XML elements and attributes on the options page.
 
 ### Screenshot
 
