@@ -5,9 +5,9 @@
 }
 
 html {
-  --default: 0.875rem;
+  --default: 0.85rem;
   --large: 1rem;
-  --extra-large: 1.125rem;
+  --extra-large: 1.15rem;
   --illini-orange: #ff552e;
 }
 
@@ -42,7 +42,6 @@ fieldset {
 
 legend {
   font-size: var(--large);
-  /* font-weight: bold; */
   padding: 5px 8px;
 }
 
