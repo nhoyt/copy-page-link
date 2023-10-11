@@ -22,7 +22,7 @@ const displaySettings = {
 
 export const defaultOptions = {
   display:    displaySettings,
-  format:     'html',
+  format:     'markdown',
   link:       'site',
   href:       'href',
   name:       'name'
