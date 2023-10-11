@@ -11,11 +11,41 @@ import { getOptions, saveOptions } from './storage.js';
 */
 function initForm (options) {
   const formatItems = document.querySelectorAll('div.formats input');
+  const copyButton = document.querySelector('div.copy-button button');
+  const displaySettings = options.display;
+  const displayItems = [];
+  let hasSelection = false;
+
+  function selectItem (item) {
+    item.checked = true;
+    item.focus();
+  }
+
   for (const item of formatItems) {
-    if (item.value === options.format) {
-      item.checked = true;
-      item.focus();
+    if (!displaySettings[item.value]) {
+      item.parentElement.remove();
     }
+    else {
+      displayItems.push(item);
+    }
+  }
+
+  if (displayItems.length === 0) {
+    copyButton.setAttribute('disabled', '');
+    return;
+  }
+
+  copyButton.removeAttribute('disabled');
+
+  for (const item of displayItems) {
+    if (item.value === options.format) {
+      selectItem(item);
+      hasSelection = true;
+    }
+  }
+
+  if (!hasSelection) {
+    selectItem(displayItems[0]);
   }
 }
 

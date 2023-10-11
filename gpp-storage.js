@@ -12,8 +12,17 @@ const formatsArray = [
 
 export const linkFormats = new Map(formatsArray);
 
+const displaySettings = {
+  html:       true,
+  latex:      true,
+  markdown:   true,
+  mediawiki:  true,
+  xml:        false
+};
+
 export const defaultOptions = {
-  format:     'markdown',
+  display:    displaySettings,
+  format:     'html',
   link:       'site',
   href:       'href',
   name:       'name'
@@ -110,7 +119,15 @@ export function saveOptions (options) {
 export function logOptions (context, objName, obj) {
   let output = [];
   for (const prop in obj) {
-    output.push(`${prop}: '${obj[prop]}'`);
+    if (typeof obj[prop] === 'object') {
+      let inner = obj[prop];
+      for (const p in inner) {
+        output.push(`${p}: ${inner[p]}`);
+      }
+    }
+    else {
+      output.push(`${prop}: '${obj[prop]}'`);
+    }
   }
   console.log(`${context} > ${objName} > ${output.join(', ')}`);
 }

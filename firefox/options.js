@@ -8,7 +8,7 @@ import {
   logOptions
 } from './storage.js';
 
-const debug = false;
+const debug = true;
 
 // Functions for displaying messages
 
@@ -34,7 +34,16 @@ function notifyRestored () {
 function saveFormOptions(e) {
   e.preventDefault();
 
+  const displaySettings = {
+    html:       document.getElementById('html').checked,
+    latex:      document.getElementById('latex').checked,
+    markdown:   document.getElementById('markdown').checked,
+    mediawiki:  document.getElementById('mediawiki').checked,
+    xml:        document.getElementById('xml').checked
+  }
+
   const options = {
+    display: displaySettings,
     link: document.getElementById('link').value,
     href: document.getElementById('href').value,
     name: document.getElementById('name').value
@@ -53,6 +62,10 @@ function updateOptionsForm() {
     if (debug) logOptions('updateForm', 'options', options);;
 
     // Set the form element states and values
+    const displaySettings = options.display;
+    for (const prop in displaySettings) {
+      document.getElementById(prop).checked = displaySettings[prop];
+    }
     document.getElementById('link').value = options.link;
     document.getElementById('href').value = options.href;
     document.getElementById('name').value = options.name;
