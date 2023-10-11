@@ -1,22 +1,20 @@
 /* popup.css */
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
 * {
   box-sizing: border-box;
 }
 
 html {
-  --default: 12.5px;
-  --large: 14px;
-  --extra-large: 16px;
+  --default: 0.875rem;
+  --large: 1rem;
+  --extra-large: 1.125rem;
   --illini-orange: #ff552e;
 }
 
 body {
   background-color: white;
   color: black;
-  font-family: 'Roboto', sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: var(--default);
   padding: var(--default);
   width: max-content;
@@ -44,7 +42,7 @@ fieldset {
 
 legend {
   font-size: var(--large);
-  font-weight: bold;
+  /* font-weight: bold; */
   padding: 5px 8px;
 }
 
@@ -71,7 +69,7 @@ button {
   border: 1px transparent;
   border-radius: 3px;
   font-family: inherit;
-  font-size: var(--large);
+  font-size: var(--default);
   margin: 0.75rem 0 0;
   padding: 5px 8px;
   width: 100%;
