@@ -2,6 +2,7 @@
 
 import {
   extensionName,
+  defaultDisplaySettings,
   defaultOptions,
   getOptions,
   saveOptions,
@@ -28,6 +29,10 @@ function notifyRestored () {
   displayMessage('Default values for options restored!');
 }
 
+function notifyOverride () {
+  displayMessage('No formats enabled! Using default menu settings…');
+}
+
 /*
 **  saveFormOptions: Save user options in storage.sync and display message
 */
@@ -42,15 +47,27 @@ function saveFormOptions(e) {
     xml:        document.getElementById('xml').checked
   }
 
-  const options = {
-    display: displaySettings,
-    link: document.getElementById('link').value,
-    href: document.getElementById('href').value,
-    name: document.getElementById('name').value
-  };
+  let oneOrMoreChecked = false;
+  for (const prop in displaySettings) {
+    oneOrMoreChecked = oneOrMoreChecked || displaySettings[prop];
+  }
 
-  if (debug) logOptions('saveFormOptions', 'options', options)
-  saveOptions(options).then(notifySaved);
+  const options = {
+    display: oneOrMoreChecked ? displaySettings : defaultDisplaySettings,
+    link:       document.getElementById('link').value,
+    href:       document.getElementById('href').value,
+    name:       document.getElementById('name').value
+  }
+
+  if (oneOrMoreChecked) {
+    saveOptions(options).then(notifySaved);
+  }
+  else {
+    saveOptions(options).then(notifyOverride);
+    updateOptionsForm();
+  }
+
+  if (debug) logOptions('saveFormOptions', 'options', options);
 }
 
 /*

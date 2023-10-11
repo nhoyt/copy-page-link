@@ -12,7 +12,7 @@ const formatsArray = [
 
 export const linkFormats = new Map(formatsArray);
 
-const displaySettings = {
+export const defaultDisplaySettings = {
   html:       true,
   latex:      true,
   markdown:   true,
@@ -21,8 +21,8 @@ const displaySettings = {
 };
 
 export const defaultOptions = {
-  display:    displaySettings,
-  format:     'markdown',
+  display:    defaultDisplaySettings,
+  format:     'html',
   link:       'site',
   href:       'href',
   name:       'name'
