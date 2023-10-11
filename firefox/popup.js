@@ -5,13 +5,14 @@ import { getOptions, saveOptions } from './storage.js';
 /*
 **  Copy Page Link can only process web pages with an 'http' or 'https'
 **  protocol. If the page URL does not have one of these protocols, the
-**  'checkUrlProtocol' function displays an error message. Otherwise, it
-**  displays the Copy Page Link form, initialized with the most recently
-**  used link format preselected and focused.
+**  checkUrlProtocol function displays an error message.
+**
+**  Otherwise, it calls initForm with the currently set options, which
+**  include the link formats to be displayed as specified in Preferences,
+**  and with the most recently used link format preselected and focused.
 */
 function initForm (options) {
   const formatItems = document.querySelectorAll('div.formats input');
-  const copyButton = document.querySelector('div.copy-button button');
   const displaySettings = options.display;
   const displayItems = [];
   let hasSelection = false;
@@ -30,13 +31,6 @@ function initForm (options) {
     }
   }
 
-  if (displayItems.length === 0) {
-    copyButton.setAttribute('disabled', '');
-    return;
-  }
-
-  copyButton.removeAttribute('disabled');
-
   for (const item of displayItems) {
     if (item.value === options.format) {
       selectItem(item);
@@ -44,7 +38,7 @@ function initForm (options) {
     }
   }
 
-  if (!hasSelection) {
+  if (displayItems.length && !hasSelection) {
     selectItem(displayItems[0]);
   }
 }
