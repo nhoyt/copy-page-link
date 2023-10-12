@@ -5,11 +5,9 @@ html {
 fieldset {
   border: 1px solid #bbb;
   margin-top: 1.25em;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
-
-fieldset div:nth-child(n+3) { margin-top: 0.75em; }
-fieldset div:nth-child(2)   { margin-top: 0.25em; }
-fieldset div:last-child     { margin-bottom: 0.25em; }
 
 .grid-formats {
   display: grid;
@@ -19,7 +17,7 @@ fieldset div:last-child     { margin-bottom: 0.25em; }
 .grid-identifiers {
   display: grid;
   grid-template-columns: max-content auto;
-  grid-row-gap: 8px;
+  row-gap: 8px;
 }
 
 .grid-identifiers label {

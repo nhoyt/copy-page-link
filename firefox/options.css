@@ -6,5 +6,5 @@ body {
 }
 
 .grid-formats {
-  grid-row-gap: 1rem;
+  row-gap: 1em;
 }

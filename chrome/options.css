@@ -6,7 +6,7 @@ body {
 }
 
 .grid-formats {
-  grid-row-gap: 2px;
+  row-gap: 2px;
 }
 
 fieldset:first-of-type { margin-top: 0; }
