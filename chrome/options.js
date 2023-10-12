@@ -74,6 +74,14 @@ function saveFormOptions(e) {
 **  updateOptionsForm: Update HTML form values based on user options
 */
 function updateOptionsForm() {
+  const xmlCheckbox = document.getElementById('xml');
+  const identifiers = document.getElementById('identifiers');
+
+  function showHideIdentifiers () {
+    identifiers.style.display = xmlCheckbox.checked ? 'block' : 'none';
+  }
+
+  xmlCheckbox.addEventListener('change', showHideIdentifiers);
 
   function updateForm (options) {
     if (debug) logOptions('updateForm', 'options', options);;
@@ -83,9 +91,12 @@ function updateOptionsForm() {
     for (const prop in displaySettings) {
       document.getElementById(prop).checked = displaySettings[prop];
     }
+
     document.getElementById('link').value = options.link;
     document.getElementById('href').value = options.href;
     document.getElementById('name').value = options.name;
+
+    showHideIdentifiers();
   }
 
   getOptions().then(updateForm);

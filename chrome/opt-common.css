@@ -62,4 +62,5 @@ button#restore {
   float: right;
   color: #0c0c0d;
   background-color: rgba(12, 12, 13, 0.1);
+  visibility: hidden;
 }
