@@ -4,6 +4,7 @@ html {
 
 fieldset {
   border: 1px solid #bbb;
+  border-radius: 5px;
   margin-top: 1.25em;
   padding-top: 1em;
   padding-bottom: 1em;
@@ -37,7 +38,7 @@ button {
   text-align: center;
   min-width: 6em;
   border: 0;
-  border-radius: 2px;
+  border-radius: 5px;
   padding: 6px 12px;
   margin: 0.5em 2px 1em;
   color: #ffffff;
@@ -56,11 +57,4 @@ button:focus {
   box-shadow: 0 0 0 1px #0a84ff inset,
               0 0 0 1px #0a84ff,
               0 0 0 4px rgba(10, 132, 255, 0.3);
-}
-
-button#restore {
-  float: right;
-  color: #0c0c0d;
-  background-color: rgba(12, 12, 13, 0.1);
-  visibility: hidden;
 }

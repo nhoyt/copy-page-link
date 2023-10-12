@@ -25,10 +25,6 @@ function notifySaved () {
   displayMessage('Options saved!');
 }
 
-function notifyRestored () {
-  displayMessage('Default values for options restored!');
-}
-
 function notifyOverride () {
   displayMessage('No formats enabled! Using default menu settings…');
 }
@@ -102,21 +98,6 @@ function updateOptionsForm() {
   getOptions().then(updateForm);
 }
 
-/*
-**  restoreDefaults: Restore default values for all options in storage.sync
-*/
-function restoreDefaults (e) {
-  e.preventDefault();
-
-  if (debug) logOptions('restoreDefaults', 'defaultOptions', defaultOptions);
-
-  // Save defaultOptions
-  saveOptions(defaultOptions).then(notifyRestored);
-
-  // Update the UI
-  updateOptionsForm();
-}
-
 // Redefine console for Chrome extension
 var console = chrome.extension.getBackgroundPage().console;
 
@@ -133,4 +114,3 @@ function notLastError () {
 
 document.addEventListener('DOMContentLoaded', updateOptionsForm);
 document.querySelector('form').addEventListener('submit', saveFormOptions);
-document.querySelector('form button#restore').addEventListener('click', restoreDefaults);

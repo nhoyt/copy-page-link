@@ -44,7 +44,6 @@ fieldset {
 
 legend {
   font-size: var(--large);
-  font-weight: 600;
   padding: 5px 8px;
 }
 
@@ -73,7 +72,7 @@ button {
   border-radius: 5px;
   font-family: inherit;
   font-size: var(--default);
-  margin: 0.5rem 0 0.25rem;
+  margin: 0.75rem 0 0.25rem;
   padding: 5px;
   width: 100%;
 }
