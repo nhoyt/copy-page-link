@@ -44,7 +44,10 @@ fieldset {
 
 legend {
   font-size: var(--large);
-  padding: 5px 8px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 4px 8px;
+  width: auto;
 }
 
 div.formats > div {
@@ -52,7 +55,7 @@ div.formats > div {
 }
 
 div.formats > div:first-child {
-  margin-top: 0.125rem;
+  margin-top: 0;
 }
 
 input:focus {
@@ -65,6 +68,11 @@ label {
   vertical-align: 2px;
 }
 
+.copy-button {
+  display: flex;
+  justify-content: center;
+}
+
 button {
   background-color: #0060df;
   color: white;
@@ -72,9 +80,8 @@ button {
   border-radius: 5px;
   font-family: inherit;
   font-size: var(--default);
-  margin: 0.75rem 0 0.25rem;
-  padding: 5px 10px;
-  width: 100%;
+  margin: 0.625rem 0 0.25rem;
+  padding: 4px 8px;
 }
 
 button:focus {
