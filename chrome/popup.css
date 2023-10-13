@@ -16,7 +16,7 @@ body {
   color: black;
   font-family: Arial, Helvetica, sans-serif;
   font-size: var(--default);
-  padding: 0.625rem var(--default);
+  padding: 0.875rem var(--default) 0.625rem;
   width: max-content;
 }
 
@@ -43,7 +43,9 @@ fieldset {
 }
 
 legend {
-  font-size: var(--large);
+  font-size: var(--default);
+  background-color: #eee;
+  border-radius: 5px;
   margin-left: auto;
   margin-right: auto;
   padding: 4px 8px;
@@ -55,7 +57,7 @@ div.formats > div {
 }
 
 div.formats > div:first-child {
-  margin-top: 0;
+  margin-top: 0.125rem;
 }
 
 input:focus {
@@ -80,7 +82,7 @@ button {
   border-radius: 5px;
   font-family: inherit;
   font-size: var(--default);
-  margin: 0.625rem 0 0.25rem;
+  margin: 0.625rem 0 0.125rem;
   padding: 4px 8px;
 }
 
