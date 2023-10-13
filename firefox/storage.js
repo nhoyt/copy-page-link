@@ -7,6 +7,7 @@ const formatsArray = [
   ['latex',     'LaTeX'],
   ['markdown',  'Markdown'],
   ['mediawiki', 'MediaWiki'],
+  ['textile',   'Textile'],
   ['xml',       'XML']
 ];
 
@@ -17,6 +18,7 @@ export const defaultDisplaySettings = {
   latex:      true,
   markdown:   true,
   mediawiki:  true,
+  textile:    true,
   xml:        false
 };
 
