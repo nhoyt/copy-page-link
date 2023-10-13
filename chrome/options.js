@@ -74,12 +74,13 @@ function updateOptionsForm() {
   function updateForm (options) {
     if (debug) logOptions('updateForm', 'options', options);;
 
-    // Set the form element states and values
+    // Popup menu settings
     const displaySettings = options.display;
     for (const prop in displaySettings) {
       document.getElementById(prop).checked = displaySettings[prop];
     }
 
+    // XML format settings
     document.getElementById('link').value = options.link;
     document.getElementById('href').value = options.href;
     document.getElementById('name').value = options.name;
