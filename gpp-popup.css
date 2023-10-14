@@ -45,10 +45,11 @@ fieldset {
 legend {
   font-size: var(--default);
   background-color: #eee;
+  border: 1px solid transparent;
   border-radius: 5px;
   margin-left: auto;
   margin-right: auto;
-  padding: 4px 8px;
+  padding: 4px 16px;
   width: auto;
 }
 
@@ -77,6 +78,7 @@ div.button-row {
   grid-auto-rows: min-content;
   grid-template-columns: 1fr auto;
   margin: 0.5rem 0 0.125rem;
+  padding: 0 0.5rem;
 }
 
 div.copy-button {
@@ -98,7 +100,6 @@ button#copy {
   border-radius: 5px;
   font-family: inherit;
   font-size: var(--default);
-  margin-left: 6px;
   padding: 4px 16px;
 }
 
@@ -109,7 +110,6 @@ button#copy:hover {
 button#options {
   border: none;
   background-color: transparent;
-  margin-right: 6px;
   padding: 0;
 }
 
