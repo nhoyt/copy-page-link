@@ -95,13 +95,8 @@ button#copy {
   border-radius: 5px;
   font-family: inherit;
   font-size: var(--default);
-  padding: 4px 16px;
   margin-left: 6px;
-}
-
-button#copy:focus {
-  outline-color: var(--illini-orange);
-  outline-offset: 2px;
+  padding: 4px 16px;
 }
 
 button#copy:hover {
@@ -111,7 +106,8 @@ button#copy:hover {
 button#options {
   border: none;
   background-color: transparent;
-  cursor: pointer;
+  margin-right: 6px;
+  padding: 0;
 }
 
 button#options svg {
@@ -119,5 +115,11 @@ button#options svg {
 }
 
 button#options svg:hover g {
-  fill: #333;
+  fill: #777;
+}
+
+button#copy:focus,
+button#options:focus {
+  outline-color: var(--illini-orange);
+  outline-offset: 2px;
 }
