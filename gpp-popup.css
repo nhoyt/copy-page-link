@@ -57,7 +57,7 @@ div.formats > div {
 }
 
 div.formats > div:first-child {
-  margin-top: 0.1875rem;
+  margin-top: 0.3125rem;
 }
 
 input:focus {
@@ -72,27 +72,55 @@ label {
 #endif
 }
 
-.copy-button {
-  display: flex;
-  justify-content: center;
+div.button-row {
+  display: grid;
+  grid-auto-rows: min-content;
+  grid-template-columns: 1fr auto;
+  margin: 0.3125rem 0 0.125rem;
 }
 
-button {
+div.copy-button {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+div.options-button {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+button#copy {
   background-color: #0060df;
   color: white;
   border: 1px transparent;
   border-radius: 5px;
   font-family: inherit;
   font-size: var(--default);
-  margin: 0.625rem 0 0.125rem;
-  padding: 4px 8px;
+  padding: 4px 16px;
+  margin-left: 6px;
 }
 
-button:focus {
+button#copy:focus {
   outline-color: var(--illini-orange);
   outline-offset: 2px;
 }
 
-button:hover {
-  filter: brightness(1.25);
+button#copy:hover {
+  filter: brightness(1.5);
+}
+
+button#options {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+button#options svg {
+  display: block;
+}
+
+button#options svg:hover g {
+  fill: #333;
 }

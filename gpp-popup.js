@@ -128,4 +128,14 @@ function handleSubmit () {
   copyPageLink();
 }
 
+function openOptions () {
+#ifdef FIREFOX
+  browser.runtime.openOptionsPage();
+#endif
+#ifdef CHROME
+  chrome.runtime.openOptionsPage();
+#endif
+}
+
 document.querySelector('form').addEventListener('submit', handleSubmit);
+document.querySelector('button#options').addEventListener('click', openOptions);
