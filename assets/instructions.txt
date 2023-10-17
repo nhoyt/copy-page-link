@@ -1,0 +1,33 @@
+
+Generic use case:
+
+* To active the Copy Page Link popup menu:
+  * Click on or tap the add-on's toolbar button, or
+  * Use the keyboard shortcut: Alt-1 (Option-1 on the Mac).
+
+* Choose a format (click, tap, arrow keys).
+  * Note: The format you last used to copy a page link is auto-selected.
+
+* Press Enter or Return to perform the copy and close the popup menu.
+  * The link is formatted as specified and copied to the clipboard.
+
+* Navigate to the document you are editing, select the insertion point and paste the formatted link.
+
+
+Keyboard-only users:
+
+* To choose a format, you can traverse the menu items using the arrow keys:
+  * Down-arrow or right-arrow: move down in the Format menu list.
+  * Up-arrow or left-arrow: move up in the Format menu list.
+  * Note: Menu traversal is circular. For example, when you reach the last item
+  in the menu using the down-arrow key, pressing it again takes you to the
+  first item.
+* Once you've chosen the desired format (or if it is already selected), simply press Enter or Return to copy the formatted link to the clipboard.
+  * Alternatively, you can press Tab to select the Copy button and then press Spacebar, Enter or Return.
+
+New item in the interface:
+
+* The Settings button (gear icon) will directly open the extension's Preferences/Options page, where you can select the link formats that are shown or hidden in the popup menu.
+
+* The Settings button is reachable using the Tab key (one tab-stop past the Copy button).
+
