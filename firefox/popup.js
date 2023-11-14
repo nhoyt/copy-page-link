@@ -103,7 +103,8 @@ function handleSubmit () {
 }
 
 function openOptions () {
-  browser.runtime.openOptionsPage();
+  browser.runtime.openOptionsPage()
+  .then(window.close());
 }
 
 document.querySelector('form').addEventListener('submit', handleSubmit);
