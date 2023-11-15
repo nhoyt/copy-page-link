@@ -1,6 +1,6 @@
 /* popup.js */
 
-import { getOptions, saveOptions } from './storage.js';
+import { linkFormats, getOptions, saveOptions } from './storage.js';
 
 /*
 **  Copy Page Link can only process web pages with an 'http' or 'https'
@@ -12,34 +12,44 @@ import { getOptions, saveOptions } from './storage.js';
 **  and with the most recently used link format preselected and focused.
 */
 function initForm (options) {
-  const formatItems = document.querySelectorAll('div.formats input');
+  const container = document.querySelector('div.formats');
   const displaySettings = options.display;
-  const displayItems = [];
   let hasSelection = false;
+
+  function getFormatDiv (prop, count) {
+    const div = document.createElement('div');
+    const id = `rb${count}`;
+
+    div.innerHTML = `
+      <input type="radio" name="format" id="${id}" value="${prop}">
+      <label for="${id}">${linkFormats.get(prop)}</label>`;
+
+    return div;
+  }
 
   function selectItem (item) {
     item.checked = true;
     item.focus();
   }
 
-  for (const item of formatItems) {
-    if (!displaySettings[item.value]) {
-      item.parentElement.remove();
-    }
-    else {
-      displayItems.push(item);
+  let count = 0;
+  for (const prop in displaySettings) {
+    if (displaySettings[prop]) {
+      const item = getFormatDiv(prop, ++count);
+      container.appendChild(item);
     }
   }
 
-  for (const item of displayItems) {
+  const formatItems = document.querySelectorAll('div.formats input');
+  for (const item of formatItems) {
     if (item.value === options.format) {
       selectItem(item);
       hasSelection = true;
     }
   }
 
-  if (displayItems.length && !hasSelection) {
-    selectItem(displayItems[0]);
+  if (formatItems.length && !hasSelection) {
+    selectItem(formatItems[0]);
   }
 }
 
