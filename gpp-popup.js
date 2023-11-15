@@ -130,12 +130,12 @@ function handleSubmit () {
 
 function openOptions () {
 #ifdef FIREFOX
-  browser.runtime.openOptionsPage()
+  browser.runtime.openOptionsPage().then(window.close());
 #endif
 #ifdef CHROME
-  chrome.runtime.openOptionsPage()
+  chrome.runtime.openOptionsPage();
 #endif
-  .then(window.close());
+
 }
 
 document.querySelector('form').addEventListener('submit', handleSubmit);
