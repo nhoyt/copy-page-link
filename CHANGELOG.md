@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v3.3.0
+* Improved efficiency of popup window's form initialization
+
+## v3.2.0
+* Added customization of popup window's Formats menu via user preferences
+* Added Settings button (gear icon) to popup window that opens preferences
+
 ## v3.1.0
 * Updated popup layout
 * Added fieldset border
