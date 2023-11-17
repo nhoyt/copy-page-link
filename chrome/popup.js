@@ -32,6 +32,10 @@ function initForm (options) {
     item.focus();
   }
 
+  // Loop through displaySettings object (each property is a key/value pair
+  // where key is a format name and value is a boolean indicating whether that
+  // format should be displayed in the 'Formats' menu), adding format items to
+  // the menu container as specified by user preferences.
   let count = 0;
   for (const prop in displaySettings) {
     if (displaySettings[prop]) {
@@ -40,6 +44,10 @@ function initForm (options) {
     }
   }
 
+  // Last two steps of initialization:
+
+  // 1. Loop through format items added to the menu container and if we find
+  // one that corresponds to last-used format (options.format), select it...
   const formatItems = document.querySelectorAll('div.formats input');
   for (const item of formatItems) {
     if (item.value === options.format) {
@@ -48,6 +56,7 @@ function initForm (options) {
     }
   }
 
+  // 2. Otherwise (nothing selected yet), select the first item in the menu.
   if (formatItems.length && !hasSelection) {
     selectItem(formatItems[0]);
   }
