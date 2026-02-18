@@ -127,9 +127,8 @@ function openOptions () {
   browser.runtime.openOptionsPage().then(window.close());
 #endif
 #ifdef CHROME
-  chrome.runtime.openOptionsPage();
+  browser.runtime.openOptionsPage();
 #endif
-
 }
 
 document.querySelector('form').addEventListener('submit', handleSubmit);
