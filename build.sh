@@ -5,6 +5,17 @@ GPPFILES=(
   popup.js
 )
 
+SHARED=(
+  background.js
+  content.js
+  LICENSE
+  opt-common.css
+  options.html
+  options.js
+  popup.html
+  storage.js
+)
+
 # Process gpp files with browser-specific code
 
 for FNAME in ${GPPFILES[@]}
@@ -23,7 +34,7 @@ gpp -DFIREFOX=1 -o firefox/manifest.json manifest.json
 
 # Copy shared extension files to browser folders
 
-for FNAME in ./shared/*
+for FNAME in ${SHARED[@]}
 do
   cp -p ${FNAME} ./chrome/
   cp -p ${FNAME} ./firefox/
