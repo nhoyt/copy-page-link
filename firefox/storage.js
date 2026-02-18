@@ -1,5 +1,7 @@
 /* storage.js */
 
+const browser = chrome || browser;
+
 export const extensionName = 'Copy Page Link';
 
 const formatsArray = [
@@ -60,36 +62,33 @@ function addDefaultValues (options) {
 /*
 **  getOptions
 */
-export function getOptions () {
-  return new Promise (function (resolve, reject) {
-    let promise = browser.storage.sync.get();
-    promise.then(
-      options => {
-        if (isComplete(options)) {
-          resolve(options);
-        }
-        else {
-          const optionsWithDefaults = addDefaultValues(options);
-          saveOptions(optionsWithDefaults);
-          resolve(optionsWithDefaults);
-        }
-      },
-      message => { reject(new Error(`getOptions: ${message}`)) }
-    );
-  });
+export async function getOptions () {
+  try {
+    let options = await browser.storage.sync.get();
+    if (isComplete(options)) {
+      return options;
+    }
+    else {
+      const optionsWithDefaults = addDefaultValues(options);
+      saveOptions(optionsWithDefaults);
+      return optionsWithDefaults;
+    }
+  }
+  catch (error) {
+    return new Error(`getOptions: ${error.message}`);
+  }
 }
 
 /*
 **  saveOptions
 */
-export function saveOptions (options) {
-  return new Promise (function (resolve, reject) {
-    let promise = browser.storage.sync.set(options);
-    promise.then(
-      () => { resolve() },
-      message => { reject(new Error(`saveOptions: ${message}`)) }
-    );
-  });
+export async function saveOptions (options) {
+  try {
+    await browser.storage.sync.set(options);
+  }
+  catch (error) {
+    return new Error(`saveOptions: ${error.message}`);
+  }
 }
 
 /*

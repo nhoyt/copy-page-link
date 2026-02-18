@@ -89,17 +89,6 @@ function updateOptionsForm() {
   getOptions().then(updateForm);
 }
 
-
-// Generic error handler
-function notLastError () {
-  if (!chrome.runtime.lastError) { return true; }
-  else {
-    console.log(chrome.runtime.lastError.message);
-    return false;
-  }
-}
-
 // Add event listeners for saving and restoring options
-
 document.addEventListener('DOMContentLoaded', updateOptionsForm);
 document.querySelector('form').addEventListener('submit', saveFormOptions);

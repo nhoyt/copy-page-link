@@ -89,12 +89,6 @@ function updateOptionsForm() {
   getOptions().then(updateForm);
 }
 
-// Generic error handler
-function onError (error) {
-  console.log(`${extensionName}: ${error}`);
-}
-
 // Add event listeners for saving and restoring options
-
 document.addEventListener('DOMContentLoaded', updateOptionsForm);
 document.querySelector('form').addEventListener('submit', saveFormOptions);

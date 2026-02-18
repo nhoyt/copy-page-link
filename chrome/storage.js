@@ -1,5 +1,7 @@
 /* storage.js */
 
+const browser = chrome || browser;
+
 export const extensionName = 'Copy Page Link';
 
 const formatsArray = [
@@ -60,32 +62,33 @@ function addDefaultValues (options) {
 /*
 **  getOptions
 */
-export function getOptions () {
-  return new Promise (function (resolve, reject) {
-    chrome.storage.sync.get(function (options) {
-      if (notLastError()) {
-        if (isComplete(options)) {
-          resolve(options);
-        }
-        else {
-          const optionsWithDefaults = addDefaultValues(options);
-          saveOptions(optionsWithDefaults);
-          resolve(optionsWithDefaults);
-        }
-      }
-    });
-  });
+export async function getOptions () {
+  try {
+    let options = await browser.storage.sync.get();
+    if (isComplete(options)) {
+      return options;
+    }
+    else {
+      const optionsWithDefaults = addDefaultValues(options);
+      saveOptions(optionsWithDefaults);
+      return optionsWithDefaults;
+    }
+  }
+  catch (error) {
+    return new Error(`getOptions: ${error.message}`);
+  }
 }
 
 /*
 **  saveOptions
 */
-export function saveOptions (options) {
-  return new Promise (function (resolve, reject) {
-    chrome.storage.sync.set(options, function () {
-      if (notLastError()) { resolve() }
-    });
-  });
+export async function saveOptions (options) {
+  try {
+    await browser.storage.sync.set(options);
+  }
+  catch (error) {
+    return new Error(`saveOptions: ${error.message}`);
+  }
 }
 
 /*
@@ -111,14 +114,5 @@ export function logOptions (context, objName, obj) {
 **  clearStorage: Used for testing
 */
 export function clearStorage () {
-  chrome.storage.sync.clear();
-}
-
-// Generic error handler
-function notLastError () {
-  if (!chrome.runtime.lastError) { return true; }
-  else {
-    console.log(chrome.runtime.lastError.message);
-    return false;
-  }
+  browser.storage.sync.clear();
 }

@@ -1,5 +1,7 @@
 /* storage.js */
 
+const browser = chrome || browser;
+
 export const extensionName = 'Copy Page Link';
 
 const formatsArray = [
@@ -60,59 +62,33 @@ function addDefaultValues (options) {
 /*
 **  getOptions
 */
-export function getOptions () {
-  return new Promise (function (resolve, reject) {
-#ifdef FIREFOX
-    let promise = browser.storage.sync.get();
-    promise.then(
-      options => {
-        if (isComplete(options)) {
-          resolve(options);
-        }
-        else {
-          const optionsWithDefaults = addDefaultValues(options);
-          saveOptions(optionsWithDefaults);
-          resolve(optionsWithDefaults);
-        }
-      },
-      message => { reject(new Error(`getOptions: ${message}`)) }
-    );
-#endif
-#ifdef CHROME
-    chrome.storage.sync.get(function (options) {
-      if (notLastError()) {
-        if (isComplete(options)) {
-          resolve(options);
-        }
-        else {
-          const optionsWithDefaults = addDefaultValues(options);
-          saveOptions(optionsWithDefaults);
-          resolve(optionsWithDefaults);
-        }
-      }
-    });
-#endif
-  });
+export async function getOptions () {
+  try {
+    let options = await browser.storage.sync.get();
+    if (isComplete(options)) {
+      return options;
+    }
+    else {
+      const optionsWithDefaults = addDefaultValues(options);
+      saveOptions(optionsWithDefaults);
+      return optionsWithDefaults;
+    }
+  }
+  catch (error) {
+    return new Error(`getOptions: ${error.message}`);
+  }
 }
 
 /*
 **  saveOptions
 */
-export function saveOptions (options) {
-  return new Promise (function (resolve, reject) {
-#ifdef FIREFOX
-    let promise = browser.storage.sync.set(options);
-    promise.then(
-      () => { resolve() },
-      message => { reject(new Error(`saveOptions: ${message}`)) }
-    );
-#endif
-#ifdef CHROME
-    chrome.storage.sync.set(options, function () {
-      if (notLastError()) { resolve() }
-    });
-#endif
-  });
+export async function saveOptions (options) {
+  try {
+    await browser.storage.sync.set(options);
+  }
+  catch (error) {
+    return new Error(`saveOptions: ${error.message}`);
+  }
 }
 
 /*
@@ -138,21 +114,5 @@ export function logOptions (context, objName, obj) {
 **  clearStorage: Used for testing
 */
 export function clearStorage () {
-#ifdef FIREFOX
   browser.storage.sync.clear();
-#endif
-#ifdef CHROME
-  chrome.storage.sync.clear();
-#endif
 }
-#ifdef CHROME
-
-// Generic error handler
-function notLastError () {
-  if (!chrome.runtime.lastError) { return true; }
-  else {
-    console.log(chrome.runtime.lastError.message);
-    return false;
-  }
-}
-#endif
