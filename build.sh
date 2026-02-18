@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 GPPFILES=(
+  options.css
   popup.css
   popup.js
 )
