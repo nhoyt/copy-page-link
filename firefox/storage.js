@@ -9,6 +9,7 @@ const formatsArray = [
   ['latex',     'LaTeX'],
   ['markdown',  'Markdown'],
   ['mediawiki', 'MediaWiki'],
+  ['rawurl',    'Raw URL'],
   ['textile',   'Textile'],
   ['xml',       'XML']
 ];
@@ -17,10 +18,11 @@ export const linkFormats = new Map(formatsArray);
 
 export const defaultDisplaySettings = {
   html:       true,
-  latex:      true,
+  latex:      false,
   markdown:   true,
-  mediawiki:  true,
-  textile:    true,
+  mediawiki:  false,
+  rawurl:     true,
+  textile:    false,
   xml:        false
 };
 

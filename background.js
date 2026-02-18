@@ -32,6 +32,9 @@ function getFormattedLink (data, options) {
     case 'mediawiki':
       return `[${data.href} ${name}]`;
 
+    case 'rawurl':
+      return `${data.href}`;
+
     case 'textile':
       return `"${name}":${data.href}`;
 
