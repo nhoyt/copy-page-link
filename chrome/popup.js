@@ -123,8 +123,7 @@ function handleSubmit () {
 }
 
 function openOptions () {
-  chrome.runtime.openOptionsPage();
-
+  browser.runtime.openOptionsPage();
 }
 
 document.querySelector('form').addEventListener('submit', handleSubmit);
