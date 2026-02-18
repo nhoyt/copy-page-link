@@ -1,7 +1,8 @@
 /* background.js */
 
 import { extensionName, linkFormats, getOptions } from './storage.js';
-const debug = false;
+const browser = chrome || browser;
+const debug = true;
 
 /*
 **  getFormattedLink: The main function for extracting and processing
@@ -44,52 +45,25 @@ function getFormattedLink (data, options) {
   }
 }
 
-/*
-**  processLinkData: Called when this script (background) receives 'content'
-**  message from the content script. It first gets the extension options and
-**  then calls 'copyToClipboard'. If successful, it calls 'notifySuccess'.
-*/
-function processLinkData (data) {
+// Send back the results for copying to clipboard
+async function sendFormattedLinkData (formattedLink, options) {
+  const message = {
+    id: 'linkText',
+    format: linkFormats.get(options.format),
+    linkText: formattedLink
+  };
 
-  function copyToClipboard (options) {
-    let str = getFormattedLink(data, options);
-    if (debug) console.log(str);
-    let listener = function (event) {
-      event.clipboardData.setData('text/plain', str);
-      event.preventDefault();
-    };
-    document.addEventListener('copy', listener);
-    document.execCommand('copy', false, null);
-    document.removeEventListener('copy', listener);
-  }
-
-  function notifySuccess (options) {
-    const format = linkFormats.get(options.format);
-    console.log(`Copied page link using ${format} format!`);
-  }
-
-  getOptions().then(function (options) {
-    copyToClipboard(options);
-    if (notLastError()) {
-      notifySuccess(options);
-      notLastError();
-    }
-  });
+  const [tab] = await browser.tabs.query({ active: true, lastFocusedWindow: true });
+  const response = await browser.tabs.sendMessage(tab.id, message);
 }
 
-// Generic error handler
-function notLastError () {
-  if (!chrome.runtime.lastError) { return true; }
-  else {
-    console.log(chrome.runtime.lastError.message);
-    return false;
-  }
-}
 
 // Listen for message from content script
-
-function messageHandler (data, sender) {
-  if (data.id === 'content') { processLinkData(data); }
+async function messageHandler (data, sender) {
+  if (data.id === 'content') {
+    const options = await getOptions();
+    const formattedLink = getFormattedLink(data, options);
+    sendFormattedLinkData(formattedLink, options);
+  }
 }
-
-chrome.runtime.onMessage.addListener(messageHandler);
+browser.runtime.onMessage.addListener(messageHandler);

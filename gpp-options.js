@@ -96,8 +96,6 @@ function onError (error) {
 }
 #endif
 #ifdef CHROME
-// Redefine console for Chrome extension
-var console = chrome.extension.getBackgroundPage().console;
 
 // Generic error handler
 function notLastError () {

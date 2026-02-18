@@ -1,26 +1,26 @@
 {
-  "manifest_version": 2,
   "name": "Copy Page Link",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description" : "Creates a formatted link to the current page and copies it to the clipboard.",
   "homepage_url": "https://github.com/nhoyt/copy-page-link",
   "author": "Nicholas Hoyt",
-
+  "manifest_version": 3,
 
   "permissions": [
     "activeTab",
     "clipboardWrite",
+    "scripting",
     "storage"
   ],
 
-  "browser_action": {
+  "action": {
     "default_icon": "images/icon-32.png",
     "default_popup": "popup.html"
   },
 
   "background": {
-    "page": "background.html",
-    "persistent": true
+    "service_worker": "background.js",
+    "type": "module"
   },
 
   "options_ui": {
@@ -29,7 +29,7 @@
   },
 
   "commands": {
-    "_execute_browser_action": {
+    "_execute_action": {
       "suggested_key": {
         "default": "Alt+1"
       }
@@ -42,5 +42,11 @@
      "64": "images/icon-64.png",
      "96": "images/icon-96.png",
     "128": "images/icon-128.png"
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "copy-link@github.com"
+    }
   }
 }

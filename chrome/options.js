@@ -89,8 +89,6 @@ function updateOptionsForm() {
   getOptions().then(updateForm);
 }
 
-// Redefine console for Chrome extension
-var console = chrome.extension.getBackgroundPage().console;
 
 // Generic error handler
 function notLastError () {

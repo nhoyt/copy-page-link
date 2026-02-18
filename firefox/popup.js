@@ -1,6 +1,7 @@
 /* popup.js */
 
 import { linkFormats, getOptions, saveOptions } from './storage.js';
+const browser = chrome || browser;
 
 /*
 **  Copy Page Link can only process web pages with an 'http' or 'https'
@@ -80,14 +81,10 @@ getActiveTab().then(checkUrlProtocol);
 **  Helper functions
 */
 
-function getActiveTab () {
-  return new Promise (function (resolve, reject) {
-    let promise = browser.tabs.query({ currentWindow: true, active: true });
-    promise.then(
-      tabs => { resolve(tabs[0]) },
-      msg => { reject(new Error(`getActiveTab: ${msg}`)); }
-    )
-  });
+async function getActiveTab() {
+  let queryOptions = { active: true, lastFocusedWindow: true };
+  let [tab] = await browser.tabs.query(queryOptions);
+  return tab;
 }
 
 /* ---------------------------------------------------------------- */
@@ -97,8 +94,12 @@ function getActiveTab () {
 **  the active tab web page and then sends it to the background script,
 **  which in turn formats the link markup and copies it to the clipboard.
 */
-function copyPageLink () {
-  browser.tabs.executeScript(null, { file: 'content.js' });
+async function copyPageLink () {
+  let activeTab = await getActiveTab();
+  browser.scripting.executeScript({
+    target: { tabId: activeTab.id },
+    files: [ 'content.js' ]
+  });
   window.close();
 }
 
