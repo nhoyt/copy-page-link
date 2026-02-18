@@ -4,6 +4,17 @@ import { linkFormats, getOptions, saveOptions } from './storage.js';
 const browser = chrome || browser;
 
 /*
+**  Helper functions
+*/
+async function getActiveTab() {
+  let queryOptions = { active: true, lastFocusedWindow: true };
+  let [tab] = await browser.tabs.query(queryOptions);
+  return tab;
+}
+
+/* ---------------------------------------------------------------- */
+
+/*
 **  Copy Page Link can only process web pages with an 'http' or 'https'
 **  protocol. If the page URL does not have one of these protocols, the
 **  checkUrlProtocol function displays an error message.
@@ -74,18 +85,6 @@ function checkUrlProtocol (tab) {
 }
 
 getActiveTab().then(checkUrlProtocol);
-
-/* ---------------------------------------------------------------- */
-
-/*
-**  Helper functions
-*/
-
-async function getActiveTab() {
-  let queryOptions = { active: true, lastFocusedWindow: true };
-  let [tab] = await browser.tabs.query(queryOptions);
-  return tab;
-}
 
 /* ---------------------------------------------------------------- */
 
