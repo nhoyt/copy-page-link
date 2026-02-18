@@ -1,6 +1,7 @@
 @import 'opt-common.css';
 
 body {
+  font-family: sans-serif;
   font-size: 92.5%;
   width: 60%;
 }

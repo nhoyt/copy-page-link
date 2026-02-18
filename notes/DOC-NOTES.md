@@ -20,11 +20,13 @@ Copy Page Link provides the following choices for link format:
 * LaTeX
 * Markdown (default)
 * MediaWiki
+* Raw URL
+* Textile
 * XML
 
-The formatted link consists of (1) the page URL and (2) the link text. By default, the <em>page title</em> is used as the link text. However, if there is a <em>text selection</em> on the web page, it will be used as the link text <em>instead of</em> the page title.
+With the exception of the Raw URL format, the formatted link consists of (1) the page URL and (2) the link text. By default, the <em>page title</em> is used as the link text. However, if there is a <em>text selection</em> on the web page, it will be used as the link text <em>instead of</em> the page title.
 
-To use the XML format, you can configure the names of the XML elements and attributes on the options page.
+The XML format includes configuration options for the element and attribute names of an XML element on the options page.
 
 ### Screenshot
 
@@ -43,6 +45,12 @@ Markdown:
 
 MediaWiki:
 [https://en.wikipedia.org/wiki/Main_Page Wikipedia, the free encyclopedia]
+
+Raw URL:
+https://en.wikipedia.org/wiki/Main_Page
+
+Textile:
+"Wikipedia, the free encyclopedia":https://en.wikipedia.org/wiki/Main_Page
 
 XML:
 <site href="https://en.wikipedia.org/wiki/Main_Page">

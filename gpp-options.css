@@ -18,6 +18,7 @@ fieldset div label {
 #endif
 #ifdef FIREFOX
 body {
+  font-family: sans-serif;
   font-size: 92.5%;
   width: 60%;
 }
