@@ -1,0 +1,28 @@
+@import 'opt-common.css';
+
+#ifdef CHROME
+body {
+  font-size: 92.5%;
+  padding: 0 1.5em;
+}
+
+.grid-formats {
+  row-gap: 2px;
+}
+
+fieldset:first-of-type { margin-top: 0; }
+
+fieldset div label {
+  line-height: 225%;
+}
+#endif
+#ifdef FIREFOX
+body {
+  font-size: 92.5%;
+  width: 60%;
+}
+
+.grid-formats {
+  row-gap: 1em;
+}
+#endif
