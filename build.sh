@@ -1,15 +1,11 @@
 #!/usr/bin/env bash
 
 GPPFILES=(
-  background.js
-  content.js
-  options.js
   popup.css
   popup.js
-  storage.js
 )
 
-# Process extension JS files: output to browser folders
+# Process gpp files with browser-specific code
 
 for FNAME in ${GPPFILES[@]}
 do
