@@ -55,13 +55,13 @@ async function sendFormattedLinkData (formattedLink, options) {
     format: linkFormats.get(options.format),
     linkText: formattedLink
   };
-
   const [tab] = await browser.tabs.query({ active: true, lastFocusedWindow: true });
   const response = await browser.tabs.sendMessage(tab.id, message);
 }
 
-
 // Listen for message from content script
+browser.runtime.onMessage.addListener(messageHandler);
+
 async function messageHandler (data, sender) {
   if (data.id === 'content') {
     const options = await getOptions();
@@ -69,4 +69,3 @@ async function messageHandler (data, sender) {
     sendFormattedLinkData(formattedLink, options);
   }
 }
-browser.runtime.onMessage.addListener(messageHandler);

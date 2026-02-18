@@ -14,10 +14,12 @@ browser.runtime.sendMessage({
 
 async function writeClipboardText (text) {
   try {
-    await navigator.clipboard.writeText(text);
+    setTimeout(async () => {
+      await navigator.clipboard.writeText(text);
+    }, 30);
   }
   catch (error) {
-    console.error(error.message);
+    console.error(`writeClipboardText: ${error.message}`);
   }
 }
 
@@ -26,6 +28,8 @@ function notifySuccess (format) {
 }
 
 // Listen for message from background script
+browser.runtime.onMessage.addListener(messageHandler);
+
 async function messageHandler (data, sender) {
   if (data.id === 'linkText') {
     try {
@@ -33,8 +37,7 @@ async function messageHandler (data, sender) {
       notifySuccess(data.format);
     }
     catch (error) {
-      console.error('messageHandler', error.message);
+      console.error(`messageHandler (content.js): ${error.message}`);
     }
   }
 }
-browser.runtime.onMessage.addListener(messageHandler);
