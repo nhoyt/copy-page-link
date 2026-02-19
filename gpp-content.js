@@ -12,11 +12,24 @@ browser.runtime.sendMessage({
   title: document.title
 });
 
+// Chrome
+function writeToClipboard (text) {
+  let listener = event => {
+    event.clipboardData.setData('text/plain', text);
+    event.preventDefault();
+  };
+
+  document.addEventListener('copy', listener);
+  document.execCommand('copy', false, null);
+  document.removeEventListener('copy', listener);
+}
+
+// Firefox
 async function writeClipboardText (text) {
   try {
     setTimeout(async () => {
       await navigator.clipboard.writeText(text);
-    }, 30);
+    }, 50);
   }
   catch (error) {
     console.error(`writeClipboardText: ${error.message}`);
@@ -30,14 +43,19 @@ function notifySuccess (format) {
 // Listen for message from background script
 browser.runtime.onMessage.addListener(messageHandler);
 
-async function messageHandler (data, sender) {
+#ifdef CHROME
+function messageHandler (data, sender) {
   if (data.id === 'linkText') {
-    try {
-      await writeClipboardText(data.linkText);
-      notifySuccess(data.format);
-    }
-    catch (error) {
-      console.error(`messageHandler (content.js): ${error.message}`);
-    }
+    writeToClipboard(data.linkText);
+    notifySuccess(data.format);
   }
 }
+#endif
+#ifdef FIREFOX
+async function messageHandler (data, sender) {
+  if (data.id === 'linkText') {
+    await writeClipboardText(data.linkText);
+    notifySuccess(data.format);
+  }
+}
+#endif

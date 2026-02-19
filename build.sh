@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 GPPFILES=(
+  content.js
   manifest.json
   options.css
   popup.css
@@ -9,7 +10,6 @@ GPPFILES=(
 
 SHARED=(
   background.js
-  content.js
   LICENSE
   opt-common.css
   options.html
