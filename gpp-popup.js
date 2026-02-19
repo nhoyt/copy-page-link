@@ -99,7 +99,9 @@ async function copyPageLink () {
   try {
     await browser.scripting.executeScript({
       target: { tabId: activeTab.id },
-      files: [ 'content.js' ] });
+      files: [ 'content.js' ],
+      injectImmediately: true
+    });
   }
   catch (error) {
     console.log(`copyPageLink: ${error.message}`);
@@ -107,9 +109,9 @@ async function copyPageLink () {
 }
 
 /*
-**  When the user submits the Copy Page Link form, 'handleSubmit' first
-**  saves the user-selected format so that it can be retrieved for use
-**  by the background script. It then calls the 'copyPageLink' function.
+**  When the user submits the Copy Page Link form, the event handler first
+**  saves the user-selected format so that it can be retrieved for use by the
+**  background script. It then calls the 'copyPageLink' function.
 */
 function getSelectedFormat () {
   const formatItems = document.querySelectorAll('div.formats input');
@@ -120,20 +122,16 @@ function getSelectedFormat () {
   }
 }
 
-async function handleSubmit () {
-  await saveOptions({ format: getSelectedFormat() });
-  await copyPageLink();
-  window.close();
-}
+// When user submits popup form - main execution path
+document.querySelector('form').addEventListener('submit',
+  async () => {
+    await saveOptions({ format: getSelectedFormat() });
+    copyPageLink();
+    window.close();
+  });
 
-function openOptions () {
-#ifdef FIREFOX
-  browser.runtime.openOptionsPage().then(window.close());
-#endif
-#ifdef CHROME
-  browser.runtime.openOptionsPage();
-#endif
-}
-
-document.querySelector('form').addEventListener('submit', handleSubmit);
-document.querySelector('button#options').addEventListener('click', openOptions);
+// When user clicks options icon - open options page
+document.querySelector('button#options').addEventListener('click',
+  () => {
+    browser.runtime.openOptionsPage().then(window.close());
+  });

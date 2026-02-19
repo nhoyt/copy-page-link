@@ -72,7 +72,7 @@ export async function getOptions () {
     }
     else {
       const optionsWithDefaults = addDefaultValues(options);
-      saveOptions(optionsWithDefaults);
+      await saveOptions(optionsWithDefaults);
       return optionsWithDefaults;
     }
   }
