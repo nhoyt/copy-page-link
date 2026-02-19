@@ -12,7 +12,7 @@ browser.runtime.sendMessage({
   title: document.title
 });
 
-// Chrome
+#ifdef CHROME
 function writeToClipboard (text) {
   let listener = event => {
     event.clipboardData.setData('text/plain', text);
@@ -23,8 +23,8 @@ function writeToClipboard (text) {
   document.execCommand('copy', false, null);
   document.removeEventListener('copy', listener);
 }
-
-// Firefox
+#endif
+#ifdef FIREFOX
 async function writeClipboardText (text) {
   try {
     setTimeout(async () => {
@@ -35,6 +35,7 @@ async function writeClipboardText (text) {
     console.error(`writeClipboardText: ${error.message}`);
   }
 }
+#endif
 
 function notifySuccess (format) {
   console.log(`Copied page link using ${format} format!`);

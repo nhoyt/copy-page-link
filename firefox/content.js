@@ -12,19 +12,6 @@ browser.runtime.sendMessage({
   title: document.title
 });
 
-// Chrome
-function writeToClipboard (text) {
-  let listener = event => {
-    event.clipboardData.setData('text/plain', text);
-    event.preventDefault();
-  };
-
-  document.addEventListener('copy', listener);
-  document.execCommand('copy', false, null);
-  document.removeEventListener('copy', listener);
-}
-
-// Firefox
 async function writeClipboardText (text) {
   try {
     setTimeout(async () => {
