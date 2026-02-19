@@ -89,17 +89,21 @@ getActiveTab().then(checkUrlProtocol);
 /* ---------------------------------------------------------------- */
 
 /*
-**  copyPageLink: Executes the content script, which extracts data from
-**  the active tab web page and then sends it to the background script,
-**  which in turn formats the link markup and copies it to the clipboard.
+**  copyPageLink: Executes the content script, which (1) extracts data from
+**  the active tab web page; (2) sends that data to the background script,
+**  which (3) formats the link markup and, finally (4) sends the result back
+**  to the content script, which copies it to the clipboard.
 */
 async function copyPageLink () {
   let activeTab = await getActiveTab();
-  browser.scripting.executeScript({
-    target: { tabId: activeTab.id },
-    files: [ 'content.js' ]
-  });
-  window.close();
+  try {
+    await browser.scripting.executeScript({
+      target: { tabId: activeTab.id },
+      files: [ 'content.js' ] });
+  }
+  catch (error) {
+    console.log(`copyPageLink: ${error.message}`);
+  }
 }
 
 /*
@@ -116,9 +120,10 @@ function getSelectedFormat () {
   }
 }
 
-function handleSubmit () {
-  saveOptions({ format: getSelectedFormat() });
-  copyPageLink();
+async function handleSubmit () {
+  await saveOptions({ format: getSelectedFormat() });
+  await copyPageLink();
+  window.close();
 }
 
 function openOptions () {

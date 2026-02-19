@@ -17,3 +17,13 @@ In Preferences/Options, display the list of all link formats, each with a checkb
 2.  The last selected format is no longer in the popup menu:
 
   The 'selected format' in the popup is based on the 'default format' the first time it is displayed, and on the 'last selected format' for all subsequent activations of the popup window. When the last selected format is disabled by the user in Preferences, the heuristic for 'selected format' becomes (a) the default format if it is currently in the list, or (b) the first format in the list, when the default format is not enabled (i.e., in the menu).
+
+## Migrating Promise code to async/await and proper handling of async functions
+
+The following functions used in this extension are asynchronous:
+
+* browser.scripting.executeScript
+* navigator.clipboard.writeText
+
+* copyPageLink
+* getOptions, saveOptions
