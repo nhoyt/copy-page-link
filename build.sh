@@ -11,7 +11,6 @@ GPPFILES=(
 SHARED=(
   background.js
   LICENSE
-  opt-common.css
   options.html
   options.js
   popup.html

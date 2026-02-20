@@ -8,8 +8,13 @@ const browser = chrome || browser;
 */
 async function getActiveTab() {
   let queryOptions = { active: true, lastFocusedWindow: true };
-  let [tab] = await browser.tabs.query(queryOptions);
-  return tab;
+  try {
+    let tabs = await browser.tabs.query(queryOptions);
+    return tabs[0];
+  }
+  catch (error) {
+    console.error(`getActiveTab: ${error.message}`);
+  }
 }
 
 /* ---------------------------------------------------------------- */
@@ -99,12 +104,11 @@ async function copyPageLink () {
   try {
     await browser.scripting.executeScript({
       target: { tabId: activeTab.id },
-      files: [ 'content.js' ],
-      injectImmediately: true
+      files: [ 'content.js' ]
     });
   }
   catch (error) {
-    console.log(`copyPageLink: ${error.message}`);
+    console.error(`copyPageLink: ${error.message}`);
   }
 }
 
@@ -133,5 +137,9 @@ document.querySelector('form').addEventListener('submit',
 // When user clicks options icon - open options page
 document.querySelector('button#options').addEventListener('click',
   () => {
-    browser.runtime.openOptionsPage().then(window.close());
+    browser.runtime.openOptionsPage();
+    console.log(`navigator.userAgent: ${navigator.userAgent}`);
+    if (navigator.userAgent.startsWith('Mozilla')) {
+      window.close()
+    }
   });

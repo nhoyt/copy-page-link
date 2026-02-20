@@ -41,7 +41,6 @@ function saveFormOptions(e) {
     markdown:   document.getElementById('markdown').checked,
     mediawiki:  document.getElementById('mediawiki').checked,
     rawurl:     document.getElementById('rawurl').checked,
-    textile:    document.getElementById('textile').checked,
     xml:        document.getElementById('xml').checked
   }
 

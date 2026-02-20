@@ -10,7 +10,6 @@ const formatsArray = [
   ['markdown',  'Markdown'],
   ['mediawiki', 'MediaWiki'],
   ['rawurl',    'Raw URL'],
-  ['textile',   'Textile'],
   ['xml',       'XML']
 ];
 
@@ -22,7 +21,6 @@ export const defaultDisplaySettings = {
   markdown:   true,
   mediawiki:  false,
   rawurl:     true,
-  textile:    false,
   xml:        false
 };
 

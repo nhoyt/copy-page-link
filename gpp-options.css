@@ -1,19 +1,9 @@
-@import 'opt-common.css';
+/* options.css */
 
 #ifdef CHROME
 body {
   font-size: 92.5%;
   padding: 0 1.5em;
-}
-
-.grid-formats {
-  row-gap: 2px;
-}
-
-fieldset:first-of-type { margin-top: 0; }
-
-fieldset div label {
-  line-height: 225%;
 }
 #endif
 #ifdef FIREFOX
@@ -22,8 +12,79 @@ body {
   font-size: 92.5%;
   width: 60%;
 }
+#endif
 
-.grid-formats {
-  row-gap: 1em;
+html {
+  font-size: 15px;
+}
+
+fieldset {
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  margin-top: 1.25em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+#ifdef CHROME
+fieldset:first-of-type { margin-top: 0; }
+
+fieldset div label {
+  line-height: 225%;
 }
 #endif
+
+.grid-formats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+#ifdef CHROME
+  row-gap: 2px;
+#endif
+#ifdef FIREFOX
+  row-gap: 1em;
+#endif
+}
+
+.grid-identifiers {
+  display: grid;
+  grid-template-columns: max-content auto;
+  row-gap: 8px;
+}
+
+.grid-identifiers label {
+  display: inline;
+  line-height: 30px;
+}
+
+input[type=text] {
+  font-size: 100%;
+  margin-left: 12px;
+}
+
+div#status { margin: 0.75em 0 0.5em; color: #0a84ff; }
+
+button {
+  font-size: 92.5%;
+  text-align: center;
+  min-width: 6em;
+  border: 0;
+  border-radius: 5px;
+  padding: 6px 12px;
+  margin: 0.5em 2px 1em;
+  color: #ffffff;
+  background-color: #0060df;
+}
+
+button:hover {
+  background-color: #003eaa;
+}
+
+button:active {
+  background-color: #002275;
+}
+
+button:focus {
+  box-shadow: 0 0 0 1px #0a84ff inset,
+              0 0 0 1px #0a84ff,
+              0 0 0 4px rgba(10, 132, 255, 0.3);
+}

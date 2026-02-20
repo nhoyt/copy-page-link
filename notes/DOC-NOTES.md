@@ -4,7 +4,7 @@ https://github.com/nhoyt/copy-page-link
 
 ## Documentation Notes
 
-Copy Page Link creates link markup for the current page in the selected format and copies it to the clipboard for pasting into another document.
+Copy Page Link creates a formatted link to the current page in the selected format and copies it to the clipboard for pasting into another document.
 
 ### Keyboard Accessibility
 

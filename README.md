@@ -2,10 +2,9 @@
 
 ## Overview
 
-Copy Page Link is a browser add-on for Chrome and Firefox that creates a
-formatted link to the current page loaded in the active tab, and copies it
-to the clipboard. You can then paste the resulting link markup into an
-external document.
+Copy Page Link is a browser extension that creates a formatted link to the
+current page loaded in the active tab, and copies it to the clipboard. You can
+then paste the resulting link markup into an external document.
 
 By default, the page title is used as the display text for the link. You can
 override this behavior by selecting a text string within the document — that
@@ -14,8 +13,10 @@ string will then be used as the display text instead of the page title.
 ### Keyboard Accessibility
 
 * The keyboard shortcut for Copy Page Link is 'alt-1' ('option-1' on the Mac).
-* Copy Page Link "remembers" the last link format that was copied. To select
-  another link format, use 'arrow-up' or 'arrow-down' to move through the list.
+* Copy Page Link stores the last-used link format and auto-selects that format
+  on the next invocation.
+* To move through the list of link formats, use the arrow keys: 'arrow-down' or
+  'arrow-right' to move down, and 'arrow-up' or 'arrow-left' to move up.
 * When the desired link format is selected, press 'return' or 'enter' to copy
   the formatted link to the clipboard.
 
@@ -29,6 +30,7 @@ string will then be used as the display text instead of the page title.
 | LaTeX     | `\href{URL}{page-title-or-selection}`       |
 | Markdown  | `[page-title-or-selection](URL)`            |
 | MediaWiki | `[URL page-title-or-selection]`             |
+| Raw URL   | `URL`                                       |
 | XML       | configured in Options (see below)           |
 
 ## Preferences / Options

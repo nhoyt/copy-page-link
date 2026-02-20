@@ -35,9 +35,6 @@ function getFormattedLink (data, options) {
     case 'rawurl':
       return `${data.href}`;
 
-    case 'textile':
-      return `"${name}":${data.href}`;
-
     case 'xml':
       return `      <${options.link} ${options.href}="${data.href}">\n` +
              `        <${options.name}>${name}</${options.name}>\n` +
