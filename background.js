@@ -2,7 +2,6 @@
 
 import { extensionName, linkFormats, getOptions } from './storage.js';
 const browser = chrome || browser;
-const debug = true;
 
 /*
 **  getFormattedLink: The main function for extracting and processing

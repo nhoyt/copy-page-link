@@ -1,6 +1,4 @@
-/*
-*   content.js
-*/
+/* content.js */
 
 var browser = chrome || browser;
 
